@@ -9,7 +9,7 @@ class Sort {
         }
         System.out.println();
     }
-    // Алгоритм пузырьковой сортировки
+    // Bubble sort algorithm
     private static void bubble(int[] arr, int size) {
         int t;
         for (int i = 1; i < size; i++) {
@@ -23,10 +23,10 @@ class Sort {
                 }
             }
         }
-        System.out.println("Отсортированный массив методом пузырька: ");
+        System.out.println("Sorted array by bubble method: ");
         arrOutput(arr);
     }
-    // Алгоритм сортировки методом выбора
+    // Selection sort algorithm
     private static void selection(int[] arr, int size) {
         int t, max, n;
         for (int i = size - 1; i > 0; i--) {
@@ -42,14 +42,14 @@ class Sort {
             arr[i] = arr[n];
             arr[n] = t;
         }
-        System.out.println("Отсортированный массив методом выбора: ");
+        System.out.println("Sorted array by selection method: ");
         arrOutput(arr);
     }
 
-    // С использованием Arrays.sort()
+    // With using Arrays.sort()
     private static void arrSort(int[] arr) {
         Arrays.sort(arr);
-        System.out.println("Отсортированный массив методом Arrays.sort():");
+        System.out.println("Sorted array by Arrays.sort():");
         arrOutput(arr);
     }
 
@@ -62,22 +62,22 @@ class Sort {
         }
         arr1 = arr2 = arr.clone();
         int t, size = arr.length;
-        System.out.println("Исходный массив: ");
+        System.out.println("Source array: ");
         arrOutput(arr);
         System.out.println();
 
         startTime = System.nanoTime();
         bubble(arr, size);
-        System.out.println("Время выполнения алгоритма: " + (System.nanoTime() - startTime));
+        System.out.println("Algorithm execution time: " + (System.nanoTime() - startTime));
         System.out.println();
 
         startTime = System.nanoTime();
         selection(arr1, size);
-        System.out.println("Время выполнения алгоритма: " + (System.nanoTime() - startTime));
+        System.out.println("Algorithm execution time: " + (System.nanoTime() - startTime));
         System.out.println();
 
         startTime = System.nanoTime();
         arrSort(arr2);
-        System.out.println("Время выполнения алгоритма: " + (System.nanoTime() - startTime));
+        System.out.println("Algorithm execution time: " + (System.nanoTime() - startTime));
     }
 }
