@@ -2,7 +2,7 @@ import java.lang.reflect.Array;
 import java.util.Arrays;
 
 class Sort {
-    private static  void arrOutput(int[] arr)
+    private static void printArray(int[] arr)
     {
         for (int value : arr) {
             System.out.print(value + " ");
@@ -10,7 +10,7 @@ class Sort {
         System.out.println();
     }
     // Bubble sort algorithm
-    private static void bubble(int[] arr, int size) {
+    private static void sortByBubble(int[] arr, int size) {
         int t;
         for (int i = 1; i < size; i++) {
             for (int j = size - 1; j >= i; j--) {
@@ -24,10 +24,10 @@ class Sort {
             }
         }
         System.out.println("Sorted array by bubble method: ");
-        arrOutput(arr);
+        printArray(arr);
     }
     // Selection sort algorithm
-    private static void selection(int[] arr, int size) {
+    private static void sortBySelection(int[] arr, int size) {
         int t, max, n;
         for (int i = size - 1; i > 0; i--) {
             max = arr[0];
@@ -43,14 +43,13 @@ class Sort {
             arr[n] = t;
         }
         System.out.println("Sorted array by selection method: ");
-        arrOutput(arr);
+        printArray(arr);
     }
-
     // With using Arrays.sort()
-    private static void arrSort(int[] arr) {
+    private static void sortByMethod(int[] arr) {
         Arrays.sort(arr);
         System.out.println("Sorted array by Arrays.sort():");
-        arrOutput(arr);
+        printArray(arr);
     }
 
     public static void main(String[] args) {
@@ -61,23 +60,23 @@ class Sort {
             arr[i] = (int)((Math.random() * 200) - 100);
         }
         arr1 = arr2 = arr.clone();
-        int t, size = arr.length;
+        int size = arr.length;
         System.out.println("Source array: ");
-        arrOutput(arr);
+        printArray(arr);
         System.out.println();
 
         startTime = System.nanoTime();
-        bubble(arr, size);
+        sortByBubble(arr, size);
         System.out.println("Algorithm execution time: " + (System.nanoTime() - startTime));
         System.out.println();
 
         startTime = System.nanoTime();
-        selection(arr1, size);
+        sortBySelection(arr1, size);
         System.out.println("Algorithm execution time: " + (System.nanoTime() - startTime));
         System.out.println();
 
         startTime = System.nanoTime();
-        arrSort(arr2);
+        sortByMethod(arr2);
         System.out.println("Algorithm execution time: " + (System.nanoTime() - startTime));
     }
 }
