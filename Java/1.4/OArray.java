@@ -4,20 +4,17 @@ import java.util.Random;
 import java.util.Set;
 
 public class OArray {
-    private static void printArray(int[] arr){
-        for(int value : arr){
+    private static void printArray(int[] arr) {
+        for(int value : arr)
             System.out.print(value + " ");
-        }
         System.out.println();
     }
     private static void fillOdd(int[] oddArr) {
         for(int i = 0, j = 0; i <= 99; i++)
-        {
             if(i % 2 != 0) {
                 oddArr[j] = i;
                 j++;
             }
-        }
     }
     private  static void  fillRandom(int[] randArr, int range1, int range2) {
         Random random = new Random();
@@ -29,7 +26,7 @@ public class OArray {
     }
     private static void reverseArray(int[] arr) {
         int t;
-        for(int i = 0; i < arr.length / 2; i++) {
+        for (int i = 0; i < arr.length / 2; i++) {
             t = arr[i];
             arr[i] = arr[arr.length - i - 1];
             arr[arr.length - i - 1] = t;
@@ -49,17 +46,16 @@ public class OArray {
         System.out.println("Number of odd numbers: " + odd);
     }
 
-    private static void  replaceOdd(int[] arr){
-        for (int i = 0; i < arr.length; i += 2){
+    private static void  replaceOdd(int[] arr) {
+        for (int i = 0; i < arr.length; i += 2)
             arr[i] = 0;
-        }
     }
 
     private static void findMaxMin(int[] arr){
         int max, min, iMax, iMin;
         max = min = arr[0];
         iMax = iMin = 0;
-        for (int i = 0; i < arr.length; i++){
+        for (int i = 0; i < arr.length; i++) {
             if (arr[i] > max) {
                 max = arr[i];
                 iMax = i;
@@ -75,9 +71,8 @@ public class OArray {
 
     private static double countAverage(int[] arr){
         int sum = 0;
-        for (int value: arr){
+        for (int value: arr)
             sum += value;
-        }
         return ((double)sum / arr.length);
     }
 
@@ -106,16 +101,12 @@ public class OArray {
             frequency.put(value, fr);
         }
         System.out.print("The most common element(s) in array: ");
-        for (int i = -1; i < 2; i++) {
+        for (int i = -1; i < 2; i++)
             if (frequency.get(i) > maxFreq)
                 maxFreq = frequency.get(i);
-        }
-        for (Map.Entry<Integer, Integer> pair : entrySet) {
-            if (maxFreq == pair.getValue()) {
+        for (Map.Entry<Integer, Integer> pair : entrySet)
+            if (maxFreq == pair.getValue())
                 System.out.print(pair.getKey() + " ");
-            }
-
-        }
         //System.out.println(frequency.values());
     }
 
