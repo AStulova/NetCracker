@@ -67,9 +67,8 @@ public class MArray {
                 }
             }
         System.out.print("Max element in array is " + max + " with indices:");
-        for (int i = 0; i < indexI.size(); i++){
+        for (int i = 0; i < indexI.size(); i++)
             System.out.print(" (" + indexI.get(i) + "; " + indexJ.get(i) + ")");
-        }
         System.out.println();
     }
 
