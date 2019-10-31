@@ -100,7 +100,7 @@ public class MainPoint {
         System.out.println(triangle1.getPerimeter());
         System.out.println(triangle1.getType());
 
-        MyTriangle triangle2 = new MyTriangle(-3, -4, 2, -2, -4, 5);
+        MyTriangle triangle2 = new MyTriangle(-3, -4, 2, -2, -4, 6);
         System.out.println(triangle2.toString());
         System.out.println(triangle2.getPerimeter());
         System.out.println(triangle2.getType());
