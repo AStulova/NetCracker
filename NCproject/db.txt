@@ -1,0 +1,39 @@
+create table Client (
+	id_client serial primary key,
+        full_name varchar(70) NOT NULL,
+        phone varchar(12) NOT NULL,
+        email varchar(100),
+	password varchar(30) NOT NULL,
+        personal_account serial NOT NULL,
+        balance money,
+        UNIQUE(phone, email, personal_account)
+);
+
+create table Orders (
+	id_order serial primary key,
+	id_client serial references Client(id_client),
+	id_service serial references Service(id_service),
+	price money,
+	order_date timestamp
+);
+
+create table Service (
+	id_service serial primary key,
+	name varchar(100),
+	price_month money
+	//price_connection money
+);
+
+create table Account (
+	id_check serial primary key,
+	id_client serial references Client(id_client),
+	total money
+);
+
+INSERT into client values
+(5438, 'Courteney Cox', '+79106845169', 'CourteneyCox@gmail.com', 2568452, 578.47),
+(5439, 'Matthew Perry', '+79425684113', 'MPerry@ya.ru', 2626435, 890.23);
+
+INSERT into order values
+(854, 5438, 300.00, '2019-10-25 16:36:45'),
+(855, 5439, 149.90, '2019-10-16 10:21:11');
