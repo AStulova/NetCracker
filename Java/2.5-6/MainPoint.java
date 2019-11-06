@@ -1,3 +1,5 @@
+import java.util.Objects;
+
 class MyPoint {
     private int x = 0;
     private int y = 0;
@@ -36,7 +38,7 @@ class MyPoint {
         setX(x);
         setY(y);
     }
-    @Override
+
     public String toString() {
         return "(" + x + ", " + y + ")";
     }
@@ -51,6 +53,22 @@ class MyPoint {
 
     public double distance() {
         return Math.sqrt(Math.pow(0 - this.x, 2) + Math.pow(0 - this.y, 2));
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        MyPoint myPoint = (MyPoint) o;
+        return x == myPoint.x && y == myPoint.y;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = 17;
+        result = 31 * result + x;
+        result = 31 * result + y;
+        return result;
     }
 }
 
@@ -91,6 +109,24 @@ class MyTriangle {
         else
             return "Scalene";
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        MyTriangle myTriangle = (MyTriangle) o;
+        return myTriangle.v1.equals(v1) && myTriangle.v2.equals(v2)
+                && myTriangle.v3.equals(v3);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = 17;
+        result = 31 * result + v1.hashCode();
+        result = 31 * result + v2.hashCode();
+        result = 31 * result + v3.hashCode();
+        return result;
+    }
 }
 
 public class MainPoint {
@@ -100,9 +136,15 @@ public class MainPoint {
         System.out.println(triangle1.getPerimeter());
         System.out.println(triangle1.getType());
 
-        MyTriangle triangle2 = new MyTriangle(-3, -4, 2, -2, -4, 6);
+        System.out.println();
+        MyTriangle triangle2 = new MyTriangle(-3, -4, 2, -2, -4, 5);
         System.out.println(triangle2.toString());
         System.out.println(triangle2.getPerimeter());
         System.out.println(triangle2.getType());
+
+        System.out.println();
+        System.out.println("hashcode triangle1 --> " + triangle1.hashCode());
+        System.out.println("hashcode triangle2 --> " + triangle2.hashCode());
+        System.out.println(triangle1.equals(triangle2));
     }
 }

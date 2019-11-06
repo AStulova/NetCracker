@@ -37,6 +37,22 @@ class Circle {
     public double getArea() {
         return Math.PI * radius * radius;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == this) return true;
+        if (!(obj instanceof Circle)) return false;
+        Circle circle = (Circle) obj;
+        return circle.color.equals(color) && circle.radius == radius;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = 1;
+        result = 31 * result + color.hashCode();
+        result = 31 * result + (int)(Double.doubleToLongBits(radius) ^ (Double.doubleToLongBits(radius) >>> 32));
+        return result;
+    }
 }
 
 public class MainCircle {
@@ -46,5 +62,13 @@ public class MainCircle {
         circle.setColor("blue");
         System.out.println(circle.toString());
         System.out.println("Circle's area is " + circle.getArea());
+        Circle circle1 = new Circle(3.5, "blue");
+        Circle circle2 = circle1;
+        System.out.println(circle.hashCode());
+        System.out.println(circle1.hashCode());
+        System.out.println(circle.equals(circle1));
+        System.out.println(circle1.hashCode());
+        System.out.println(circle2.hashCode());
+        System.out.println(circle1.equals(circle2));
     }
 }

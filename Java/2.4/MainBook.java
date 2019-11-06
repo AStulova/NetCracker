@@ -1,3 +1,6 @@
+import java.util.Arrays;
+import java.util.Objects;
+
 class Author {
     private String name;
     private String email;
@@ -20,7 +23,28 @@ class Author {
     public char getGender() {
         return gender;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null) return false;
+        if (!(obj instanceof Author)) return false;
+        Author author = (Author) obj;
+        return gender == author.gender &&
+                name.equals(author.name) &&
+                email.equals(author.email);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = 17;
+        result = 31 * result + name.hashCode();
+        result = 31 * result + email.hashCode();
+        result = 31 * result + gender;
+        return result;
+    }
 }
+
 class Book {
     private String name;
     private Author[] authors;
@@ -86,9 +110,27 @@ class Book {
             output.append(author.getName() + " ");
         return output.toString();
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == this) return true;
+        if (obj == null) return false;
+        if (!(obj instanceof Book)) return false;
+        Book book = (Book) obj;
+        return book.name.equals(name) && book.price == price && book.qty == qty
+                && Arrays.equals(authors, book.authors);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = 17;
+        result = 31 * result + name.hashCode();
+        result = 31 * result + qty;
+        result = 31 * result + (int)(Double.doubleToLongBits(price) ^ (Double.doubleToLongBits(price) >>> 32));
+        result = 31 * result + Arrays.hashCode(authors);
+        return result;
+    }
 }
-
-
 
 public class MainBook {
     public static void main(String[] args) {
@@ -98,11 +140,22 @@ public class MainBook {
         System.out.println(book.toString());
         System.out.println(book.getAuthorNames());
 
+        System.out.println();
         Author[] author1 = new Author[2];
         author1[0] = new Author("Zaitsev A.P.", "AZaitsev@ya.ru", 'M');
         author1[1] = new Author("Shelupanov A.A.", "AShelupanov@mail.ru", 'M');
         Book book1 = new Book("Technical means and methods of information protection", author1, 629.30);
         System.out.println(book1.toString());
         System.out.println(book1.getAuthorNames());
+
+        System.out.println();
+        System.out.println("hashcode author --> " + author.hashCode());
+        System.out.println("hashcode author1 --> " + author1.hashCode());
+        System.out.println(author.equals(author1));
+
+        book = book1;
+        System.out.println("hashcode book --> " + book.hashCode());
+        System.out.println("hashcode book1 --> " + book1.hashCode());
+        System.out.println(book.equals(book1));
     }
 }
