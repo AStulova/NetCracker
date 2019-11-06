@@ -62,6 +62,19 @@ class MyPolynomial {
         }
         return new MyPolynomial(pol);
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        MyPolynomial that = (MyPolynomial) o;
+        return Arrays.equals(coeffs, that.coeffs);
+    }
+
+    @Override
+    public int hashCode() {
+        return Arrays.hashCode(coeffs);
+    }
 }
 
 public class MainPolynomial {
@@ -75,5 +88,10 @@ public class MainPolynomial {
         System.out.println(polynomial3);
         MyPolynomial polynomial4 = polynomial1.multiply(polynomial2);
         System.out.println(polynomial4);
+
+        System.out.println();
+        System.out.println("hashcode polynomial1 --> " + polynomial1.hashCode());
+        System.out.println("hashcode polynomial2 --> " + polynomial2.hashCode());
+        System.out.println(polynomial1.equals(polynomial2));
     }
 }

@@ -1,3 +1,5 @@
+import java.util.Objects;
+
 import static java.lang.Math.*;
 
 class MyComplex {
@@ -103,7 +105,25 @@ class MyComplex {
     public MyComplex conjugate() {
         return new MyComplex(real, -imag);
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        MyComplex myComplex = (MyComplex) o;
+        return Double.compare(myComplex.real, real) == 0 &&
+                Double.compare(myComplex.imag, imag) == 0;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = 17;
+        result = 31 * result + (int)(Double.doubleToLongBits(real) ^ (Double.doubleToLongBits(real) >>> 32));
+        result = 31 * result + (int)(Double.doubleToLongBits(imag) ^ (Double.doubleToLongBits(imag) >>> 32));
+        return result;
+    }
 }
+
 public class MainComplex {
     public static void main(String[] args) {
         MyComplex complex1 = new MyComplex(2, 3.7);
@@ -117,5 +137,12 @@ public class MainComplex {
         System.out.println(complex2.subtract(complex1));
         System.out.println(complex1.multiply(complex2));
         System.out.println(complex2.divide(complex3));
+
+        System.out.println();
+        System.out.println("hashcode complex1 --> " + complex1.hashCode());
+        System.out.println("hashcode complex2 --> " + complex2.hashCode());
+        System.out.println("hashcode complex3 --> " + complex3.hashCode());
+        System.out.println(complex1.equals(complex2));
+        System.out.println(complex3.equals(complex2));
     }
 }
