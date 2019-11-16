@@ -1,0 +1,12 @@
+package bsys.service;
+
+import bsys.model.Client;
+import java.util.List;
+
+public interface ClientService {
+    List<Client> allClients();
+    void addClient(Client client);
+    void deleteClient(Client client);
+    void editClient(Client client);
+    Client getById(int idClient);
+}
