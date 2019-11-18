@@ -61,6 +61,12 @@
             <version>5.3.7.Final</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.apache.tomcat</groupId>
+            <artifactId>tomcat-dbcp</artifactId>
+            <version>9.0.10</version>
+        </dependency>
+
     </dependencies>
 
 </project>

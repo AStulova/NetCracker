@@ -1,12 +1,28 @@
 package bsys.model;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "client")
 public class Client {
+    @Id
+    @Column(name = "id_client")
+    @GeneratedValue (strategy = GenerationType.IDENTITY)
     private int idClient;
+
+    @Column(name = "full_name")
     private String fullName;
+
+    @Column(name = "phone")
     private String phone;
+
+    @Column(name = "email")
     private String email;
-    //private String password;
+
+    @Column(name = "personal_account")
     private int personalAccount;
+
+    @Column(name = "balance")
     private double balance;
 
     public int getIdClient() {
@@ -25,7 +41,7 @@ public class Client {
         this.fullName = fullName;
     }
 
-    public String  getPhone() {
+    public String getPhone() {
         return phone;
     }
 
@@ -53,19 +69,7 @@ public class Client {
         return balance;
     }
 
-    public void setBalance(double money) {
-        this.balance = money;
-    }
-
-    @Override
-    public String toString() {
-        return "Client{" +
-                "id_client=" + idClient +
-                ", full_name=" + fullName + ' ' +
-                ", phone=" + phone + ' ' +
-                ", email=" + email + ' ' +
-                ", personal_account=" + personalAccount +
-                ", money=" + balance +
-                '}';
+    public void setBalance(double balance) {
+        this.balance = balance;
     }
 }

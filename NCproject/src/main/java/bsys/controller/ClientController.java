@@ -1,8 +1,8 @@
 package bsys.controller;
 
 import bsys.model.Client;
-import bsys.service.ClientImp;
 import bsys.service.ClientService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,7 +13,12 @@ import java.util.List;
 
 @Controller
 public class ClientController {
-    private ClientService clientService = new ClientImp();
+    private ClientService clientService;
+
+    @Autowired
+    public void setFilmService(ClientService clientService) {
+        this.clientService = clientService;
+    }
 
     @RequestMapping(method = RequestMethod.GET)
     public ModelAndView allClients() {
