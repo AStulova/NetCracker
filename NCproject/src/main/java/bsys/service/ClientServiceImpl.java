@@ -1,6 +1,7 @@
 package bsys.service;
 
 import bsys.model.Client;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -8,7 +9,13 @@ import java.util.List;
 
 @Service
 public class ClientServiceImpl implements ClientService {
-    private ClientDAO clientDAO = new ClientDAOImpl();
+    private ClientDAO clientDAO;
+
+    @Autowired
+    public void setClientDAO(ClientDAO clientDAO) {
+        this.clientDAO = clientDAO;
+    }
+
     @Transactional
     public List<Client> allClients() {
         return clientDAO.allClients();

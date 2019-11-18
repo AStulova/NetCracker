@@ -5,7 +5,7 @@ create table Client (
         email varchar(100),
 	password varchar(30) NOT NULL,
         personal_account serial NOT NULL,
-        balance money,
+        balance numeric(8, 2),
         UNIQUE(phone, email, personal_account)
 );
 
@@ -13,21 +13,21 @@ create table Orders (
 	id_order serial primary key,
 	id_client serial references Client(id_client),
 	id_service serial references Service(id_service),
-	price money,
+	price numeric(8, 2),
 	order_date timestamp
 );
 
 create table Service (
 	id_service serial primary key,
 	name varchar(100),
-	price_month money
+	price_month numeric(8, 2),
 	//price_connection money
 );
 
 create table Account (
 	id_check serial primary key,
 	id_client serial references Client(id_client),
-	total money
+	total numeric(8, 2),
 );
 
 INSERT into client values
