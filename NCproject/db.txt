@@ -9,25 +9,25 @@ create table Client (
         UNIQUE(phone, email, personal_account)
 );
 
-create table Orders (
+create table Order (
 	id_order serial primary key,
 	id_client serial references Client(id_client),
 	id_service serial references Service(id_service),
-	price numeric(8, 2),
-	order_date timestamp
+	price_order numeric(8, 2),
+	date_order timestamp
 );
 
-create table Service (
-	id_service serial primary key,
-	name varchar(100),
+create table Connection (
+	id_connection serial primary key,
+	name_connection varchar(100),
 	price_month numeric(8, 2),
-	//price_connection money
+	price_connection numeric(8, 2)
 );
 
 create table Account (
-	id_check serial primary key,
+	id_account serial primary key,
 	id_client serial references Client(id_client),
-	total numeric(8, 2),
+	total numeric(8, 2)
 );
 
 INSERT into client values
