@@ -3,7 +3,7 @@ package bsys.model;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "client")
+@Table(name = "Client")
 public class Client {
     @Id
     @Column(name = "id_client")
