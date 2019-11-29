@@ -34,5 +34,7 @@
 
     <c:url value="/add-client" var="add" />
     <a href="${add}">Add Client</a>
+    <c:url value="/connection" var="connection"/>
+    <a href="${connection}">Services</a>
 </body>
 </html>

@@ -8,7 +8,7 @@
 <h1>Services</h1>
 <table>
     <tr>
-        <th>ID Service</th>
+        <th>ID service</th>
         <th>Name</th>
         <th>Price per month</th>
         <th>Connection cost</th>
