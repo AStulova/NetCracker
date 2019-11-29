@@ -17,10 +17,10 @@ public class AppInitializer extends AbstractAnnotationConfigDispatcherServletIni
 
     @Override
     protected String[] getServletMappings() {
-        return new String[]{"/", "/connection"};
+        return new String[]{"/", "/connection", "/order"};
     }
 
-    //Указываем русскую кодировку
+    // Specify the Russian encoding
     protected Filter[] getServletFilters() {
         CharacterEncodingFilter characterEncodingFilter = new CharacterEncodingFilter();
         characterEncodingFilter.setEncoding("UTF-8");
