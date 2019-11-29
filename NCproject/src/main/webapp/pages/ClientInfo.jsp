@@ -38,5 +38,7 @@
     <a href="${connection}">Services</a>
     <c:url value="/order" var="order"/>
     <a href="${order}">Orders</a>
+    <c:url value="/account" var="account"/>
+    <a href="${account}">Accounts</a>
 </body>
 </html>

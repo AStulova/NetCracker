@@ -1,11 +1,8 @@
 package bsys.service.client;
 
 import bsys.model.Client;
-import bsys.service.client.ClientDAO;
-import bsys.service.client.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import javax.transaction.Transactional;
 import java.util.List;
 

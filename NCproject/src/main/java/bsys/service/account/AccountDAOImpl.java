@@ -1,15 +1,14 @@
-package bsys.service.client;
+package bsys.service.account;
 
-import bsys.model.Client;
+import bsys.model.Account;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-
 import java.util.List;
 
 @Repository
-public class ClientDAOImpl implements ClientDAO {
+public class AccountDAOImpl implements AccountDAO {
     private SessionFactory sessionFactory;
 
     @Autowired
@@ -18,32 +17,32 @@ public class ClientDAOImpl implements ClientDAO {
     }
 
     @Override
-    public List<Client> allClients() {
+    public List<Account> allAccounts() {
         Session session = sessionFactory.getCurrentSession();
-        return session.createQuery("from Client").list();
+        return session.createQuery("from Account ").list();
     }
 
     @Override
-    public void addClient(Client client) {
+    public void addAccount(Account account) {
         Session session = sessionFactory.getCurrentSession();
-        session.persist(client);
+        session.persist(account);
     }
 
     @Override
-    public void deleteClient(Client client) {
+    public void deleteAccount(Account account) {
         Session session = sessionFactory.getCurrentSession();
-        session.delete(client);
+        session.delete(account);
     }
 
     @Override
-    public void editClient(Client client) {
+    public void editAccount(Account account) {
         Session session = sessionFactory.getCurrentSession();
-        session.update(client);
+        session.update(account);
     }
 
     @Override
-    public Client getById(int idClient) {
+    public Account getById(int idAccount) {
         Session session = sessionFactory.getCurrentSession();
-        return session.get(Client.class, idClient);
+        return session.get(Account.class, idAccount);
     }
 }
