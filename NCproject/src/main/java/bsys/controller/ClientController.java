@@ -29,8 +29,8 @@ public class ClientController {
         return modelAndView;
     }
 
-    @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
-    public ModelAndView editPage(@PathVariable int id) {
+    @RequestMapping(value = "/edit-client/{id}", method = RequestMethod.GET)
+    public ModelAndView editClientPage(@PathVariable int id) {
         Client client = clientService.getById(id);
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("EditClient");
@@ -38,33 +38,33 @@ public class ClientController {
         return modelAndView;
     }
 
-    @RequestMapping(value = "/edit", method = RequestMethod.POST)
+    @RequestMapping(value = "/edit-client", method = RequestMethod.POST)
     public ModelAndView editClient(@ModelAttribute("client") Client client) {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("redirect:/");     // возврат на главную страницу
+        modelAndView.setViewName("redirect:/client");     // возврат на главную страницу
         clientService.editClient(client);
         return modelAndView;
     }
 
-    @RequestMapping(value = "/add", method = RequestMethod.GET)
-    public ModelAndView addPage() {
+    @RequestMapping(value = "/add-client", method = RequestMethod.GET)
+    public ModelAndView addClientPage() {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("EditClient");
         return modelAndView;
     }
 
-    @RequestMapping(value = "/add", method = RequestMethod.POST)
+    @RequestMapping(value = "/add-client", method = RequestMethod.POST)
     public ModelAndView addClient(@ModelAttribute("client") Client client) {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("redirect:/");
+        modelAndView.setViewName("redirect:/client");
         clientService.addClient(client);
         return modelAndView;
     }
 
-    @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/delete-client/{id}", method = RequestMethod.GET)
     public ModelAndView deleteClient(@PathVariable int id) {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("redirect:/");
+        modelAndView.setViewName("redirect:/client");
         Client client = clientService.getById(id);
         clientService.deleteClient(client);
         return modelAndView;

@@ -20,7 +20,7 @@ public class ConnectionController {
         this.connectionService = connectionService;
     }
 
-    @RequestMapping(value = "/services", method = RequestMethod.GET)
+    @RequestMapping(value = "/connection", method = RequestMethod.GET)
     public ModelAndView allConnections() {
         List<Connection> connection =  connectionService.allConnections();
         ModelAndView modelAndView = new ModelAndView();
@@ -29,25 +29,34 @@ public class ConnectionController {
         return modelAndView;
     }
 
-    @RequestMapping(value = "/add", method = RequestMethod.GET)
-    public ModelAndView addPage() {
+    @RequestMapping(value = "/add-connection", method = RequestMethod.GET)
+    public ModelAndView addConnectionPage() {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("EditConnection");
         return modelAndView;
     }
 
-    @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public ModelAndView addConnection(@ModelAttribute("client") Connection connection) {
+    @RequestMapping(value = "/edit-connection/{id}", method = RequestMethod.GET)
+    public ModelAndView editConnectionPage(@PathVariable int id) {
+        Connection connection = connectionService.getById(id);
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("redirect:/");
+        modelAndView.setViewName("EditConnection");
+        modelAndView.addObject("connection", connection);
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/add-connection", method = RequestMethod.POST)
+    public ModelAndView addConnection(@ModelAttribute("connection") Connection connection) {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("redirect:/connection");
         connectionService.addConnection(connection);
         return modelAndView;
     }
 
-    @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
-    public ModelAndView deleteClient(@PathVariable int id) {
+    @RequestMapping(value = "/delete-connection/{id}", method = RequestMethod.GET)
+    public ModelAndView deleteConnection(@PathVariable int id) {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("redirect:/services");
+        modelAndView.setViewName("redirect:/connection");
         Connection connection = connectionService.getById(id);
         connectionService.deleteConnection(connection);
         return modelAndView;

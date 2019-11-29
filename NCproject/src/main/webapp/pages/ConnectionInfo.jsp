@@ -21,13 +21,13 @@
             <td>${connection.priceMonth}</td>
             <td>${connection.priceConnection}</td>
             <td>
-                <a href="/delete/${connection.idConnection}">Delete</a>
+                <a href="/delete-connection/${connection.idConnection}">Delete</a>
             </td>
         </tr>
     </c:forEach>
 </table>
 
-<c:url value="/add" var="add" />
+<c:url value="/add-connection" var="add" />
 <a href="${add}">Add Connection</a>
 </body>
 </html>

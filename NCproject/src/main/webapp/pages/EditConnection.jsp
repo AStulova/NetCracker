@@ -8,7 +8,7 @@
 </head>
 <body>
 <c:if test="${empty connection.idConnection}">
-    <c:url value="/add" var="var"/>
+    <c:url value="/add-connection" var="var"/>
 </c:if>
 
 <form action="${var}" method="POST">

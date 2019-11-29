@@ -11,10 +11,10 @@
 </head>
 <body>
     <c:if test="${empty client.idClient}">
-        <c:url value="/add" var="var"/>
+        <c:url value="/add-client" var="var"/>
     </c:if>
     <c:if test="${!empty client.idClient}">
-        <c:url value="/edit" var="var"/>
+        <c:url value="/edit-client" var="var"/>
     </c:if>
 
     <form action="${var}" method="POST">

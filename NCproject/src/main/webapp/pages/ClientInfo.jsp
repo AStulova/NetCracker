@@ -25,14 +25,14 @@
                 <td>${client.personalAccount}</td>
                 <td>${client.balance}</td>
                 <td>
-                    <a href="/edit/${client.idClient}">Edit</a>
-                    <a href="/delete/${client.idClient}">Delete</a>
+                    <a href="/edit-client/${client.idClient}">Edit</a>
+                    <a href="/delete-client/${client.idClient}">Delete</a>
                 </td>
             </tr>
         </c:forEach>
     </table>
 
-    <c:url value="/add" var="add" />
+    <c:url value="/add-client" var="add" />
     <a href="${add}">Add Client</a>
 </body>
 </html>
