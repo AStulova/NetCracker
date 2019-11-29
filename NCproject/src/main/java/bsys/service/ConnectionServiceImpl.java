@@ -2,10 +2,12 @@ package bsys.service;
 
 import bsys.model.Connection;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
 
+@Service
 public class ConnectionServiceImpl implements ConnectionService{
     private ConnectionDAO connectionDAO;
 
@@ -15,17 +17,17 @@ public class ConnectionServiceImpl implements ConnectionService{
     }
 
     @Transactional
-    public List<Connection> allSubServices() {
+    public List<Connection> allConnections() {
         return connectionDAO.allConnections();
     }
 
     @Transactional
-    public void addSubService(Connection connection) {
+    public void addConnection(Connection connection) {
         connectionDAO.addConnection(connection);
     }
 
     @Transactional
-    public void deleteSubService(Connection connection) {
+    public void deleteConnection(Connection connection) {
         connectionDAO.deleteConnection(connection);
     }
 

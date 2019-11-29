@@ -16,11 +16,11 @@ public class ClientController {
     private ClientService clientService;
 
     @Autowired
-    public void setFilmService(ClientService clientService) {
+    public void setClientService(ClientService clientService) {
         this.clientService = clientService;
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "/", method = RequestMethod.GET)
     public ModelAndView allClients() {
         List<Client> client = clientService.allClients();
         ModelAndView modelAndView = new ModelAndView();
