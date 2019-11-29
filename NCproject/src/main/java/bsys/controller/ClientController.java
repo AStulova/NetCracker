@@ -1,7 +1,7 @@
 package bsys.controller;
 
 import bsys.model.Client;
-import bsys.service.ClientService;
+import bsys.service.client.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -41,7 +41,7 @@ public class ClientController {
     @RequestMapping(value = "/edit-client", method = RequestMethod.POST)
     public ModelAndView editClient(@ModelAttribute("client") Client client) {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("redirect:/client");     // возврат на главную страницу
+        modelAndView.setViewName("redirect:/");
         clientService.editClient(client);
         return modelAndView;
     }
@@ -56,7 +56,7 @@ public class ClientController {
     @RequestMapping(value = "/add-client", method = RequestMethod.POST)
     public ModelAndView addClient(@ModelAttribute("client") Client client) {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("redirect:/client");
+        modelAndView.setViewName("redirect:/");
         clientService.addClient(client);
         return modelAndView;
     }
@@ -64,7 +64,7 @@ public class ClientController {
     @RequestMapping(value = "/delete-client/{id}", method = RequestMethod.GET)
     public ModelAndView deleteClient(@PathVariable int id) {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("redirect:/client");
+        modelAndView.setViewName("redirect:/");
         Client client = clientService.getById(id);
         clientService.deleteClient(client);
         return modelAndView;
