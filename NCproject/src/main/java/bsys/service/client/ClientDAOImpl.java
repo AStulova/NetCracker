@@ -1,6 +1,7 @@
-package bsys.service;
+package bsys.service.client;
 
 import bsys.model.Client;
+import bsys.service.client.ClientDAO;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;

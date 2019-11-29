@@ -1,6 +1,8 @@
-package bsys.service;
+package bsys.service.connection;
 
 import bsys.model.Connection;
+import bsys.service.connection.ConnectionDAO;
+import bsys.service.connection.ConnectionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -8,7 +10,7 @@ import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
-public class ConnectionServiceImpl implements ConnectionService{
+public class ConnectionServiceImpl implements ConnectionService {
     private ConnectionDAO connectionDAO;
 
     @Autowired

@@ -1,4 +1,4 @@
-package bsys.service;
+package bsys.service.connection;
 
 import bsys.model.Connection;
 import java.util.List;
