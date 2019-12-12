@@ -19,14 +19,14 @@
 
 <form action="${var}" method="POST">
     <input type="hidden" name="id" value="${order.idOrder}">
-    <label for="id_client">ID client</label>
-    <input type="number" name="id_client" id="id_client">
-    <label for="id_connection">ID connection</label>
-    <input type="number" name="id_connection" id="id_connection">
-    <label for="price_order">Price</label>
-    <input type="number" name="price_order" id="price_order">
-    <label for="date_order">Order date</label>
-    <input type="text" name="date_order" id="date_order">
+    <label for="idClient">ID client</label>
+    <input type="number" name="idClient" id="idClient">
+    <label for="idConnection">ID connection</label>
+    <input type="number" name="idConnection" id="idConnection">
+    <label for="priceOrder">Price</label>
+    <input type="number" name="priceOrder" id="priceOrder">
+    <label for="dateOrder">Order date</label>
+    <input type="text" name="dateOrder" id="dateOrder">
 
     <c:if test="${empty order.idOrder}">
         <input type="submit" value="Add">

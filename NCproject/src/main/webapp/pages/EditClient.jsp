@@ -19,14 +19,14 @@
 
     <form action="${var}" method="POST">
         <input type="hidden" name="id" value="${client.idClient}">
-        <label for="full_name">Full name</label>
-        <input type="text" name="full_name" id="full_name">
+        <label for="fullName">Full name</label>
+        <input type="text" name="fullName" id="fullName">
         <label for="phone">Phone</label>
         <input type="text" name="phone" id="phone">
         <label for="email">Email</label>
         <input type="text" name="email" id="email">
-        <label for="personal_account">Personal account</label>
-        <input type="text" name="personal_account" id="personal_account">
+        <label for="personalAccount">Personal account</label>
+        <input type="text" name="personalAccount" id="personalAccount">
         <label for="balance">Balance</label>
         <input type="text" name="balance" id="balance">
 

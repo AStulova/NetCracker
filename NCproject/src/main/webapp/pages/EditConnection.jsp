@@ -13,12 +13,12 @@
 
 <form action="${var}" method="POST">
     <input type="hidden" name="id" value="${connection.idConnection}">
-    <label for="name_connection">Name</label>
-    <input type="text" name="name_connection" id="name_connection">
-    <label for="price_month">Price per month</label>
-    <input type="text" name="price_month" id="price_month">
-    <label for="price_connection">Connection cost</label>
-    <input type="text" name="price_connection" id="price_connection">
+    <label for="nameConnection">Name</label>
+    <input type="text" name="nameConnection" id="nameConnection">
+    <label for="priceMonth">Price per month</label>
+    <input type="text" name="priceMonth" id="priceMonth">
+    <label for="priceConnection">Connection cost</label>
+    <input type="text" name="priceConnection" id="priceConnection">
 
     <c:if test="${empty connection.idConnection}">
         <input type="submit" value="Add">

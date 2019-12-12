@@ -19,8 +19,8 @@
 
 <form action="${var}" method="POST">
     <input type="hidden" name="id" value="${account.idAccount}">
-    <label for="id_client">ID client</label>
-    <input type="text" name="id_client" id="id_client">
+    <label for="idClient">ID client</label>
+    <input type="text" name="idClient" id="idClient">
     <label for="total">Total</label>
     <input type="text" name="total" id="total">
 
