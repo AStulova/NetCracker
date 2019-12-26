@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>User</title>
+</head>
+<body>
+    <a href="/">Main page</a>
+    <h1>Founded User:</h1>
+    <div>
+        <div th:text="'Surname:' + ${user1.surname}"></div>
+        <div th:text="'Name:' + ${user1.name}"></div>
+        <div th:text="'Patronymic:' + ${user1.patronymic}"></div>
+        <div th:text="'Age:' + ${user1.age}"></div>
+        <div th:text="'Salary:' + ${user1.salary}"></div>
+        <div th:text="'Email:' + ${user1.email}"></div>
+        <div th:text="'Job:' + ${user1.job}"></div>
+        <br>
+        <div th:text="${#dates.format(#dates.createNow(), 'dd MMM yyyy HH:mm:ss')}"></div>
+        <div th:text="${#httpServletRequest.getHeader('User-Agent')}"></div>
+    </div>
+
+</body>
+</html>

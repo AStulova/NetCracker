@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>File</title>
+</head>
+<body>
+    <a href="/">Main page</a>
+    <h1>Add from file:</h1>
+    <form method="post" action="/add-from-file" enctype="multipart/form-data">
+        <input type="file" name="file"/>
+        <input type="submit" value="Submit">
+    </form>
+</body>
+</html>
