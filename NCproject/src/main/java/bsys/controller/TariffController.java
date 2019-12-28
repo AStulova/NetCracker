@@ -21,7 +21,7 @@ public class TariffController {
     public ModelAndView allTariffs() {
         List<Tariff> tariff =  tariffService.allTariffs();
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("TariffInfo");
+        modelAndView.setViewName("TariffPage");
         modelAndView.addObject("tariffList", tariff);
         return modelAndView;
     }

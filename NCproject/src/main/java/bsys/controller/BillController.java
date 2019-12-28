@@ -21,7 +21,7 @@ public class BillController {
     public ModelAndView allBills() {
         List<Bill> bill = billService.allBills();
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("BillInfo");
+        modelAndView.setViewName("BillPage");
         modelAndView.addObject("billList", bill);
         return modelAndView;
     }
@@ -30,7 +30,7 @@ public class BillController {
     public ModelAndView editBillPage(@PathVariable int id) {
         Bill bill = billService.getById(id);
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("BillEdit");
+        modelAndView.setViewName("old/BillEdit");
         modelAndView.addObject("bill", bill);
         return modelAndView;
     }
@@ -46,7 +46,7 @@ public class BillController {
     @GetMapping(value = "/add-bill")
     public ModelAndView addBillPage() {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("BillEdit");
+        modelAndView.setViewName("old/BillEdit");
         return modelAndView;
     }
 

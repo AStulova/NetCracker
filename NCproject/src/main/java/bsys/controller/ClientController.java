@@ -21,7 +21,7 @@ public class ClientController {
     public ModelAndView allClients() {
         List<Client> client = clientService.allClients();
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("ClientInfo");
+        modelAndView.setViewName("ClientPage");
         modelAndView.addObject("clientList", client);
         return modelAndView;
     }

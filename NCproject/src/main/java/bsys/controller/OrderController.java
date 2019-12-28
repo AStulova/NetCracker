@@ -21,12 +21,13 @@ public class OrderController {
     public ModelAndView allOrders() {
         List<Order> order = orderService.allOrders();
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("OrderInfo");
+        modelAndView.setViewName("OrderPage");
         modelAndView.addObject("orderList", order);
         return modelAndView;
     }
 
-    @PostMapping(value = "/edit-order")
+    // ??? и Add, и Edit на одной странице
+    @PostMapping(value = "/order-edit")
     public ModelAndView editOrder(@ModelAttribute("order") Order order) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("redirect:/order");
@@ -34,14 +35,16 @@ public class OrderController {
         return modelAndView;
     }
 
-    @GetMapping(value = "/add-order")
+    @GetMapping(value = "/order-add")
     public ModelAndView addOrderPage() {
+        List<Order> order = orderService.allOrders(); // +
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("OrderEdit");
+        modelAndView.addObject("orderList", order); // +
         return modelAndView;
     }
 
-    @PostMapping(value = "/add-order")
+    @PostMapping(value = "/order-add")
     public ModelAndView addOrder(@ModelAttribute("order") Order order) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("redirect:/order");
