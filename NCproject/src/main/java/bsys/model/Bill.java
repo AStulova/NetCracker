@@ -14,7 +14,7 @@ public class Bill {
     private int idClient;
 
     @Column(name = "date_bill")
-    private double dateBill;
+    private String dateBill;
 
     public int getIdBill() {
         return idBill;
@@ -32,11 +32,11 @@ public class Bill {
         this.idClient = idClient;
     }
 
-    public double getDateBill() {
+    public String getDateBill() {
         return dateBill;
     }
 
-    public void setDateBill(double dateBill) {
+    public void setDateBill(String dateBill) {
         this.dateBill = dateBill;
     }
 }

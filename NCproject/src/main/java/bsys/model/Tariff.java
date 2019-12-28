@@ -13,10 +13,10 @@ public class Tariff {
     private String nameTariff;
 
     @Column(name = "type")
-    private double type;
+    private String typeTariff;
 
     @Column(name = "price")
-    private double price;
+    private double priceTariff;
 
     public int getIdTariff() {
         return idTariff;
@@ -34,19 +34,19 @@ public class Tariff {
         this.nameTariff = nameTariff;
     }
 
-    public double getType() {
-        return type;
+    public String getTypeTariff() {
+        return typeTariff;
     }
 
-    public void setType(double type) {
-        this.type = type;
+    public void setTypeTariff(String typeTariff) {
+        this.typeTariff = typeTariff;
     }
 
-    public double getPrice() {
-        return price;
+    public double getPriceTariff() {
+        return priceTariff;
     }
 
-    public void setPrice(double price) {
-        this.price = price;
+    public void setPriceTariff(double priceTariff) {
+        this.priceTariff = priceTariff;
     }
 }
