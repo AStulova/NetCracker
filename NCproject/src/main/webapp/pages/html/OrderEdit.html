@@ -18,18 +18,17 @@
 		<div class="collapse navbar-collapse" id="navbarResponsive" style>
 			<ul class="navbar-nav mr-auto">
 				<li class="nav-item">
-					<a class="nav-link" href="/connection">Services</a>
+					<a class="nav-link" href="/tariff">Tariffs</a>
 				</li>
 				<li class="nav-item">
 					<a class="nav-link" href="/order">Orders</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" href="/account">Bills</a>
+					<a class="nav-link" href="/bill">Bills</a>
 				</li>
 				<li class="nav-item dropdown">
 					<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id="download">Personal Information<span class="caret"></span></a>
 					<div class="dropdown-menu" aria-labelledby="download">
-					<a class="dropdown-item" href="../cerulean/">Info</a>
 					<a class="dropdown-item" href="../cerulean/">Info</a>
 					<a class="dropdown-item" href="../cerulean/">Sign out</a>
 					</div>
@@ -56,7 +55,7 @@
 					<form>
 						<div class="form-row">
 							<div class="form-group col-md-6">
-							  <h5>Service name</h5>
+							  <h5>Tariff name</h5>
 							  <p>Smart</p>
 							</div>
 							<div class="form-group col-md-6">
@@ -84,7 +83,7 @@
 						
 						<button type="button" class="btn btn-success">Send</button>
 						<button type="button" class="btn btn-warning">Save</button>
-						<button type="button" class="btn btn-outline-secondary">Cancel</button>
+						<button type="button" class="btn btn-outline-secondary" onclick="history.back()">Cancel</button>
 						
 					</form>
 				</div>
@@ -95,8 +94,8 @@
 				<thead>
 					<tr>
 					  <th scope="col">ID Order</th>
-					  <th scope="col">Service name</th>
-					  <th scope="col">Service type</th>
+					  <th scope="col">Tariff name</th>
+					  <th scope="col">Tariff type</th>
 					  <th scope="col">Order date</th>
 					  <th scope="col">Number of SMS/Gb/min</th>
 					  <th scope="col">Order price</th>

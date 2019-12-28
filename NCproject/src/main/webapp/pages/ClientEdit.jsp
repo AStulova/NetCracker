@@ -25,7 +25,7 @@
         <input type="text" name="phone" id="phone">
         <label for="email">Email</label>
         <input type="text" name="email" id="email">
-        <label for="personalAccount">Personal account</label>
+        <label for="personalAccount">Personal bill</label>
         <input type="text" name="personalAccount" id="personalAccount">
         <label for="balance">Balance</label>
         <input type="text" name="balance" id="balance">

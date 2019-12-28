@@ -1,0 +1,17 @@
+tr {
+    display: table-row;
+    vertical-align: inherit;
+    border-color: inherit;
+}
+
+th {
+    text-align: inherit;
+}
+
+.bs-docs-section {
+    margin-top: 4em;
+}
+
+.navbar-brand {
+  font-size: 1.571875rem; !important
+}

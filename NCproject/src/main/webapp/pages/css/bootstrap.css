@@ -214,16 +214,6 @@ table {
   border-collapse: collapse;
 }
 
-tr {
-    display: table-row;
-    vertical-align: inherit;
-    border-color: inherit;
-}
-
-th {
-    text-align: inherit;
-}
-
 caption {
   padding-top: 0.75rem;
   padding-bottom: 0.75rem;
@@ -4652,7 +4642,7 @@ input[type="button"].btn-block {
   padding-top: 0.32421875rem;
   padding-bottom: 0.32421875rem;
   margin-right: 1rem;
-  font-size: 1.571875rem;
+  font-size: 1.171875rem;
   line-height: inherit;
   white-space: nowrap;
 }
@@ -6573,10 +6563,6 @@ a.close.disabled {
   content: "";
   border-color: transparent;
   border-style: solid;
-}
-
-.bs-docs-section {
-    margin-top: 4em;
 }
 
 .bs-tooltip-top, .bs-tooltip-auto[x-placement^="top"] {
