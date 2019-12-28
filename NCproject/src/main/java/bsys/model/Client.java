@@ -10,17 +10,17 @@ public class Client {
     @GeneratedValue (strategy = GenerationType.IDENTITY)
     private int idClient;
 
-    @Column(name = "full_name")
-    private String fullName;
+    @Column(name = "first_name")
+    private String firstName;
+
+    @Column(name = "last_name")
+    private String lastName;
 
     @Column(name = "phone")
     private String phone;
 
     @Column(name = "email")
     private String email;
-
-    @Column(name = "personal_account")
-    private int personalAccount;
 
     @Column(name = "balance")
     private double balance;
@@ -33,12 +33,20 @@ public class Client {
         this.idClient = idClient;
     }
 
-    public String getFullName() {
-        return fullName;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public String getPhone() {
@@ -55,14 +63,6 @@ public class Client {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public int getPersonalAccount() {
-        return personalAccount;
-    }
-
-    public void setPersonalAccount(int personalAccount) {
-        this.personalAccount = personalAccount;
     }
 
     public double getBalance() {

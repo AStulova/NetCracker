@@ -4,10 +4,7 @@ import bsys.model.Order;
 import bsys.service.order.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import java.util.List;
 
@@ -20,7 +17,7 @@ public class OrderController {
         this.orderService = orderService;
     }
 
-    @RequestMapping(value = "/order", method = RequestMethod.GET)
+    @GetMapping(value = "/order")
     public ModelAndView allOrders() {
         List<Order> order = orderService.allOrders();
         ModelAndView modelAndView = new ModelAndView();
@@ -29,7 +26,7 @@ public class OrderController {
         return modelAndView;
     }
 
-    @RequestMapping(value = "/edit-order", method = RequestMethod.POST)
+    @PostMapping(value = "/edit-order")
     public ModelAndView editOrder(@ModelAttribute("order") Order order) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("redirect:/order");
@@ -37,14 +34,14 @@ public class OrderController {
         return modelAndView;
     }
 
-    @RequestMapping(value = "/add-order", method = RequestMethod.GET)
+    @GetMapping(value = "/add-order")
     public ModelAndView addOrderPage() {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("EditOrder");
+        modelAndView.setViewName("OrderEdit");
         return modelAndView;
     }
 
-    @RequestMapping(value = "/add-order", method = RequestMethod.POST)
+    @PostMapping(value = "/add-order")
     public ModelAndView addOrder(@ModelAttribute("order") Order order) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("redirect:/order");
@@ -52,7 +49,7 @@ public class OrderController {
         return modelAndView;
     }
 
-    @RequestMapping(value = "/delete-order/{id}", method = RequestMethod.GET)
+    @GetMapping(value = "/delete-order/{id}")
     public ModelAndView deleteOrder(@PathVariable int id) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("redirect:/order");

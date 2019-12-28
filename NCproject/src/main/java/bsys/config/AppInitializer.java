@@ -17,7 +17,7 @@ public class AppInitializer extends AbstractAnnotationConfigDispatcherServletIni
 
     @Override
     protected String[] getServletMappings() {
-        return new String[]{"/", "/connection", "/order", "/account"};
+        return new String[]{"/", "/tariff", "/order", "/bill"};
     }
 
     // Specify the Russian encoding

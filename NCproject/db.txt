@@ -1,43 +1,49 @@
 create table Client (
 	id_client serial primary key,
-        full_name varchar(70) NOT NULL,
+        first_name varchar(30) NOT NULL,
+	last_name varchar(30) NOT NULL,
         phone varchar(12) NOT NULL,
         email varchar(100),
 	password varchar(30) NOT NULL,
-        personal_account serial NOT NULL,
         balance numeric(8, 2),
-        UNIQUE(phone, email, personal_account)
+        UNIQUE(phone, email)
 );
 
 create table Orders (
 	id_order serial primary key,
 	id_client serial references Client(id_client),
-	id_connection serial references Connection(id_connection),
-	price_order numeric(8, 2),
-	date_order timestamp
+	id_tariff serial references Tariff(id_tariff),
+	date_order timestamp NOT NULL,
+	number integer NOT NULL,
+	status varchar(6) NOT NULL
 );
 
-create table Connection (
-	id_connection serial primary key,
-	name_connection varchar(100),
-	price_month numeric(8, 2),
-	price_connection numeric(8, 2)
+create table Tariff (
+	id_tariff serial primary key,
+	name_tariff varchar(100) NOT NULL,
+	type varchar(40) NOT NULL,
+	price numeric(8, 2) NOT NULL,
+	UNIQUE(name_tariff)
 );
 
-create table Account (
-	id_account serial primary key,
+create table Bill (
+	id_bill serial primary key,
 	id_client serial references Client(id_client),
-	total numeric(8, 2)
+	date_bill timestamp NOT NULL
 );
 
 INSERT into client values
-(5438, 'Courteney Cox', '+79106845169', 'CourteneyCox@gmail.com', 2568452, 578.47),
-(5439, 'Matthew Perry', '+79425684113', 'MPerry@ya.ru', 2626435, 890.23);
+(1, 'Courteney', 'Cox', '+79106845169', 'CourteneyCox@gmail.com', '2fg56gsg', 578.47),
+(2, 'Matthew', 'Perry', '+79425684113', 'MPerry@ya.ru', 'dg6f43sa5', 890.23);
 
-insert into Connection values
-(1, 'Super', 79.90, 115.20),
-(2, 'Ultra', 65.50, 120.00);
+insert into tariff values
+(1, 'Super', 'Internet', 9.90),
+(2, 'Ultra', 'Minutes and SMS', 5.50);
 
 INSERT into orders values
-(1, 5438, 2, 115.20, '2019-10-25 16:36:45'),
-(2, 5439, 1, 120.00, '2019-10-16 10:21:11');
+(1, 2, 2, '2019-10-25 16:36:45', 500, 'Saved'),
+(2, 1, 1, '2019-10-16 10:21:11', 20, 'Sended');
+
+insert into bill values
+(1, 2, '2019-10-05 16:36:45'),
+(2, 1, '2019-10-05 10:21:11');

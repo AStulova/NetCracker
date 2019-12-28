@@ -4,10 +4,7 @@ import bsys.model.Client;
 import bsys.service.client.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import java.util.List;
 
@@ -20,7 +17,7 @@ public class ClientController {
         this.clientService = clientService;
     }
 
-    @RequestMapping(value = "/", method = RequestMethod.GET)
+    @GetMapping(value = "/")
     public ModelAndView allClients() {
         List<Client> client = clientService.allClients();
         ModelAndView modelAndView = new ModelAndView();
@@ -29,16 +26,16 @@ public class ClientController {
         return modelAndView;
     }
 
-    @RequestMapping(value = "/edit-client/{id}", method = RequestMethod.GET)
+    @GetMapping(value = "/edit-client/{id}")
     public ModelAndView editClientPage(@PathVariable int id) {
         Client client = clientService.getById(id);
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("EditClient");
+        modelAndView.setViewName("ClientEdit");
         modelAndView.addObject("client", client);
         return modelAndView;
     }
 
-    @RequestMapping(value = "/edit-client", method = RequestMethod.POST)
+    @PostMapping(value = "/edit-client")
     public ModelAndView editClient(@ModelAttribute("client") Client client) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("redirect:/");
@@ -46,14 +43,14 @@ public class ClientController {
         return modelAndView;
     }
 
-    @RequestMapping(value = "/add-client", method = RequestMethod.GET)
+    @GetMapping(value = "/add-client")
     public ModelAndView addClientPage() {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("EditClient");
+        modelAndView.setViewName("ClientEdit");
         return modelAndView;
     }
 
-    @RequestMapping(value = "/add-client", method = RequestMethod.POST)
+    @PostMapping(value = "/add-client")
     public ModelAndView addClient(@ModelAttribute("client") Client client) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("redirect:/");
@@ -61,7 +58,7 @@ public class ClientController {
         return modelAndView;
     }
 
-    @RequestMapping(value = "/delete-client/{id}", method = RequestMethod.GET)
+    @GetMapping(value = "/delete-client/{id}")
     public ModelAndView deleteClient(@PathVariable int id) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("redirect:/");

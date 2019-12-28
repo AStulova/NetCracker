@@ -13,14 +13,17 @@ public class Order {
     @Column(name = "id_client")
     private int idClient;
 
-    @Column(name = "id_connection")
-    private int idConnection;
-
-    @Column(name = "price_order")
-    private double priceOrder;
+    @Column(name = "id_tariff")
+    private int idTariff;
 
     @Column(name = "date_order")
     private String dateOrder;
+
+    @Column(name = "number")
+    private String numberOrder;
+
+    @Column(name = "status")
+    private String statusOrder;
 
     public int getIdOrder() {
         return idOrder;
@@ -38,20 +41,12 @@ public class Order {
         this.idClient = idClient;
     }
 
-    public int getIdConnection() {
-        return idConnection;
+    public int getIdTariff() {
+        return idTariff;
     }
 
-    public void setIdConnection(int idConnection) {
-        this.idConnection = idConnection;
-    }
-
-    public double getPriceOrder() {
-        return priceOrder;
-    }
-
-    public void setPriceOrder(double priceOrder) {
-        this.priceOrder = priceOrder;
+    public void setIdTariff(int idTariff) {
+        this.idTariff = idTariff;
     }
 
     public String getDateOrder() {
@@ -60,5 +55,21 @@ public class Order {
 
     public void setDateOrder(String dateOrder) {
         this.dateOrder = dateOrder;
+    }
+
+    public String getNumberOrder() {
+        return numberOrder;
+    }
+
+    public void setNumberOrder(String numberOrder) {
+        this.numberOrder = numberOrder;
+    }
+
+    public String getStatusOrder() {
+        return statusOrder;
+    }
+
+    public void setStatusOrder(String statusOrder) {
+        this.statusOrder = statusOrder;
     }
 }
