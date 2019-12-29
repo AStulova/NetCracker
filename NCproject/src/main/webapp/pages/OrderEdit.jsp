@@ -3,7 +3,13 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>BilSYS | Add/Edit Order</title>
+    <c:if test="${empty order.idOrder}">
+        <title>BilSYS | Add Order</title>
+    </c:if>
+    <c:if test="${!empty order.idOrder}">
+        <title>BilSYS | Edit Order</title>
+    </c:if>
+
     <!-- Bootstrap -->
     <style>
         <%@include file='css/bootstrap.min.css' %>
@@ -11,6 +17,13 @@
     </style>
 </head>
 <body>
+    <c:if test="${empty order.idOrder}">
+        <c:url value="/order-add" var="var"/>
+    </c:if>
+    <c:if test="${!empty order.idOrder}">
+        <c:url value="/order-add" var="var"/>
+    </c:if>
+
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary" style> <!-- fixed-top -->
         <div class="container">
@@ -84,8 +97,8 @@
                                 </select>
                             </div>
                         </div>
-                        <input type="submit" class="btn btn-success" value="Send" />
-                        <input type="submit" class="btn btn-warning" value="Save" />
+                        <input type="submit" class="btn btn-success" value="Send" id="statusOrder"/>
+                        <input type="submit" class="btn btn-warning" value="Save" id="statusOrder"/>
                         <button type="button" class="btn btn-outline-secondary" onclick="history.back()">Cancel</button>
                     </form>
                 </div>

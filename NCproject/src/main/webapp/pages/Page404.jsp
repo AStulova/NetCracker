@@ -48,7 +48,7 @@
                     <h1 class="display-1 font-weight-bold">404</h1>
                     <p class="h1">Page not found</p>
                     <p class="h3 font-weight-normal mt-3 mb-4">The page you are looking for might have been removed.</p>
-                    <button type="button" class="btn btn-primary btn-lg" onclick="history.back()">Return back </button>
+                    <button type="button" class="btn btn-primary btn-lg" onclick="history.back()">Come back </button>
                 </div>
             </div>
         </div>

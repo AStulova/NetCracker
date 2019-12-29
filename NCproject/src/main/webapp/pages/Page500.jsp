@@ -47,7 +47,7 @@
                     <h1 class="display-1 font-weight-bold">500</h1>
                     <p class="h1">Internal server error</p>
                     <p class="h3 font-weight-normal mt-3 mb-4">The server encountered something unexpected that didn't allow it to complete the request.</p>
-                    <button type="button" class="btn btn-primary btn-lg" onclick="history.back()">Return back </button>
+                    <button type="button" class="btn btn-primary btn-lg" onclick="history.back()">Come back </button>
                 </div>
             </div>
         </div>

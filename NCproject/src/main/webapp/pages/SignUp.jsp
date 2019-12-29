@@ -26,11 +26,11 @@
                                 <input type="hidden" name="id" value="${client.idClient}">
                                 <div class="form-group">
                                     <label class="h5" for="firstName">First Name</label>
-                                    <input class="form-control form-control-lg" type="text" name="firstName" id="firstName" placeholder="Enter your first name" required>
+                                    <input class="form-control form-control-lg" type="text" name="firstName" id="firstName" placeholder="Enter your first name" required pattern="^[A-Z][a-z]+$">
                                 </div>
                                 <div class="form-group">
                                     <label class="h5" for="lastName">Last Name</label>
-                                    <input class="form-control form-control-lg" type="text" name="lastName" id="lastName" placeholder="Enter your last name" required>
+                                    <input class="form-control form-control-lg" type="text" name="lastName" id="lastName" placeholder="Enter your last name" required pattern="^[A-Z][a-z]+$">
                                 </div>
                                 <div class="form-group">
                                     <label class="h5" for="phone">Phone</label>

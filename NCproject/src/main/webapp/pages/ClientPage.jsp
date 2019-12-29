@@ -58,31 +58,31 @@
                 <div class="card-body">
                     <form>
                         <div class="form-group">
-                            <h5>Personal ID</h5>
+                            <label class="h5">Personal ID</label>
                             <p>46534635 </p>
                         </div>
                         <div class="form-row">
                             <div class="form-group col-md-6">
-                                <h5>First name</h5>
+                                <label class="h5">First name</label>
                                 <p>Name </p>
                             </div>
                             <div class="form-group col-md-6">
-                                <h5>Last name</h5>
+                                <label class="h5">Last name</label>
                                 <p>LName </p>
                             </div>
                         </div>
                         <div class="form-row">
                             <div class="form-group col-md-6">
-                                <h5>Email</h5>
+                                <label class="h5">Email</label>
                                 <p>email@example.com</p>
                             </div>
                             <div class="form-group col-md-6">
-                                <h5>Phone</h5>
+                                <label class="h5">Phone</label>
                                 <p>8910244357</p>
                             </div>
                         </div>
                         <div class="form-group">
-                            <h5>Balance</h5>
+                            <label class="h5">Balance</label>
                             <p>420.56 </p>
                         </div>
                     </form>
@@ -97,11 +97,11 @@
                         <div class="form-row">
                             <div class="form-group col-md-6">
                                 <label class="h5" for="firstName">First name</label>
-                                <input type="text" class="form-control" name="firstName" id="firstName" placeholder="First name" required>
+                                <input type="text" class="form-control" name="firstName" id="firstName" placeholder="First name" required pattern="^[A-Z][a-z]+$">
                             </div>
                             <div class="form-group col-md-6">
                                 <label class="h5" for="lastName">Last name</label>
-                                <input type="text" class="form-control" name="lastName" id="lastName" placeholder="Last name" required>
+                                <input type="text" class="form-control" name="lastName" id="lastName" placeholder="Last name" required pattern="^[A-Z][a-z]+$">
                             </div>
                         </div>
                         <div class="form-row">
