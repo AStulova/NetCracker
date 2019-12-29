@@ -17,7 +17,7 @@ public class ClientController {
         this.clientService = clientService;
     }
 
-    @GetMapping(value = "/")
+    @GetMapping(value = "/client")
     public ModelAndView allClients() {
         List<Client> client = clientService.allClients();
         ModelAndView modelAndView = new ModelAndView();
@@ -26,34 +26,34 @@ public class ClientController {
         return modelAndView;
     }
 
-    @GetMapping(value = "/edit-client/{id}")
+    @GetMapping(value = "/client-edit/{id}")
     public ModelAndView editClientPage(@PathVariable int id) {
         Client client = clientService.getById(id);
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("ClientEdit");
+        modelAndView.setViewName("old/ClientEdit");
         modelAndView.addObject("client", client);
         return modelAndView;
     }
 
-    @PostMapping(value = "/edit-client")
+    @PostMapping(value = "/client-edit")
     public ModelAndView editClient(@ModelAttribute("client") Client client) {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("redirect:/");
+        modelAndView.setViewName("redirect:/client");
         clientService.editClient(client);
         return modelAndView;
     }
 
-    @GetMapping(value = "/add-client")
+    @GetMapping(value = "/signup")
     public ModelAndView addClientPage() {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("ClientEdit");
+        modelAndView.setViewName("SignUp");
         return modelAndView;
     }
 
-    @PostMapping(value = "/add-client")
+    @PostMapping(value = "/signup")
     public ModelAndView addClient(@ModelAttribute("client") Client client) {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("redirect:/");
+        modelAndView.setViewName("redirect:/client");
         clientService.addClient(client);
         return modelAndView;
     }
@@ -61,7 +61,7 @@ public class ClientController {
     @GetMapping(value = "/delete-client/{id}")
     public ModelAndView deleteClient(@PathVariable int id) {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("redirect:/");
+        modelAndView.setViewName("redirect:/client");
         Client client = clientService.getById(id);
         clientService.deleteClient(client);
         return modelAndView;
