@@ -26,23 +26,23 @@ public class TariffController {
         return modelAndView;
     }
 
-    @GetMapping(value = "/add-tariff")
+    @GetMapping(value = "/tariff-add")
     public ModelAndView addTariffPage() {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("TariffEdit");
+        modelAndView.setViewName("old/TariffEdit");
         return modelAndView;
     }
 
-    @GetMapping(value = "/edit-tariff/{id}")
+    @GetMapping(value = "/tariff-edit/{id}")
     public ModelAndView editTariffPage(@PathVariable int id) {
         Tariff tariff = tariffService.getById(id);
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("TariffEdit");
+        modelAndView.setViewName("old/TariffEdit");
         modelAndView.addObject("tariff", tariff);
         return modelAndView;
     }
 
-    @PostMapping(value = "/add-tariff")
+    @PostMapping(value = "/tariff-add")
     public ModelAndView addTariff(@ModelAttribute("tariff") Tariff tariff) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("redirect:/tariff");
@@ -50,7 +50,7 @@ public class TariffController {
         return modelAndView;
     }
 
-    @GetMapping(value = "/delete-tariff/{id}")
+    @GetMapping(value = "/tariff-delete/{id}")
     public ModelAndView deleteConnection(@PathVariable int id) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("redirect:/tariff");

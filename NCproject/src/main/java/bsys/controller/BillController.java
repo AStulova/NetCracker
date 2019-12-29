@@ -26,7 +26,7 @@ public class BillController {
         return modelAndView;
     }
 
-    @GetMapping(value = "/edit-bill/{id}")
+    @GetMapping(value = "/bill-edit/{id}")
     public ModelAndView editBillPage(@PathVariable int id) {
         Bill bill = billService.getById(id);
         ModelAndView modelAndView = new ModelAndView();
@@ -35,7 +35,7 @@ public class BillController {
         return modelAndView;
     }
 
-    @PostMapping(value = "/edit-bill")
+    @PostMapping(value = "/bill-edit")
     public ModelAndView editBill(@ModelAttribute("bill") Bill bill) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("redirect:/bill");
@@ -43,14 +43,14 @@ public class BillController {
         return modelAndView;
     }
 
-    @GetMapping(value = "/add-bill")
+    @GetMapping(value = "/bill-add")
     public ModelAndView addBillPage() {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("old/BillEdit");
         return modelAndView;
     }
 
-    @PostMapping(value = "/add-bill")
+    @PostMapping(value = "/bill-add")
     public ModelAndView addBill(@ModelAttribute("bill") Bill bill) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("redirect:/bill");
@@ -58,7 +58,7 @@ public class BillController {
         return modelAndView;
     }
 
-    @GetMapping(value = "/delete-bill/{id}")
+    @GetMapping(value = "/bill-delete/{id}")
     public ModelAndView deleteBill(@PathVariable int id) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("redirect:/bill");

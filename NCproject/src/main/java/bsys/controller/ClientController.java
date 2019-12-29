@@ -58,7 +58,7 @@ public class ClientController {
         return modelAndView;
     }
 
-    @GetMapping(value = "/delete-client/{id}")
+    @GetMapping(value = "/client-delete/{id}")
     public ModelAndView deleteClient(@PathVariable int id) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("redirect:/client");

@@ -52,7 +52,7 @@ public class OrderController {
         return modelAndView;
     }
 
-    @GetMapping(value = "/delete-order/{id}")
+    @GetMapping(value = "/order-delete/{id}")
     public ModelAndView deleteOrder(@PathVariable int id) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("redirect:/order");
