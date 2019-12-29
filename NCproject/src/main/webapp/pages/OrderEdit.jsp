@@ -14,7 +14,7 @@
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary" style> <!-- fixed-top -->
         <div class="container">
-            <a class="navbar-brand" href="/">BilSYS</a>
+            <a class="navbar-brand" href="/client">BilSYS</a>
             <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -56,39 +56,37 @@
             <!-- Add/Edit Order -->
             <div class="card bg-light mb-4">
                 <div class="card-body">
-                    <form>
+                    <form action="${var}" method="POST">
                         <div class="form-row">
                             <div class="form-group col-md-6">
-                                <h5>Tariff name</h5>
+                                <label class="h5">Tariff name</label>
                                 <p>Smart</p>
                             </div>
                             <div class="form-group col-md-6">
-                                <h5>Type</h5>
+                                <label class="h5">Type</label>
                                 <p>Internet</p>
                             </div>
                         </div>
                         <div class="form-row">
                             <div class="form-group col-md-6">
-                                <h5>Price for 1 SMS/Gb/min</h5>
+                                <label class="h5">Price for 1 SMS/Gb/min</label>
                                 <p>15.50</p>
                             </div>
                             <div class="form-group col-md-3">
-                                <h5>Number of SMS/Gb/min</h5>
-                                <select class="form-control" id="exampleSelect1">
-                                    <option>100 minutes and SMS</option>
-                                    <option>200 minutes and SMS</option>
-                                    <option>300 minutes and SMS</option>
-                                    <option>500 minutes and SMS</option>
-                                    <option>600 minutes and SMS</option>
-                                    <option>700 minutes and SMS</option>
+                                <label class="h5" for="numberOrder">Number of SMS/Gb/min</label>
+                                <select class="form-control" id="numberOrder">
+                                    <option>100</option>
+                                    <option>200</option>
+                                    <option>300</option>
+                                    <option>500</option>
+                                    <option>600</option>
+                                    <option>700</option>
                                 </select>
                             </div>
                         </div>
-
                         <input type="submit" class="btn btn-success" value="Send" />
                         <input type="submit" class="btn btn-warning" value="Save" />
                         <button type="button" class="btn btn-outline-secondary" onclick="history.back()">Cancel</button>
-
                     </form>
                 </div>
             </div>

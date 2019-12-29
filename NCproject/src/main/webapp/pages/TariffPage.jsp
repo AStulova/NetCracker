@@ -14,7 +14,7 @@
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary" style> <!-- fixed-top -->
         <div class="container">
-            <a class="navbar-brand" href="/">BilSYS</a>
+            <a class="navbar-brand" href="/client">BilSYS</a>
             <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -72,7 +72,7 @@
                             <td class="align-middle">${tariff.typeTariff}</td>
                             <td class="align-middle">${tariff.priceTariff}</td>
                             <td class="text-right">
-                                <input value="Add Tariff" type="button" onclick="location.href=/add-tariff" class="btn btn-outline-primary" />
+                                <input value="Add Tariff" type="button" onclick="location.href='/order-add/${tariff.idTariff}'" class="btn btn-outline-primary" />
                             </td>
                         </tr>
                         <tr class="bg-white">

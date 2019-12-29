@@ -14,7 +14,7 @@
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary" style> <!-- fixed-top -->
         <div class="container">
-            <a class="navbar-brand" href="/">BilSYS</a>
+            <a class="navbar-brand" href="/client">BilSYS</a>
             <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -32,7 +32,7 @@
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id="download">Personal Information<span class="caret"></span></a>
                         <div class="dropdown-menu" aria-labelledby="download">
-                            <a class="dropdown-item" href="/">Info</a>
+                            <a class="dropdown-item" href="/client">Info</a>
                             <a class="dropdown-item" href="/">Sign out</a>
                         </div>
                     </li>
@@ -92,29 +92,29 @@
             <!-- Edit Client -->
             <div class="card bg-light">
                 <div class="card-body">
-                    <h5 class="card-title">Edit Information</h5>
-                    <form>
+                    <h4 class="card-title">Edit Information</h4>
+                    <form action="${var}" method="POST">
                         <div class="form-row">
                             <div class="form-group col-md-6">
-                                <label>First name</label>
-                                <input type="text" class="form-control" placeholder="First name">
+                                <label class="h5" for="firstName">First name</label>
+                                <input type="text" class="form-control" name="firstName" id="firstName" placeholder="First name" required>
                             </div>
                             <div class="form-group col-md-6">
-                                <label>Last name</label>
-                                <input type="text" class="form-control" placeholder="Last name">
+                                <label class="h5" for="lastName">Last name</label>
+                                <input type="text" class="form-control" name="lastName" id="lastName" placeholder="Last name" required>
                             </div>
                         </div>
                         <div class="form-row">
                             <div class="form-group col-md-6">
-                                <label>Email</label>
-                                <input type="email" class="form-control" aria-describedby="emailHelp" placeholder="Email">
+                                <label class="h5" for="email">Email</label>
+                                <input type="email" class="form-control" name="email" id="email" aria-describedby="emailHelp" placeholder="Email" required>
                             </div>
                             <div class="form-group col-md-6">
-                                <label>Phone</label>
-                                <input type="text" class="form-control" placeholder="Phone">
+                                <label class="h5" for="phone">Phone</label>
+                                <input type="tel" class="form-control" name="phone" id="phone" placeholder="Phone" required>
                             </div>
                         </div>
-                        <button type="button" class="btn btn-success">Safe changes</button>
+                        <input value="Save changes" type="submit" class="btn btn-success" />
                     </form>
                 </div>
             </div>
