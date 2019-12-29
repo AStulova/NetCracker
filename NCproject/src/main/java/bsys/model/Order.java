@@ -10,11 +10,13 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idOrder;
 
-    @Column(name = "id_client")
-    private int idClient;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "id_client")
+    private Client idClient;
 
-    @Column(name = "id_tariff")
-    private int idTariff;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "id_tariff")
+    private Tariff idTariff;
 
     @Column(name = "date_order")
     private String dateOrder;
@@ -33,19 +35,19 @@ public class Order {
         this.idOrder = idOrder;
     }
 
-    public int getIdClient() {
+    public Client getIdClient() {
         return idClient;
     }
 
-    public void setIdClient(int idClient) {
+    public void setIdClient(Client idClient) {
         this.idClient = idClient;
     }
 
-    public int getIdTariff() {
+    public Tariff getIdTariff() {
         return idTariff;
     }
 
-    public void setIdTariff(int idTariff) {
+    public void setIdTariff(Tariff idTariff) {
         this.idTariff = idTariff;
     }
 

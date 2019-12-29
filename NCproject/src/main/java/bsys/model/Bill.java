@@ -10,8 +10,9 @@ public class Bill {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idBill;
 
-    @Column(name = "id_client")
-    private int idClient;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "id_client")
+    private Client idClient;
 
     @Column(name = "date_bill")
     private String dateBill;
@@ -24,11 +25,11 @@ public class Bill {
         this.idBill = idBill;
     }
 
-    public int getIdClient() {
+    public Client getIdClient() {
         return idClient;
     }
 
-    public void setIdClient(int idClient) {
+    public void setIdClient(Client idClient) {
         this.idClient = idClient;
     }
 
