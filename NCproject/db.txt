@@ -5,25 +5,39 @@ create table Client (
         phone varchar(12) NOT NULL,
         email varchar(100),
 	password varchar(30) NOT NULL,
-        balance numeric(8, 2),
+        balance numeric(8, 2) NOT NULL default '0.0',
         UNIQUE(phone, email)
 );
 
 create table Orders (
-	id_order serial primary key,
+	id_order serial NOT NULL,
 	id_client serial references Client(id_client),
-	id_tariff serial references Tariff(id_tariff),
 	date_order timestamp NOT NULL,
-	number integer NOT NULL,
-	status varchar(6) NOT NULL
+	status varchar(6) NOT NULL,
+	CONSTRAINT PK_ORDER_ID primary key (id_order)
 );
 
 create table Tariff (
-	id_tariff serial primary key,
+	id_tariff serial NOT NULL,
 	name_tariff varchar(100) NOT NULL,
 	type varchar(40) NOT NULL,
 	price numeric(8, 2) NOT NULL,
+	CONSTRAINT PK_TARIFF_ID primary key (id_tariff),
 	UNIQUE(name_tariff)
+);
+
+create table Product (
+	id_product serial primary key,
+	id_order serial NOT NULL,
+	id_tariff serial NOT NULL,
+	sms integer default 0,
+	gb integer default 0,
+	minute integer default 0,
+	speed integer default 0,
+	channel integer default 0,
+	addition varchar(100) default 'No',
+	CONSTRAINT FK_ORDER_ID foreign key (id_order) REFERENCES Orders (id_order),
+	CONSTRAINT FK_TARIFF_ID foreign key (id_tariff) REFERENCES Tariff (id_tariff)
 );
 
 create table Bill (
@@ -37,12 +51,18 @@ INSERT into client values
 (2, 'Matthew', 'Perry', '+79425684113', 'MPerry@ya.ru', 'dg6f43sa5', 890.23);
 
 insert into tariff values
-(1, 'Super', 'Internet', 9.90),
-(2, 'Ultra', 'Minutes and SMS', 5.50);
+(1, 'Super', 'Mobile connection and Internet', 9.90),
+(2, 'FIT Internet', 'Internet', 5.50),
+(3, 'Amedia', 'TV', 10.20);
 
 INSERT into orders values
-(1, 2, 2, '2019-10-25 16:36:45', 500, 'Saved'),
-(2, 1, 1, '2019-10-16 10:21:11', 20, 'Sended');
+(1, 2, '2019-10-25 16:36:45', 'Saved'),
+(2, 1, '2019-10-16 10:21:11', 'Sended');
+
+insert into Product values
+(1, 1, 1, 200, 10, 500, 60, 0, 'Balance Check'),
+(2, 1, 2, 0, 1000, 0, 100, 0, 'Online'),
+(3, 2, 3, 0, 0, 0, 0, 5, 'TV Pause');
 
 insert into bill values
 (1, 2, '2019-10-05 16:36:45'),
