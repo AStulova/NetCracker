@@ -28,6 +28,9 @@
                     <li class="nav-item">
                         <a class="nav-link" href="/bill">Bills</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/payment">Payment</a>
+                    </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id="download">Personal Information<span class="caret"></span></a>
                         <div class="dropdown-menu" aria-labelledby="download">

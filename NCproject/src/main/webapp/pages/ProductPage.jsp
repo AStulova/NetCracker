@@ -3,7 +3,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>BilSYS | Tariffs</title>
+    <title>BilSYS | Products</title>
     <!-- Bootstrap -->
     <style>
         <%@include file='css/bootstrap.min.css' %>
@@ -50,40 +50,54 @@
             <div class="page-header" id="banner">
                 <div class="row">
                     <div class="col-lg-8 col-md-7 col-sm-6">
-                        <h1>Tariffs</h1>
+                        <h1>Add/Edit Order</h1>
                         <p class="lead"> </p>
                     </div>
                 </div>
             </div>
 
-            <!-- Table of services -->
+            <!-- Table of products -->
             <table class="table table-borderless">
                 <thead>
-                    <tr>
-                        <th scope="col">ID Tariff</th>
-                        <th scope="col">Tariff name</th>
-                        <th scope="col">Type</th>
-                        <th scope="col">Price for 1 SMS/Gb/min</th>
-                        <th class="text-right"></th>
-                    </tr>
+                <tr>
+                    <th scope="col">Tariff name</th>
+                    <th scope="col">Tariff type</th>
+                    <th scope="col">SMS</th>
+                    <th scope="col">Gb</th>
+                    <th scope="col">Minutes</th>
+                    <th scope="col">Speed</th>
+                    <th scope="col">Channels</th>
+                    <th scope="col">Addition</th>
+                    <th scope="col">Price</th>
+                    <th class="text-right"></th>
+                </tr>
                 </thead>
                 <tbody>
-                    <c:forEach var="tariff" items="${tariffList}">
-                        <tr class="bg-light">
-                            <td class="align-middle">${tariff.idTariff}</td>
+                <c:forEach var="product" items="${productList}">
+                    <tr class="bg-light">
+                        <c:forEach var="tariff" items="${productList.idTariff}">
                             <td class="align-middle">${tariff.nameTariff}</td>
                             <td class="align-middle">${tariff.typeTariff}</td>
-                            <td class="align-middle">${tariff.priceTariff}</td>
-                            <td class="text-right">
-                                <input value="Add Tariff" type="button" onclick="location.href='/order-add/${tariff.idTariff}'" class="btn btn-outline-primary" />
-                            </td>
-                        </tr>
-                        <tr class="bg-white">
-                            <td colspan="5"></td>
-                        </tr>
-                    </c:forEach>
+                        </c:forEach>
+                        <td class="align-middle">${product.sms}</td>
+                        <td class="align-middle">${product.gb}</td>
+                        <td class="align-middle">${product.minute}</td>
+                        <td class="align-middle">${product.speed}</td>
+                        <td class="align-middle">${product.channel}</td>
+                        <td class="align-middle">${product.addition}</td>
+                        <td class="align-middle">250.00</td>
+                        <td class="text-right">
+                            <input value="Edit" type="button" class="btn btn-outline-primary" onclick="location.href='/product-edit${product.idProduct}'" />
+                            <input value="Delete" type="button" class="btn btn-outline-primary" onclick="location.href='/product-delete${product.idProduct}'" />
+                        </td>
+                    </tr>
+                    <tr class="bg-white">
+                        <td colspan="5"></td>
+                    </tr>
+                </c:forEach>
                 </tbody>
             </table>
+
         </div>
     </div>
 

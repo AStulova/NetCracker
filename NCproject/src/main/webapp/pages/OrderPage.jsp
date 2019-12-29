@@ -29,6 +29,9 @@
                     <li class="nav-item">
                         <a class="nav-link" href="/bill">Bills</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/payment">Payment</a>
+                    </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id="download">Personal Information<span class="caret"></span></a>
                         <div class="dropdown-menu" aria-labelledby="download">
@@ -50,6 +53,11 @@
                         <h1>Orders</h1>
                         <p class="lead"> </p>
                     </div>
+                    <div class="col-lg-4 col-md-4 col-sm-6">
+                        <div class="text-sm-right">
+                            <input value="New Order" type="button" class="btn btn-primary btn-lg" onclick="location.href='/order-add/'" />
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -58,9 +66,6 @@
                 <thead>
                 <tr>
                     <th scope="col">ID Order</th>
-                    <th scope="col">Tariff name</th>
-                    <th scope="col">Tariff type</th>
-                    <th scope="col">Number of SMS/Gb/min</th>
                     <th scope="col">Order date</th>
                     <th scope="col">Order price</th>
                     <th scope="col">Status</th>
@@ -71,9 +76,6 @@
                     <c:forEach var="order" items="${orderList}">
                     <tr class="bg-light">
                         <td class="align-middle">${order.idOrder}</td>
-                        <td class="align-middle">Productivity</td>
-                        <td class="align-middle">Internet</td>
-                        <td class="align-middle">${order.numberOrder}</td>
                         <td class="align-middle">${order.dateOrder}</td>
                         <td class="align-middle">250.00</td>
                         <c:if test="${order.statusOrder eq 'Saved'}">
@@ -81,8 +83,8 @@
                                 <span class="badge badge-warning">Saved</span>
                             </td>
                             <td class="text-right">
-                                <input value="Send" type="button" class="btn btn-primary" onclick="location.href='/tariff-send/${order.idOrder}'"/>
-                                <input value="Edit" type="button" class="btn btn-outline-primary" onclick="location.href='/tariff-edit/${order.idOrder}'" />
+                                <input value="Send" type="button" class="btn btn-primary" onclick="location.href='/order-send/${order.idOrder}'"/>
+                                <input value="Edit" type="button" class="btn btn-outline-primary" onclick="location.href='/product/${order.idOrder}'" />
                             </td>
                         </c:if>
                         <c:if test="${order.statusOrder eq 'Sended'}">
@@ -90,7 +92,7 @@
                                 <span class="badge badge-success">Sended</span>
                             </td>
                             <td class="text-right">
-                                <input value="Delete" type="button" class="btn btn-outline-primary" onclick="location.href='/tariff-delete/${order.idOrder}'" />
+                                <input value="Cancel" type="button" class="btn btn-outline-primary" onclick="location.href='/order-delete/${order.idOrder}'" />
                             </td>
                         </c:if>
                     </tr>

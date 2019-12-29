@@ -3,7 +3,12 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>BilSYS | Tariffs</title>
+    <c:if test="${empty product.idProduct}">
+        <title>BilSYS | Add Tariff</title>
+    </c:if>
+    <c:if test="${!empty product.idProduct}">
+        <title>BilSYS | Edit Tariff</title>
+    </c:if>
     <!-- Bootstrap -->
     <style>
         <%@include file='css/bootstrap.min.css' %>
@@ -11,6 +16,13 @@
     </style>
 </head>
 <body>
+    <c:if test="${empty product.idProduct}">
+        <c:url value="/product-add" var="var"/>
+    </c:if>
+    <c:if test="${!empty product.idProduct}">
+        <c:url value="/product-edit" var="var"/>
+    </c:if>
+
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary" style> <!-- fixed-top -->
         <div class="container">
@@ -50,40 +62,50 @@
             <div class="page-header" id="banner">
                 <div class="row">
                     <div class="col-lg-8 col-md-7 col-sm-6">
-                        <h1>Tariffs</h1>
+                        <h1>Add/Edit Order</h1>
                         <p class="lead"> </p>
                     </div>
                 </div>
             </div>
 
-            <!-- Table of services -->
-            <table class="table table-borderless">
-                <thead>
-                    <tr>
-                        <th scope="col">ID Tariff</th>
-                        <th scope="col">Tariff name</th>
-                        <th scope="col">Type</th>
-                        <th scope="col">Price for 1 SMS/Gb/min</th>
-                        <th class="text-right"></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <c:forEach var="tariff" items="${tariffList}">
-                        <tr class="bg-light">
-                            <td class="align-middle">${tariff.idTariff}</td>
-                            <td class="align-middle">${tariff.nameTariff}</td>
-                            <td class="align-middle">${tariff.typeTariff}</td>
-                            <td class="align-middle">${tariff.priceTariff}</td>
-                            <td class="text-right">
-                                <input value="Add Tariff" type="button" onclick="location.href='/order-add/${tariff.idTariff}'" class="btn btn-outline-primary" />
-                            </td>
-                        </tr>
-                        <tr class="bg-white">
-                            <td colspan="5"></td>
-                        </tr>
-                    </c:forEach>
-                </tbody>
-            </table>
+            <!-- Add/Edit Product -->
+            <div class="card bg-light mb-4">
+                <div class="card-body">
+                    <form action="${var}" method="POST">
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label class="h5">Tariff name</label>
+                                <p>Smart</p>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label class="h5">Type</label>
+                                <p>Internet</p>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label class="h5">Price for 1 SMS/Gb/min</label>
+                                <p>15.50</p>
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label class="h5" for="numberOrder">Number of SMS/Gb/min</label>
+                                <select class="form-control" id="numberOrder">
+                                    <option>100</option>
+                                    <option>200</option>
+                                    <option>300</option>
+                                    <option>500</option>
+                                    <option>600</option>
+                                    <option>700</option>
+                                </select>
+                            </div>
+                        </div>
+                        <input type="submit" class="btn btn-success" value="Send" id="statusOrder"/>
+                        <input type="submit" class="btn btn-warning" value="Save" id="statusOrder"/>
+                        <button type="button" class="btn btn-outline-secondary" onclick="history.back()">Cancel</button>
+                    </form>
+                </div>
+            </div>
+
         </div>
     </div>
 

@@ -26,7 +26,7 @@ public class OrderController {
         return modelAndView;
     }
 
-    // ??? и Add, и Edit на одной странице
+    //  и Add, и Edit на одной странице
     @PostMapping(value = "/order-edit")
     public ModelAndView editOrder(@ModelAttribute("order") Order order) {
         ModelAndView modelAndView = new ModelAndView();
@@ -39,7 +39,7 @@ public class OrderController {
     public ModelAndView addOrderPage() {
         List<Order> order = orderService.allOrders(); // +
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("OrderEdit");
+        modelAndView.setViewName("ProductPage");
         modelAndView.addObject("orderList", order); // +
         return modelAndView;
     }

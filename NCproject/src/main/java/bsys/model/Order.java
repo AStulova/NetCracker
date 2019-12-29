@@ -14,15 +14,8 @@ public class Order {
     @JoinColumn(name = "id_client")
     private Client idClient;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "id_tariff")
-    private Tariff idTariff;
-
     @Column(name = "date_order")
     private String dateOrder;
-
-    @Column(name = "number")
-    private String numberOrder;
 
     @Column(name = "status")
     private String statusOrder;
@@ -43,28 +36,12 @@ public class Order {
         this.idClient = idClient;
     }
 
-    public Tariff getIdTariff() {
-        return idTariff;
-    }
-
-    public void setIdTariff(Tariff idTariff) {
-        this.idTariff = idTariff;
-    }
-
     public String getDateOrder() {
         return dateOrder;
     }
 
     public void setDateOrder(String dateOrder) {
         this.dateOrder = dateOrder;
-    }
-
-    public String getNumberOrder() {
-        return numberOrder;
-    }
-
-    public void setNumberOrder(String numberOrder) {
-        this.numberOrder = numberOrder;
     }
 
     public String getStatusOrder() {
