@@ -1,0 +1,31 @@
+create table Buyer (
+    id_buyer serial primary key,
+    surname varchar(30) NOT NULL,
+    residence varchar(70) NOT NULL,
+    discount integer NOT NULL
+);
+
+create table Store (
+    id_store serial primary key,
+    name varchar(70) NOT NULL,
+    placement varchar(70) NOT NULL,
+    commission numeric(2,2) NOT NULL
+);
+
+create table Book (
+    id_book serial primary key,
+    name varchar(150) NOT NULL,
+    price numeric(4,2) NOT NULL,
+    storage integer NOT NULL default 0,
+    number integer NOT NULL default 0
+);
+
+create table Purchase (
+    id_purchase serial primary key,
+    date timestamp NOT NULL,
+    id_store integer references Store(id_store) NOT NULL,
+    id_buyer integer references Buyer(id_buyer) NOT NULL,
+    id_book integer references Book(id_book) NOT NULL,
+    number integer NOT NULL default 1,
+    total numeric (6,2) NOT NULL
+);
