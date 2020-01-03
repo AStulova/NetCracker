@@ -4,10 +4,10 @@
 <head>
     <meta charset="utf-8">
     <c:if test="${empty product.idProduct}">
-        <title>BilSYS | Add Tariff</title>
+        <title>BilSYS | Add Product</title>
     </c:if>
     <c:if test="${!empty product.idProduct}">
-        <title>BilSYS | Edit Tariff</title>
+        <title>BilSYS | Edit Product</title>
     </c:if>
     <!-- Bootstrap -->
     <style>
@@ -62,7 +62,12 @@
             <div class="page-header" id="banner">
                 <div class="row">
                     <div class="col-lg-8 col-md-7 col-sm-6">
-                        <h1>Add/Edit Order</h1>
+                        <c:if test="${empty product.idProduct}">
+                            <h1>Add/Edit Product</h1>
+                        </c:if>
+                        <c:if test="${!empty product.idProduct}">
+                            <h1>Add/Edit Product</h1>
+                        </c:if>
                         <p class="lead"> </p>
                     </div>
                 </div>
@@ -72,43 +77,121 @@
             <div class="card bg-light mb-4">
                 <div class="card-body">
                     <form action="${var}" method="POST">
-                        <div class="form-row">
-                            <div class="form-group col-md-6">
-                                <label class="h5">Tariff name</label>
-                                <p>Smart</p>
+                        <c:forEach var="tariff" items="${productList.idTariff}">
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label class="h5">${tariff.nameTariff}</label>
+                                    <p>Smart</p>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label class="h5">${tariff.typeTariff}</label>
+                                    <p>Internet</p>
+                                </div>
                             </div>
-                            <div class="form-group col-md-6">
-                                <label class="h5">Type</label>
-                                <p>Internet</p>
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group col-md-6">
-                                <label class="h5">Price for 1 SMS/Gb/min</label>
-                                <p>15.50</p>
-                            </div>
-                            <div class="form-group col-md-3">
-                                <label class="h5" for="numberOrder">Number of SMS/Gb/min</label>
-                                <select class="form-control" id="numberOrder">
-                                    <option>100</option>
-                                    <option>200</option>
-                                    <option>300</option>
-                                    <option>500</option>
-                                    <option>600</option>
-                                    <option>700</option>
-                                </select>
-                            </div>
-                        </div>
-                        <input type="submit" class="btn btn-success" value="Send" id="statusOrder"/>
-                        <input type="submit" class="btn btn-warning" value="Save" id="statusOrder"/>
-                        <button type="button" class="btn btn-outline-secondary" onclick="history.back()">Cancel</button>
+                            <c:if test="${tariff.typeTariff eq 'Mobile connection and Internet'}">
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label class="h5" for="sms">Number of SMS</label>
+                                        <select class="form-control" id="sms">
+                                            <option>200</option>
+                                            <option>400</option>
+                                            <option>600</option>
+                                            <option>800</option>
+                                            <option>1000</option>
+                                            <option>1200</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <label class="h5" for="minute">Number of minutes</label>
+                                        <select class="form-control" id="minute">
+                                            <option>300</option>
+                                            <option>600</option>
+                                            <option>900</option>
+                                            <option>1200</option>
+                                            <option>1500</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label class="h5" for="gb">Number of Gb</label>
+                                        <select class="form-control" id="gb">
+                                            <option>10</option>
+                                            <option>15</option>
+                                            <option>20</option>
+                                            <option>25</option>
+                                            <option>30</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <label class="h5" for="speed">Maximum speed (Mb/s)</label>
+                                        <select class="form-control" id="speed">
+                                            <option>10</option>
+                                            <option>30</option>
+                                            <option>60</option>
+                                            <option>100</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </c:if>
+                            <c:if test="${tariff.typeTariff eq 'Internet'}">
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label class="h5" for="gb">Number of Gb</label>
+                                        <select class="form-control" id="gb">
+                                            <option>1000</option>
+                                            <option>5000</option>
+                                            <option>10000</option>
+                                            <option>15000</option>
+                                            <option>20000</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <label class="h5" for="speed">Maximum speed (Mb/s)</label>
+                                        <select class="form-control" id="speed">
+                                            <option>30</option>
+                                            <option>60</option>
+                                            <option>100</option>
+                                            <option>300</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </c:if>
+                            <c:if test="${tariff.typeTariff eq 'Phone'}">
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label class="h5" for="sms">Number of SMS</label>
+                                        <select class="form-control" id="sms">
+                                            <option>200</option>
+                                            <option>400</option>
+                                            <option>600</option>
+                                            <option>800</option>
+                                            <option>1000</option>
+                                            <option>1200</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <label class="h5" for="minute">Number of minutes</label>
+                                        <select class="form-control" id="minute">
+                                            <option>300</option>
+                                            <option>600</option>
+                                            <option>900</option>
+                                            <option>1200</option>
+                                            <option>1500</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </c:if>
+                            <input type="submit" class="btn btn-success" value="Send" id="statusOrder"/>
+                            <input type="submit" class="btn btn-warning" value="Save" id="statusOrder"/>
+                            <button type="button" class="btn btn-outline-secondary" onclick="history.back()">Cancel</button>
+                        </c:forEach>
                     </form>
                 </div>
             </div>
 
         </div>
     </div>
-
 
     <!-- JavaScript -->
     <script src="http://code.jquery.com/jquery-latest.js"></script>
