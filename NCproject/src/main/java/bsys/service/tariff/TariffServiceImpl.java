@@ -13,7 +13,7 @@ public class TariffServiceImpl implements TariffService {
     private TariffRepository tariffRepository;
 
     @Autowired
-    public void setTariffDAO(TariffRepository tariffRepository) {
+    public void setTariffRepository(TariffRepository tariffRepository) {
         this.tariffRepository = tariffRepository;
     }
 

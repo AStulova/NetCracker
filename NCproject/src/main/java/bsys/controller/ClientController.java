@@ -69,7 +69,7 @@ public class ClientController {
         ModelAndView modelAndView = new ModelAndView();
         clientValidator.validate(client, bindingResult);
         if (bindingResult.hasErrors()) {
-            modelAndView.setViewName("SignUp");
+            modelAndView.setViewName("redirect:/signup");
             return modelAndView;
         }
         clientService.addClient(client);

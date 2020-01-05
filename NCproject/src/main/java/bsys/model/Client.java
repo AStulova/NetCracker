@@ -28,6 +28,9 @@ public class Client {
     @Column(name = "balance")
     private double balance;
 
+    @Column(name = "role")
+    private String role;
+
     public int getIdClient() {
         return idClient;
     }
@@ -82,5 +85,13 @@ public class Client {
 
     public void setBalance(double balance) {
         this.balance = balance;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 }

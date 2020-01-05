@@ -3,10 +3,12 @@ package bsys.service.client;
 import bsys.model.Client;
 import bsys.service.client.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
+@Component
 public class ClientValidator implements Validator {
     @Autowired
     private ClientService clientService;

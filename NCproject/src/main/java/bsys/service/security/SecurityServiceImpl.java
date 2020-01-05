@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 
 
@@ -17,23 +19,23 @@ public class SecurityServiceImpl implements SecurityService {
     private AuthenticationManager authenticationManager;
 
     @Autowired
-    private ClientService clientService;
+    private UserDetailsService userDetailsService;
 
     private static final Logger logger = LoggerFactory.getLogger(SecurityServiceImpl.class);
 
     @Override
     public String findLoggedInEmail() {
-        Object client = SecurityContextHolder.getContext().getAuthentication().getDetails();
-        if (client instanceof Client) {
-            return ((Client)client).getEmail();
+        Object userDetails = SecurityContextHolder.getContext().getAuthentication().getDetails();
+        if (userDetails instanceof UserDetails) {
+            return ((UserDetails)userDetails).getUsername();
         }
         return null;
     }
 
     @Override
     public void autoLogin(String email, String password) {
-        Client client = clientService.findClientByEmail(email);
-        UsernamePasswordAuthenticationToken usernameToken = new UsernamePasswordAuthenticationToken(client, password, client.getAuthorities());
+        UserDetails userDetails = userDetailsService.loadUserByUsername(email);
+        UsernamePasswordAuthenticationToken usernameToken = new UsernamePasswordAuthenticationToken(userDetails, password, userDetails.getAuthorities());
 
         authenticationManager.authenticate(usernameToken);
 
