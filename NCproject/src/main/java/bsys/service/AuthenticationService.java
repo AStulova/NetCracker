@@ -1,7 +1,5 @@
 package bsys.service;
 
-import bsys.model.Client;
-import bsys.service.client.ClientDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

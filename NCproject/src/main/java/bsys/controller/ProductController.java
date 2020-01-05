@@ -1,7 +1,6 @@
 package bsys.controller;
 
 import bsys.model.Product;
-import bsys.service.order.OrderService;
 import bsys.service.product.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -31,11 +30,11 @@ public class ProductController {
         return modelAndView;
     }
 
-    @PostMapping(value = "/product-edit")
-    public ModelAndView editProduct(@ModelAttribute("product") Product product) {
+    @PostMapping(value = "/product-edit/{id}/{sms}/{minute}")
+    public ModelAndView editProduct(@PathVariable int id, @PathVariable int sms, @PathVariable int minute) {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("redirect:/product");
-        productService.editProduct(product);
+        modelAndView.setViewName("redirect:/product/");
+        productService.editProductPhone(sms, minute, id);
         return modelAndView;
     }
 
@@ -46,6 +45,7 @@ public class ProductController {
         return modelAndView;
     }
 
+    // Сделать доп jsp
     @PostMapping(value = "/product-add")
     public ModelAndView addProduct(@ModelAttribute("product") Product product) {
         ModelAndView modelAndView = new ModelAndView();

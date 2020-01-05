@@ -1,42 +1,37 @@
 package bsys.service.client;
 
 import bsys.model.Client;
+import bsys.repository.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
-import java.util.List;
 
 @Service
 public class ClientServiceImpl implements ClientService {
-    private ClientDAO clientDAO;
+    private ClientRepository clientRepository;
 
     @Autowired
-    public void setClientDAO(ClientDAO clientDAO) {
-        this.clientDAO = clientDAO;
+    public void setClientRepository(ClientRepository clientRepository) {
+        this.clientRepository = clientRepository;
     }
 
-    @Transactional
-    public List<Client> allClients() {
-        return clientDAO.allClients();
+    public Client findClientByEmail(String email, String password) {
+        return clientRepository.getByEmailAndPassword(email, password);
     }
 
-    @Transactional
     public void addClient(Client client) {
-        clientDAO.addClient(client);
+        clientRepository.save(client);
     }
 
-    @Transactional
     public void deleteClient(Client client) {
-        clientDAO.deleteClient(client);
+        clientRepository.delete(client);
     }
 
-    @Transactional
-    public void editClient(Client client) {
-        clientDAO.editClient(client);
+    public void editClient(String firstName, String lastName, String email, String phone, int id) {
+        clientRepository.editClient(firstName, lastName, email, phone, id);
     }
 
-    @Transactional
     public Client getById(int idClient) {
-        return clientDAO.getById(idClient);
+        return clientRepository.getByIdClient(idClient);
     }
 }

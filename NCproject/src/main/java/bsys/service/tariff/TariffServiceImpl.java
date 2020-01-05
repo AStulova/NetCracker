@@ -1,6 +1,7 @@
 package bsys.service.tariff;
 
 import bsys.model.Tariff;
+import bsys.repository.TariffRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -9,30 +10,26 @@ import java.util.List;
 
 @Service
 public class TariffServiceImpl implements TariffService {
-    private TariffDAO tariffDAO;
+    private TariffRepository tariffRepository;
 
     @Autowired
-    public void setTariffDAO(TariffDAO tariffDAO) {
-        this.tariffDAO = tariffDAO;
+    public void setTariffDAO(TariffRepository tariffRepository) {
+        this.tariffRepository = tariffRepository;
     }
 
-    @Transactional
     public List<Tariff> allTariffs() {
-        return tariffDAO.allTariffs();
+        return tariffRepository.findAll();
     }
 
-    @Transactional
     public void addTariff(Tariff tariff) {
-        tariffDAO.addTariff(tariff);
+        tariffRepository.save(tariff);
     }
 
-    @Transactional
     public void deleteTariff(Tariff tariff) {
-        tariffDAO.deleteTariff(tariff);
+        tariffRepository.delete(tariff);
     }
 
-    @Transactional
     public Tariff getById(int idTariff) {
-        return tariffDAO.getById(idTariff);
+        return tariffRepository.findByIdTariff(idTariff);
     }
 }

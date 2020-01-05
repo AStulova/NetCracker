@@ -26,12 +26,11 @@ public class OrderController {
         return modelAndView;
     }
 
-    //  и Add, и Edit на одной странице
-    @PostMapping(value = "/order-edit")
-    public ModelAndView editOrder(@ModelAttribute("order") Order order) {
+    @PostMapping(value = "/order-edit/{id}/{statusOrder}")
+    public ModelAndView editOrder(@PathVariable int id, String statusOrder) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("redirect:/order");
-        orderService.editOrder(order);
+        orderService.editOrderStatus(statusOrder, id);
         return modelAndView;
     }
 

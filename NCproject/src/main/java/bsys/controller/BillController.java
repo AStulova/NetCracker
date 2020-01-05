@@ -17,31 +17,23 @@ public class BillController {
         this.billService = billService;
     }
 
-    @GetMapping(value = "/bill")
-    public ModelAndView allBills() {
-        List<Bill> bill = billService.allBills();
+    @GetMapping(value = "/bill/{id}")
+    public ModelAndView allBills(@PathVariable int id) {
+        List<Bill> bill = billService.allBills(id);
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("BillPage");
         modelAndView.addObject("billList", bill);
         return modelAndView;
     }
 
-    @GetMapping(value = "/bill-edit/{id}")
-    public ModelAndView editBillPage(@PathVariable int id) {
-        Bill bill = billService.getById(id);
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("old/BillEdit");
-        modelAndView.addObject("bill", bill);
-        return modelAndView;
-    }
 
-    @PostMapping(value = "/bill-edit")
+    /*@PostMapping(value = "/bill-edit")
     public ModelAndView editBill(@ModelAttribute("bill") Bill bill) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("redirect:/bill");
         billService.editBill(bill);
         return modelAndView;
-    }
+    }*/
 
     @GetMapping(value = "/bill-add")
     public ModelAndView addBillPage() {

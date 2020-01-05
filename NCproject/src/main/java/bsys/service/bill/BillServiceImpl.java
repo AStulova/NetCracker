@@ -1,6 +1,7 @@
 package bsys.service.bill;
 
 import bsys.model.Bill;
+import bsys.repository.BillRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
@@ -8,35 +9,26 @@ import java.util.List;
 
 @Service
 public class BillServiceImpl implements BillService {
-    private BillDAO billDAO;
+    private BillRepository billRepository;
 
     @Autowired
-    public void setBillDAO(BillDAO billDAO) {
-        this.billDAO = billDAO;
+    public void setBillDAO(BillRepository billRepository) {
+        this.billRepository = billRepository;
     }
 
-    @Transactional
-    public List<Bill> allBills() {
-        return billDAO.allBills();
+    public List<Bill> allBills(int idClient) {
+        return billRepository.findAllByIdClient(idClient);
     }
 
-    @Transactional
     public void addBill(Bill bill) {
-        billDAO.addBill(bill);
+        billRepository.save(bill);
     }
 
-    @Transactional
     public void deleteBill(Bill bill) {
-        billDAO.deleteBill(bill);
+        billRepository.delete(bill);
     }
 
-    @Transactional
-    public void editBill(Bill bill) {
-        billDAO.editBill(bill);
-    }
-
-    @Transactional
     public Bill getById(int idBill) {
-        return billDAO.getById(idBill);
+        return billRepository.getOne(idBill);
     }
 }

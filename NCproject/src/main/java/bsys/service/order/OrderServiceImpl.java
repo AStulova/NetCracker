@@ -1,8 +1,7 @@
 package bsys.service.order;
 
 import bsys.model.Order;
-import bsys.service.order.OrderDAO;
-import bsys.service.order.OrderService;
+import bsys.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
@@ -10,35 +9,30 @@ import java.util.List;
 
 @Service
 public class OrderServiceImpl implements OrderService {
-    private OrderDAO orderDAO;
+    private OrderRepository orderRepository;
 
     @Autowired
-    public void setOrderDAO(OrderDAO orderDAO) {
-        this.orderDAO = orderDAO;
+    public void setOrderRepository(OrderRepository orderRepository) {
+        this.orderRepository = orderRepository;
     }
 
-    @Transactional
     public List<Order> allOrders() {
-        return orderDAO.allOrders();
+        return orderRepository.findAll();
     }
 
-    @Transactional
     public void addOrder(Order order) {
-        orderDAO.addOrder(order);
+        orderRepository.save(order);
     }
 
-    @Transactional
     public void deleteOrder(Order order) {
-        orderDAO.deleteOrder(order);
+        orderRepository.delete(order);
     }
 
-    @Transactional
-    public void editOrder(Order order) {
-        orderDAO.editOrder(order);
+    public void editOrderStatus(String statusOrder, int id) {
+        orderRepository.editOrderStatus(statusOrder, id);
     }
 
-    @Transactional
     public Order getById(int idOrder) {
-        return orderDAO.getById(idOrder);
+        return orderRepository.getOne(idOrder);
     }
 }

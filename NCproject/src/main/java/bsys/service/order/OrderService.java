@@ -7,6 +7,6 @@ public interface OrderService {
     List<Order> allOrders();
     void addOrder(Order order);
     void deleteOrder(Order order);
-    void editOrder(Order order);
+    void editOrderStatus(String statusOrder, int id);
     Order getById(int idOrder);
 }

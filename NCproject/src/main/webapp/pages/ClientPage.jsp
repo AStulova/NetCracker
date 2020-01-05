@@ -62,31 +62,31 @@
                     <form>
                         <div class="form-group">
                             <label class="h5">Personal ID</label>
-                            <p>46534635 </p>
+                            <p>${clientList.idClient}</p>
                         </div>
                         <div class="form-row">
                             <div class="form-group col-md-6">
                                 <label class="h5">First name</label>
-                                <p>Name </p>
+                                <p>${clientList.firstName} </p>
                             </div>
                             <div class="form-group col-md-6">
-                                <label class="h5">Last name</label>
-                                <p>LName </p>
+                                <label class="h5">Last Name</label>
+                                <p>${clientList.lastName}</p>
                             </div>
                         </div>
                         <div class="form-row">
                             <div class="form-group col-md-6">
                                 <label class="h5">Email</label>
-                                <p>email@example.com</p>
+                                <p>${clientList.email}</p>
                             </div>
                             <div class="form-group col-md-6">
                                 <label class="h5">Phone</label>
-                                <p>8910244357</p>
+                                <p>${clientList.phone}</p>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="h5">Balance</label>
-                            <p>420.56 </p>
+                            <p>${clientList.balance}</p>
                         </div>
                     </form>
                 </div>
