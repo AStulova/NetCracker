@@ -1,9 +1,12 @@
 package bsys.controller;
 
+import bsys.service.client.ClientValidator;
 import bsys.model.Client;
+import bsys.service.security.SecurityService;
 import bsys.service.client.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -12,9 +15,30 @@ public class ClientController {
     private ClientService clientService;
 
     @Autowired
-    public void setClientService(ClientService clientService) {
+    private void setClientService(ClientService clientService) {
         this.clientService = clientService;
     }
+
+    @Autowired
+    private SecurityService securityService;
+
+    @Autowired
+    private ClientValidator clientValidator;
+
+    @GetMapping(value = "/")
+    public ModelAndView SigninPage() {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("SignIn");
+        return modelAndView;
+    }
+
+     @PostMapping(value = "/{email}")
+     public ModelAndView identifyClient(@PathVariable String email) {
+         ModelAndView modelAndView = new ModelAndView();
+         Client client = clientService.findClientByEmail(email);
+         modelAndView.setViewName("redirect:/client/" + client.getIdClient()); // ???
+         return modelAndView;
+     }
 
     @GetMapping(value = "/client/{id}")
     public ModelAndView findClient(@PathVariable int id) {
@@ -41,11 +65,16 @@ public class ClientController {
     }
 
     @PostMapping(value = "/signup")
-    public ModelAndView addClient(@ModelAttribute("client") Client client) {
+    public ModelAndView addClient(@ModelAttribute("client") Client client, BindingResult bindingResult) {
         ModelAndView modelAndView = new ModelAndView();
-        int id = client.getIdClient();
-        modelAndView.setViewName("redirect:/client/"+ id);
+        clientValidator.validate(client, bindingResult);
+        if (bindingResult.hasErrors()) {
+            modelAndView.setViewName("SignUp");
+            return modelAndView;
+        }
         clientService.addClient(client);
+        securityService.autoLogin(client.getEmail(), client.getPassword());
+        modelAndView.setViewName("redirect:/client/"+ client.getIdClient());
         return modelAndView;
     }
 

@@ -3,6 +3,7 @@ package bsys.service.client;
 import bsys.model.Client;
 import bsys.repository.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 
@@ -11,15 +12,19 @@ public class ClientServiceImpl implements ClientService {
     private ClientRepository clientRepository;
 
     @Autowired
-    public void setClientRepository(ClientRepository clientRepository) {
+    private void setClientRepository(ClientRepository clientRepository) {
         this.clientRepository = clientRepository;
     }
 
-    public Client findClientByEmail(String email, String password) {
-        return clientRepository.getByEmailAndPassword(email, password);
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
+
+    public Client findClientByEmail(String email) {
+        return clientRepository.getByEmail(email);
     }
 
     public void addClient(Client client) {
+        client.setPassword(bCryptPasswordEncoder.encode(client.getPassword()));
         clientRepository.save(client);
     }
 

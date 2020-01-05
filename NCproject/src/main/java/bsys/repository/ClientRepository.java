@@ -13,8 +13,6 @@ public interface ClientRepository extends JpaRepository<Client, Integer> {
 
     Client getByEmail(String email);
 
-    Client getByEmailAndPassword(String email, String password);
-
     @Modifying
     @Query("update Client c set c.firstName = ?1, c.lastName = ?2, c.email = ?3, c.phone = ?4 where c.idClient = ?5")
     void editClient(String firstName, String lastName, String email, String phone, int id);
