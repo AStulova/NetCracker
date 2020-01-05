@@ -6,8 +6,10 @@ create table Client (
         email varchar(100),
 	password varchar(30) NOT NULL,
         balance numeric(8, 2) NOT NULL default '0.0',
+	role varchar(30) NOT NULL,
         UNIQUE(phone, email)
 );
+
 
 create table Orders (
 	id_order serial NOT NULL,
@@ -47,8 +49,8 @@ create table Bill (
 );
 
 INSERT into client values
-(1, 'Courteney', 'Cox', '+79106845169', 'CourteneyCox@gmail.com', '2fg56gsg', 578.47),
-(2, 'Matthew', 'Perry', '+79425684113', 'MPerry@ya.ru', 'dg6f43sa5', 890.23);
+(1, 'Courteney', 'Cox', '+79106845169', 'CourteneyCox@gmail.com', '2fg56gsg', 578.47, 'USER'),
+(2, 'Matthew', 'Perry', '+79425684113', 'MPerry@ya.ru', 'dg6f43sa5', 890.23, 'USER');
 
 insert into tariff values
 (1, 'Super', 'Mobile connection and Internet', 9.90),
