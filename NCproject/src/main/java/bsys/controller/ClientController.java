@@ -1,14 +1,21 @@
 package bsys.controller;
 
-import bsys.service.client.ClientValidator;
 import bsys.model.Client;
-import bsys.service.security.SecurityService;
 import bsys.service.client.ClientService;
+import bsys.service.security.SecurityService;
+import bsys.validator.ClientValidator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
+
+import java.security.Principal;
+import java.util.List;
 
 @Controller
 public class ClientController {
@@ -26,34 +33,55 @@ public class ClientController {
     private ClientValidator clientValidator;
 
     @GetMapping(value = "/")
-    public ModelAndView SigninPage() {
+    public ModelAndView HomePage() {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("SignIn");
+        modelAndView.setViewName("HomePage");
         return modelAndView;
     }
 
-     @PostMapping(value = "/{email}")
-     public ModelAndView identifyClient(@PathVariable String email) {
-         ModelAndView modelAndView = new ModelAndView();
-         Client client = clientService.findClientByEmail(email);
-         modelAndView.setViewName("redirect:/client/" + client.getIdClient()); // ???
-         return modelAndView;
-     }
+    /*@PostMapping(value = "/signin")
+    public ModelAndView loginClient() {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("redirect:/client");
+        return modelAndView;
+    }*/
 
-    @GetMapping(value = "/client/{id}")
-    public ModelAndView findClient(@PathVariable int id) {
-        Client client = clientService.getById(id);
+     /*@PostMapping(value = "/signin")
+     public ModelAndView identifyClient(@ModelAttribute("client") Client client) {
+         ModelAndView modelAndView = new ModelAndView();
+         Client client1 = clientService.findClientByEmail(client.getEmail());
+         if (client1 != null) {
+             modelAndView.setViewName("redirect:/client");
+             return modelAndView;
+         }
+         modelAndView.addObject("message", "You are not registered");
+         modelAndView.setViewName("redirect:/signin");
+         return modelAndView;
+     }*/
+
+    /*@GetMapping(value = "/client")
+    public ModelAndView findClient() {
+        List<Client> client1 = clientService.findAll();
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("ClientInfo");
+        modelAndView.addObject("clientList", client1);
+        return modelAndView;
+    }*/
+
+    @GetMapping(value = "/client")
+    public ModelAndView findClient(@AuthenticationPrincipal Client client) {
+        //Client client1 = clientService.getById(id);
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("ClientPage");
         modelAndView.addObject("clientList", client);
         return modelAndView;
     }
 
-    @PostMapping(value = "/client/{id}/{firstName}/{lastName}/{email}/{phone}")
-    public ModelAndView editClient(@PathVariable int id, @PathVariable String firstName, @PathVariable String lastName, @PathVariable String email, @PathVariable String phone) {
+    @PostMapping(value = "/client")
+    public ModelAndView editClient(@ModelAttribute("client") Client client) {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("redirect:/client/"+id);
-        clientService.editClient(firstName, lastName, email, phone, id);
+        clientService.editClient(client.getFirstName(), client.getLastName(), client.getEmail(), client.getPhone(), client.getIdClient());
+        modelAndView.setViewName("redirect:/client");
         return modelAndView;
     }
 
@@ -68,13 +96,14 @@ public class ClientController {
     public ModelAndView addClient(@ModelAttribute("client") Client client, BindingResult bindingResult) {
         ModelAndView modelAndView = new ModelAndView();
         clientValidator.validate(client, bindingResult);
-        if (bindingResult.hasErrors()) {
+        /*if (bindingResult.hasErrors()) {
+            modelAndView.addObject("message", bindingResult.getFieldErrors()); // сделать вывод
             modelAndView.setViewName("redirect:/signup");
             return modelAndView;
-        }
+        }*/
         clientService.addClient(client);
-        securityService.autoLogin(client.getEmail(), client.getPassword());
-        modelAndView.setViewName("redirect:/client/"+ client.getIdClient());
+        //securityService.autoLogin(client.getEmail(), client.getPassword());
+        modelAndView.setViewName("redirect:/signin");
         return modelAndView;
     }
 

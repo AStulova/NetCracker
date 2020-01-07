@@ -1,4 +1,4 @@
-package bsys.service.client;
+package bsys.validator;
 
 import bsys.model.Client;
 import bsys.service.client.ClientService;
@@ -24,12 +24,12 @@ public class ClientValidator implements Validator {
 
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "email", "NotEmpty");
         if (clientService.findClientByEmail(client.getEmail()) != null) {
-            errors.rejectValue("email", "You already have an account");
+            errors.rejectValue("email_message", "You already have an account");
         }
 
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "NotEmpty");
         if (client.getPassword().length() < 8 || client.getPassword().length() > 30) {
-            errors.rejectValue("password", "Try again with at least 8 characters");
+            errors.rejectValue("password_message", "Try again with at least 8 characters");
         }
     }
 }

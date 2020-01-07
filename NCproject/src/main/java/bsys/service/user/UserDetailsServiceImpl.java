@@ -1,4 +1,4 @@
-package bsys.service;
+package bsys.service.user;
 
 import bsys.model.Client;
 import bsys.repository.ClientRepository;

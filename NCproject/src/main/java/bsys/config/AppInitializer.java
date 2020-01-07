@@ -2,6 +2,7 @@ package bsys.config;
 
 import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
+
 import javax.servlet.Filter;
 
 public class AppInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
@@ -17,7 +18,7 @@ public class AppInitializer extends AbstractAnnotationConfigDispatcherServletIni
 
     @Override
     protected String[] getServletMappings() {
-        return new String[]{"/", "/client", "/tariff", "/order", "/product", "/bill", "/signup"};
+        return new String[]{"/", "/client", "/tariff", "/order", "/product", "/bill", "/signup", "/signin"};
     }
 
     // Specify the Russian encoding

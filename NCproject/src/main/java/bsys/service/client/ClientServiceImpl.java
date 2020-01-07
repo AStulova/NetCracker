@@ -28,24 +28,35 @@ public class ClientServiceImpl implements ClientService {
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Override
+    @Transactional
     public Client findClientByEmail(String email) {
         return clientRepository.getByEmail(email);
     }
 
+    @Transactional
     public void addClient(Client client) {
-        client.setPassword(bCryptPasswordEncoder.encode(client.getPassword()));
+        //client.setPassword(bCryptPasswordEncoder.encode(client.getPassword()));
         client.setRole("USER");
-        clientRepository.save(client);
+        clientRepository.saveAndFlush(client);
     }
 
+    @Override
+    @Transactional
+    public List<Client> findAll() {
+        return clientRepository.findAll();
+    }
+
+    @Transactional
     public void deleteClient(Client client) {
         clientRepository.delete(client);
     }
 
+    @Transactional
     public void editClient(String firstName, String lastName, String email, String phone, int id) {
         clientRepository.editClient(firstName, lastName, email, phone, id);
     }
 
+    @Transactional
     public Client getById(int idClient) {
         return clientRepository.getByIdClient(idClient);
     }

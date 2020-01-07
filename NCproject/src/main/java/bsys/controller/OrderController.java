@@ -1,11 +1,17 @@
 package bsys.controller;
 
+import bsys.model.Client;
 import bsys.model.Order;
 import bsys.service.order.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
+
 import java.util.List;
 
 @Controller
@@ -44,10 +50,11 @@ public class OrderController {
     }
 
     @PostMapping(value = "/order-add")
-    public ModelAndView addOrder(@ModelAttribute("order") Order order) {
+    public ModelAndView addOrder(@AuthenticationPrincipal Client client, @ModelAttribute("order") Order order) {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("redirect:/order");
+        order.setIdClient(client);
         orderService.addOrder(order);
+        modelAndView.setViewName("redirect:/order");
         return modelAndView;
     }
 
