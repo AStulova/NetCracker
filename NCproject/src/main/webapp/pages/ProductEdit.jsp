@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -76,7 +77,7 @@
             <!-- Add/Edit Product -->
             <div class="card bg-light mb-4">
                 <div class="card-body">
-                    <form action="${var}" method="POST">
+                    <form:form action="${var}" method="POST">
                         <c:forEach var="tariff" items="${productList.idTariff}">
                             <div class="form-row">
                                 <div class="form-group col-md-6">
@@ -186,7 +187,7 @@
                             <input type="submit" class="btn btn-warning" value="Save" id="statusOrder"/>
                             <button type="button" class="btn btn-outline-secondary" onclick="history.back()">Cancel</button>
                         </c:forEach>
-                    </form>
+                    </form:form>
                 </div>
             </div>
 

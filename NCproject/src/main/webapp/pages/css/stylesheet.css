@@ -15,3 +15,8 @@ th {
 .navbar-brand {
   font-size: 1.571875rem; !important
 }
+
+.py-6 {
+    padding-top: 4rem!important;
+	padding-bottom: 4.5rem!important;
+}

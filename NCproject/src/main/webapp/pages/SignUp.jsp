@@ -27,7 +27,7 @@
                             <form:errors path="password_message" cssClass="alert alert-danger alert-dismissible">
                                 <button type="button" class="close" data-dismiss="alert">&times;</button>
                             </form:errors>
-                            <form action="${var}" method="POST">
+                            <form:form action="${var}" method="POST">
                                 <input type="hidden" name="id" value="${client.idClient}">
                                 <div class="form-group">
                                     <label class="h5" for="firstName">First Name</label>
@@ -55,7 +55,7 @@
                                 <div class="text-center mt-3">
                                    <input value="Sign Up" type="submit" class="btn btn-lg btn-primary"/>
                                 </div>
-                            </form>
+                            </form:form>
                         </div>
                     </div>
                 </div>
