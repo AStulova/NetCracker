@@ -2,20 +2,16 @@ package bsys.controller;
 
 import bsys.model.Client;
 import bsys.service.client.ClientService;
-import bsys.service.security.SecurityService;
 import bsys.validator.ClientValidator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.security.Principal;
-import java.util.List;
+import javax.servlet.http.HttpSession;
 
 @Controller
 public class ClientController {
@@ -26,8 +22,6 @@ public class ClientController {
         this.clientService = clientService;
     }
 
-    @Autowired
-    private SecurityService securityService;
 
     @Autowired
     private ClientValidator clientValidator;
@@ -39,12 +33,19 @@ public class ClientController {
         return modelAndView;
     }
 
-    /*@PostMapping(value = "/signin")
-    public ModelAndView loginClient() {
+    @RequestMapping(value = "/signin", method = RequestMethod.GET)
+    public ModelAndView signin() {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("redirect:/client");
+        modelAndView.setViewName("SignIn");
         return modelAndView;
-    }*/
+    }
+
+    @RequestMapping(value = "/signin", method = RequestMethod.POST)
+    public ModelAndView signin(HttpSession session, Authentication authentication) {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("redirect:/");
+        return modelAndView;
+    }
 
      /*@PostMapping(value = "/signin")
      public ModelAndView identifyClient(@ModelAttribute("client") Client client) {
@@ -70,10 +71,10 @@ public class ClientController {
 
     @GetMapping(value = "/client")
     public ModelAndView findClient(@AuthenticationPrincipal Client client) {
-        //Client client1 = clientService.getById(id);
+        Client client1 = clientService.getById(client.getIdClient());
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("ClientPage");
-        modelAndView.addObject("clientList", client);
+        modelAndView.addObject("clientList", client1);
         return modelAndView;
     }
 
