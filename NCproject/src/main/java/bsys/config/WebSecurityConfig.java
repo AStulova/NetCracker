@@ -69,7 +69,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                    .antMatchers("/", "/signup", "/signin", "/tariff").permitAll()
+                    .antMatchers("/", "/**", "/signup", "/signin", "/tariff", "/.ico", "/.js", "/.css").permitAll()
                     .anyRequest().authenticated()
                 .and()
                     .formLogin()
@@ -82,10 +82,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                     .logout()
                     .logoutSuccessUrl("/")
-                    .permitAll()
-                .and()
+                    .permitAll();
+                /*.and()
                     .exceptionHandling()
-                    .accessDeniedPage("/403");
+                    .accessDeniedPage("/403");*/
 
         // http.csrf().disable();
 

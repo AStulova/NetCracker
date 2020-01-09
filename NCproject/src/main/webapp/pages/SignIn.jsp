@@ -26,7 +26,7 @@
                 <div class="card bg-light">
                     <div class="card-body">
                         <div class="m-sm-4">
-                            <form method="POST" action="signin">
+                            <form:form method="POST" action="signin">
                                 <div class="form-group">
                                     <label class="h5" for="email">Email</label>
                                     <input class="form-control form-control-lg" type="email" name="email" id="email" placeholder="Enter your email" required>
@@ -41,7 +41,7 @@
                                 <div class="text-center mt-3">
                                     <input value="Sign in" type="submit" class="btn btn-lg btn-primary"/>
                                 </div>
-                            </form>
+                            </form:form>
                         </div>
                     </div>
                 </div>

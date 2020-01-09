@@ -4,14 +4,11 @@ import bsys.model.Client;
 import bsys.service.client.ClientService;
 import bsys.validator.ClientValidator;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-
-import javax.servlet.http.HttpSession;
 
 @Controller
 public class ClientController {
@@ -45,13 +42,13 @@ public class ClientController {
         return modelAndView;
     }
 */
-    @RequestMapping(value = "/signin", method = RequestMethod.POST)
+    /*@RequestMapping(value = "/signin", method = RequestMethod.POST)
     public ModelAndView signin(HttpSession session, Authentication authentication) {
 
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("redirect:/tariff");
         return modelAndView;
-    }
+    }*/
 
      /*@PostMapping(value = "/signin")
      public ModelAndView identifyClient(@ModelAttribute("client") Client client) {
