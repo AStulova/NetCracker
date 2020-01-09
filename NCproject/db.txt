@@ -1,28 +1,28 @@
 create table Client (
 	id_client serial primary key,
-        first_name varchar(30) NOT NULL,
-	last_name varchar(30) NOT NULL,
+        first_name varchar(255) NOT NULL,
+	last_name varchar(255) NOT NULL,
         phone varchar(12) NOT NULL,
-        email varchar(100),
-	password varchar(30) NOT NULL,
+        email varchar(255),
+	password varchar(255) NOT NULL,
         balance numeric(8, 2) NOT NULL default '0.0',
-	role varchar(30) NOT NULL,
+	role varchar(255) NOT NULL,
         UNIQUE(phone, email)
 );
 
 
 create table Orders (
 	id_order serial NOT NULL,
-	id_client serial references Client(id_client),
+	id_client integer references Client(id_client),
 	date_order timestamp NOT NULL,
-	status varchar(6) NOT NULL,
+	status varchar(255) NOT NULL,
 	CONSTRAINT PK_ORDER_ID primary key (id_order)
 );
 
 create table Tariff (
 	id_tariff serial NOT NULL,
-	name_tariff varchar(100) NOT NULL,
-	type varchar(40) NOT NULL,
+	name_tariff varchar(255) NOT NULL,
+	type varchar(255) NOT NULL,
 	price numeric(8, 2) NOT NULL,
 	CONSTRAINT PK_TARIFF_ID primary key (id_tariff),
 	UNIQUE(name_tariff)
@@ -30,21 +30,21 @@ create table Tariff (
 
 create table Product (
 	id_product serial primary key,
-	id_order serial NOT NULL,
-	id_tariff serial NOT NULL,
+	id_order integer NOT NULL,
+	id_tariff integer NOT NULL,
 	sms integer default 0,
 	gb integer default 0,
 	minute integer default 0,
 	speed integer default 0,
 	channel integer default 0,
-	addition varchar(100) default 'No',
+	addition varchar(255) default 'No',
 	CONSTRAINT FK_ORDER_ID foreign key (id_order) REFERENCES Orders (id_order),
 	CONSTRAINT FK_TARIFF_ID foreign key (id_tariff) REFERENCES Tariff (id_tariff)
 );
 
 create table Bill (
 	id_bill serial primary key,
-	id_client serial references Client(id_client),
+	id_client integer references Client(id_client),
 	date_bill timestamp NOT NULL
 );
 

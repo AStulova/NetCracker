@@ -21,8 +21,8 @@ public class WebConfig implements WebMvcConfigurer {
         return viewResolver;
     }
 
-    /*@Override
+    @Override
     public void addViewControllers(ViewControllerRegistry registry) {
         registry.addViewController("/signin").setViewName("SignIn");
-    } */
+    }
 }

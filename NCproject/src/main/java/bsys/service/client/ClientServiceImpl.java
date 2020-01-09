@@ -35,7 +35,7 @@ public class ClientServiceImpl implements ClientService {
 
     @Transactional
     public void addClient(Client client) {
-        //client.setPassword(bCryptPasswordEncoder.encode(client.getPassword()));
+        client.setPassword(bCryptPasswordEncoder.encode(client.getPassword()));
         client.setRole("USER");
         clientRepository.saveAndFlush(client);
     }

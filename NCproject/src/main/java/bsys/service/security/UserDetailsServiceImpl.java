@@ -1,4 +1,4 @@
-package bsys.service.user;
+package bsys.service.security;
 
 import bsys.model.Client;
 import bsys.repository.ClientRepository;
@@ -20,8 +20,11 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     private ClientRepository clientRepository;
 
     @Override
-    public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
-        Client client = clientRepository.getByEmail(s);
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        Client client = clientRepository.getByEmail(email);
+        if (client == null) {
+            throw new UsernameNotFoundException("User not found");
+        }
         List<GrantedAuthority> role = new ArrayList<>();
         GrantedAuthority authority = new SimpleGrantedAuthority("ROLE_" + client.getRole());
         role.add(authority);

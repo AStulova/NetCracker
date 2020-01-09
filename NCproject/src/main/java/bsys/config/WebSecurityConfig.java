@@ -1,10 +1,9 @@
 package bsys.config;
 
-import bsys.service.user.UserDetailsServiceImpl;
+import bsys.service.security.UserDetailsServiceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -38,6 +37,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) {
+        //auth.userDetailsService(userDetailsService()).passwordEncoder(passwordEncoder());
         auth.authenticationProvider(authenticationProvider());
     }
 
@@ -73,12 +73,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     .anyRequest().authenticated()
                 .and()
                     .formLogin()
-                    .loginPage("/SignIn.jsp")
-                    .defaultSuccessUrl("/")
+                    .loginPage("/signin")
                     .usernameParameter("email").passwordParameter("password")
+                    //.loginProcessingUrl("/signin")
+                    .defaultSuccessUrl("/tariff")
+                    .failureUrl("/")
                     .permitAll()
                 .and()
                     .logout()
+                    .logoutSuccessUrl("/")
                     .permitAll()
                 .and()
                     .exceptionHandling()

@@ -33,17 +33,23 @@ public class ClientController {
         return modelAndView;
     }
 
-    @RequestMapping(value = "/signin", method = RequestMethod.GET)
+    @RequestMapping(value="/signin", method=RequestMethod.GET)
+    public ModelAndView loginForm() {
+        return new ModelAndView("SignIn");
+    }
+
+    /*@RequestMapping(value = "/signin", method = RequestMethod.GET)
     public ModelAndView signin() {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("SignIn");
         return modelAndView;
     }
-
+*/
     @RequestMapping(value = "/signin", method = RequestMethod.POST)
     public ModelAndView signin(HttpSession session, Authentication authentication) {
+
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("redirect:/");
+        modelAndView.setViewName("redirect:/tariff");
         return modelAndView;
     }
 

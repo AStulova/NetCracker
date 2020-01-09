@@ -5,10 +5,10 @@
 <head>
     <meta charset="utf-8">
     <c:if test="${empty product.idProduct}">
-        <title>BilSYS | Add Product</title>
+        <title>BillSYS | Add Product</title>
     </c:if>
     <c:if test="${!empty product.idProduct}">
-        <title>BilSYS | Edit Product</title>
+        <title>BillSYS | Edit Product</title>
     </c:if>
     <!-- Bootstrap -->
     <style>
@@ -27,7 +27,7 @@
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary" style> <!-- fixed-top -->
         <div class="container">
-            <a class="navbar-brand" href="/client">BilSYS</a>
+            <a class="navbar-brand" href="/client">BillSYS</a>
             <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>

@@ -5,7 +5,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>BilSYS | Sing Up</title>
+    <title>BillSYS | Sing Up</title>
     <!-- Bootstrap -->
     <style>
         <%@include file='css/bootstrap.min.css' %>
