@@ -4,7 +4,6 @@ import bsys.model.Client;
 import bsys.service.client.ClientService;
 import bsys.validator.ClientValidator;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -35,56 +34,19 @@ public class ClientController {
         return new ModelAndView("SignIn");
     }
 
-    /*@RequestMapping(value = "/signin", method = RequestMethod.GET)
-    public ModelAndView signin() {
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("SignIn");
-        return modelAndView;
-    }
-*/
-    /*@RequestMapping(value = "/signin", method = RequestMethod.POST)
-    public ModelAndView signin(HttpSession session, Authentication authentication) {
-
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("redirect:/tariff");
-        return modelAndView;
-    }*/
-
-     /*@PostMapping(value = "/signin")
-     public ModelAndView identifyClient(@ModelAttribute("client") Client client) {
-         ModelAndView modelAndView = new ModelAndView();
-         Client client1 = clientService.findClientByEmail(client.getEmail());
-         if (client1 != null) {
-             modelAndView.setViewName("redirect:/client");
-             return modelAndView;
-         }
-         modelAndView.addObject("message", "You are not registered");
-         modelAndView.setViewName("redirect:/signin");
-         return modelAndView;
-     }*/
-
-    /*@GetMapping(value = "/client")
-    public ModelAndView findClient() {
-        List<Client> client1 = clientService.findAll();
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("ClientInfo");
-        modelAndView.addObject("clientList", client1);
-        return modelAndView;
-    }*/
-
     @GetMapping(value = "/client")
-    public ModelAndView findClient(@AuthenticationPrincipal Client client) {
-        Client client1 = clientService.getById(client.getIdClient());
+    public ModelAndView findClient() {
+        Client client = clientService.getAuthClient();
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("ClientPage");
-        modelAndView.addObject("clientList", client1);
+        modelAndView.addObject("clientList", client);
         return modelAndView;
     }
 
-    @PostMapping(value = "/client")
+    @PostMapping(value = "/client/edit")
     public ModelAndView editClient(@ModelAttribute("client") Client client) {
         ModelAndView modelAndView = new ModelAndView();
-        clientService.editClient(client.getFirstName(), client.getLastName(), client.getEmail(), client.getPhone(), client.getIdClient());
+        clientService.editClient(client);
         modelAndView.setViewName("redirect:/client");
         return modelAndView;
     }

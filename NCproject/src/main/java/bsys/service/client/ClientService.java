@@ -9,6 +9,7 @@ public interface ClientService {
     List<Client> findAll();
     void addClient(Client client);
     void deleteClient(Client client);
-    void editClient(String firstName, String lastName, String email, String phone, int id);
+    void editClient(Client client);
     Client getById(int idClient);
+    Client getAuthClient();
 }

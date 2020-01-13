@@ -3,16 +3,12 @@ package bsys.service.client;
 import bsys.model.Client;
 import bsys.repository.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+
 import javax.transaction.Transactional;
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -52,12 +48,27 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Transactional
-    public void editClient(String firstName, String lastName, String email, String phone, int id) {
-        clientRepository.editClient(firstName, lastName, email, phone, id);
+    public void editClient(Client client) {
+        int id = getAuthClient().getIdClient();
+        if (!client.getFirstName().equals("")) {
+            clientRepository.editFirstName(client.getFirstName(), id);
+        }
+        if (!client.getLastName().equals("")) {
+            clientRepository.editLastName(client.getLastName(), id);
+        }
+        if (!client.getPhone().equals("")) {
+            clientRepository.editPhone(client.getPhone(), id);
+        }
     }
 
     @Transactional
     public Client getById(int idClient) {
         return clientRepository.getByIdClient(idClient);
+    }
+
+    @Override
+    public Client getAuthClient() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        return clientRepository.getByEmail(authentication.getName());
     }
 }

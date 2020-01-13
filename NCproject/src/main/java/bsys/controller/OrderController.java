@@ -6,15 +6,13 @@ import bsys.service.order.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 
 @Controller
+@RequestMapping(value = "/order")
 public class OrderController {
     private OrderService orderService;
 
@@ -23,7 +21,7 @@ public class OrderController {
         this.orderService = orderService;
     }
 
-    @GetMapping(value = "/order")
+    @GetMapping
     public ModelAndView allOrders() {
         List<Order> order = orderService.allOrders();
         ModelAndView modelAndView = new ModelAndView();
@@ -32,7 +30,7 @@ public class OrderController {
         return modelAndView;
     }
 
-    @PostMapping(value = "/order-edit/{id}/{statusOrder}")
+    @PostMapping(value = "/edit/{id}")
     public ModelAndView editOrder(@PathVariable int id, String statusOrder) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("redirect:/order");
@@ -40,7 +38,7 @@ public class OrderController {
         return modelAndView;
     }
 
-    @GetMapping(value = "/order-add")
+    @GetMapping(value = "/add")
     public ModelAndView addOrderPage() {
         List<Order> order = orderService.allOrders(); // +
         ModelAndView modelAndView = new ModelAndView();
@@ -49,7 +47,7 @@ public class OrderController {
         return modelAndView;
     }
 
-    @PostMapping(value = "/order-add")
+    @PostMapping(value = "/add")
     public ModelAndView addOrder(@AuthenticationPrincipal Client client, @ModelAttribute("order") Order order) {
         ModelAndView modelAndView = new ModelAndView();
         order.setIdClient(client);
@@ -58,7 +56,7 @@ public class OrderController {
         return modelAndView;
     }
 
-    @GetMapping(value = "/order-delete/{id}")
+    @GetMapping(value = "/delete/{id}")
     public ModelAndView deleteOrder(@PathVariable int id) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("redirect:/order");

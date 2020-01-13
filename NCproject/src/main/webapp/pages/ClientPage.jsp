@@ -97,25 +97,25 @@
             <div class="card bg-light">
                 <div class="card-body">
                     <h4 class="card-title">Edit Information</h4>
-                    <form:form action="${var}" method="POST">
+                    <form:form action="/client/edit" method="POST">
                         <div class="form-row">
                             <div class="form-group col-md-6">
                                 <label class="h5" for="firstName">First name</label>
-                                <input type="text" class="form-control" name="firstName" id="firstName" placeholder="First name" required pattern="^[A-Z][a-z]+$">
+                                <input type="text" class="form-control" name="firstName" id="firstName" placeholder="First name" pattern="^[A-Z][a-z]+$">
                             </div>
                             <div class="form-group col-md-6">
                                 <label class="h5" for="lastName">Last name</label>
-                                <input type="text" class="form-control" name="lastName" id="lastName" placeholder="Last name" required pattern="^[A-Z][a-z]+$">
+                                <input type="text" class="form-control" name="lastName" id="lastName" placeholder="Last name" pattern="^[A-Z][a-z]+$">
                             </div>
                         </div>
                         <div class="form-row">
                             <div class="form-group col-md-6">
                                 <label class="h5" for="email">Email</label>
-                                <input type="email" class="form-control" name="email" id="email" aria-describedby="emailHelp" placeholder="Email" required>
+                                <input type="email" class="form-control" name="email" id="email" aria-describedby="emailHelp" placeholder="Email">
                             </div>
                             <div class="form-group col-md-6">
                                 <label class="h5" for="phone">Phone</label>
-                                <input type="tel" class="form-control" name="phone" id="phone" placeholder="Phone" required>
+                                <input type="tel" class="form-control" name="phone" id="phone" placeholder="Phone">
                             </div>
                         </div>
                         <input value="Save changes" type="submit" class="btn btn-success" />

@@ -14,24 +14,10 @@
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary" style> <!-- fixed-top -->
         <div class="container">
-            <a class="navbar-brand" href="/client">BillSYS</a>
+            <a class="navbar-brand" href="/">BillSYS</a>
             <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse" id="navbarResponsive" style>
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="/tariff">Tariffs</a>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id="download">Personal Information<span class="caret"></span></a>
-                        <div class="dropdown-menu" aria-labelledby="download">
-                            <a class="dropdown-item" href="/signin">Sign In</a>
-                            <a class="dropdown-item" href="/signup">Sign Up</a>
-                        </div>
-                    </li>
-                </ul>
-            </div>
         </div>
     </nav>
 

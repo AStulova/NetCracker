@@ -2,13 +2,15 @@ package bsys.service.order;
 
 import bsys.model.Order;
 import bsys.repository.OrderRepository;
+import bsys.service.client.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import javax.transaction.Transactional;
+
 import java.util.List;
 
 @Service
 public class OrderServiceImpl implements OrderService {
+    private ClientService clientService;
     private OrderRepository orderRepository;
 
     @Autowired
@@ -17,7 +19,8 @@ public class OrderServiceImpl implements OrderService {
     }
 
     public List<Order> allOrders() {
-        return orderRepository.findAll();
+        int idClient = clientService.getAuthClient().getIdClient();
+        return orderRepository.findAllByIdClient(idClient);
     }
 
     public void addOrder(Order order) {

@@ -50,7 +50,7 @@
                                     <input class="form-control form-control-lg" type="password" name="password" id="password" placeholder="Enter your password" required>
                                 </div>
                                 <label>
-                                    Do you want to <a href="/">Sign In?</a>
+                                    Do you want to <a href="/signin">Sign In?</a>
                                 </label>
                                 <div class="text-center mt-3">
                                    <input value="Sign Up" type="submit" class="btn btn-lg btn-primary"/>
