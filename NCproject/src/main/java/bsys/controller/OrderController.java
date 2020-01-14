@@ -1,12 +1,13 @@
 package bsys.controller;
 
-import bsys.model.Client;
 import bsys.model.Order;
 import bsys.service.order.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
@@ -23,20 +24,22 @@ public class OrderController {
 
     @GetMapping
     public ModelAndView allOrders() {
-        List<Order> order = orderService.allOrders();
+        List<Order> orderList = orderService.allOrders();
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("OrderPage");
-        modelAndView.addObject("orderList", order);
+        modelAndView.addObject("orderList", orderList);
         return modelAndView;
     }
 
-    @PostMapping(value = "/edit/{id}")
-    public ModelAndView editOrder(@PathVariable int id, String statusOrder) {
+    @PostMapping(value = "/send/{id}")
+    public ModelAndView sendOrder(@PathVariable int id) {
         ModelAndView modelAndView = new ModelAndView();
+        orderService.setStatusSend(id);
         modelAndView.setViewName("redirect:/order");
-        orderService.editOrderStatus(statusOrder, id);
         return modelAndView;
     }
+
+/*
 
     @GetMapping(value = "/add")
     public ModelAndView addOrderPage() {
@@ -55,13 +58,13 @@ public class OrderController {
         modelAndView.setViewName("redirect:/order");
         return modelAndView;
     }
-
+*/
     @GetMapping(value = "/delete/{id}")
     public ModelAndView deleteOrder(@PathVariable int id) {
         ModelAndView modelAndView = new ModelAndView();
+        orderService.deleteOrder(id);
         modelAndView.setViewName("redirect:/order");
-        Order order = orderService.getById(id);
-        orderService.deleteOrder(order);
         return modelAndView;
     }
+
 }

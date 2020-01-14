@@ -1,5 +1,6 @@
 package bsys.service.order;
 
+import bsys.model.Client;
 import bsys.model.Order;
 import bsys.repository.OrderRepository;
 import bsys.service.client.ClientService;
@@ -14,25 +15,31 @@ public class OrderServiceImpl implements OrderService {
     private OrderRepository orderRepository;
 
     @Autowired
+    public void setClientService(ClientService clientService) {
+        this.clientService = clientService;
+    }
+
+    @Autowired
     public void setOrderRepository(OrderRepository orderRepository) {
         this.orderRepository = orderRepository;
     }
 
     public List<Order> allOrders() {
-        int idClient = clientService.getAuthClient().getIdClient();
-        return orderRepository.findAllByIdClient(idClient);
+        Client client = clientService.getAuthClient();
+        return orderRepository.findAllByIdClient(client);
+    }
+
+    public void setStatusSend(int idOrder) {
+        orderRepository.setStatusSend(idOrder);
+    }
+
+    public void deleteOrder(int idOrder) {
+        Order order = getById(idOrder);
+        orderRepository.delete(order);
     }
 
     public void addOrder(Order order) {
         orderRepository.save(order);
-    }
-
-    public void deleteOrder(Order order) {
-        orderRepository.delete(order);
-    }
-
-    public void editOrderStatus(String statusOrder, int id) {
-        orderRepository.editOrderStatus(statusOrder, id);
     }
 
     public Order getById(int idOrder) {

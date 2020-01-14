@@ -18,10 +18,10 @@
 </head>
 <body>
     <c:if test="${empty product.idProduct}">
-        <c:url value="/product-add" var="var"/>
+        <c:url value="/product/add" var="var"/>
     </c:if>
     <c:if test="${!empty product.idProduct}">
-        <c:url value="/product-edit" var="var"/>
+        <c:url value="/product/edit" var="var"/>
     </c:if>
 
     <!-- Navbar -->
@@ -64,10 +64,10 @@
                 <div class="row">
                     <div class="col-lg-8 col-md-7 col-sm-6">
                         <c:if test="${empty product.idProduct}">
-                            <h1>Add/Edit Product</h1>
+                            <h1>Add Product</h1>
                         </c:if>
                         <c:if test="${!empty product.idProduct}">
-                            <h1>Add/Edit Product</h1>
+                            <h1>Edit Product</h1>
                         </c:if>
                         <p class="lead"> </p>
                     </div>
@@ -78,7 +78,6 @@
             <div class="card bg-light mb-4">
                 <div class="card-body">
                     <form:form action="${var}" method="POST">
-                        <c:forEach var="tariff" items="${productList.idTariff}">
                             <div class="form-row">
                                 <div class="form-group col-md-6">
                                     <label class="h5">${tariff.nameTariff}</label>
@@ -186,7 +185,6 @@
                             <input type="submit" class="btn btn-success" value="Send" id="statusOrder"/>
                             <input type="submit" class="btn btn-warning" value="Save" id="statusOrder"/>
                             <button type="button" class="btn btn-outline-secondary" onclick="history.back()">Cancel</button>
-                        </c:forEach>
                     </form:form>
                 </div>
             </div>

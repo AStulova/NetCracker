@@ -1,3 +1,4 @@
+<%@ page buffer="8192kb" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
@@ -55,7 +56,7 @@
                     </div>
                     <div class="col-lg-4 col-md-4 col-sm-6">
                         <div class="text-sm-right">
-                            <input value="New Order" type="button" class="btn btn-primary btn-lg" onclick="location.href='/order-add/'" />
+                            <input value="New Order" type="button" class="btn btn-primary btn-lg" onclick="location.href='/order/add/'" />
                         </div>
                     </div>
                 </div>
@@ -74,31 +75,31 @@
                 </thead>
                 <tbody>
                     <c:forEach var="order" items="${orderList}">
-                    <tr class="bg-light">
-                        <td class="align-middle">${order.idOrder}</td>
-                        <td class="align-middle">${order.dateOrder}</td>
-                        <td class="align-middle">250.00</td>
-                        <c:if test="${order.statusOrder eq 'Saved'}">
-                            <td class="align-middle">
-                                <span class="badge badge-warning">Saved</span>
-                            </td>
-                            <td class="text-right">
-                                <input value="Send" type="button" class="btn btn-primary" onclick="location.href='/order-send/${order.idOrder}'"/>
-                                <input value="Edit" type="button" class="btn btn-outline-primary" onclick="location.href='/product/${order.idOrder}'" />
-                            </td>
-                        </c:if>
-                        <c:if test="${order.statusOrder eq 'Sended'}">
-                            <td class="align-middle">
-                                <span class="badge badge-success">Sended</span>
-                            </td>
-                            <td class="text-right">
-                                <input value="Cancel" type="button" class="btn btn-outline-primary" onclick="location.href='/order-delete/${order.idOrder}'" />
-                            </td>
-                        </c:if>
-                    </tr>
-                    <tr class="bg-white">
-                        <td colspan="5"></td>
-                    </tr>
+                        <tr class="bg-light">
+                            <td class="align-middle">${order.idClient}</td>
+                            <td class="align-middle">${order.dateOrder}</td>
+                            <td class="align-middle"> </td>
+                            <c:if test="${order.statusOrder eq 'Saved'}">
+                                <td class="align-middle">
+                                    <span class="badge badge-warning">Saved</span>
+                                </td>
+                                <td class="text-right">
+                                    <input value="Send" type="button" class="btn btn-primary" onclick="location.href='/order/send/${order.idOrder}'"/>
+                                    <input value="Edit" type="button" class="btn btn-outline-primary" onclick="location.href='/product/${order.idOrder}'" />
+                                </td>
+                            </c:if>
+                            <c:if test="${order.statusOrder eq 'Sended'}">
+                                <td class="align-middle">
+                                    <span class="badge badge-success">Sended</span>
+                                </td>
+                                <td class="text-right">
+                                    <input value="Cancel" type="button" class="btn btn-outline-primary" onclick="location.href='/order/delete/${order.idOrder}'" />
+                                </td>
+                            </c:if>
+                        </tr>
+                        <tr class="bg-white">
+                            <td colspan="5"></td>
+                        </tr>
                     </c:forEach>
                 </tbody>
             </table>

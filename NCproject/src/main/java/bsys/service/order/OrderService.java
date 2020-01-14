@@ -1,12 +1,13 @@
 package bsys.service.order;
 
 import bsys.model.Order;
+
 import java.util.List;
 
 public interface OrderService {
     List<Order> allOrders();
+    void setStatusSend(int idOrder);
     void addOrder(Order order);
-    void deleteOrder(Order order);
-    void editOrderStatus(String statusOrder, int id);
+    void deleteOrder(int idOrder);
     Order getById(int idOrder);
 }

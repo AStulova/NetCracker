@@ -1,13 +1,12 @@
 package bsys.controller;
 
 import bsys.model.Product;
+import bsys.model.Tariff;
 import bsys.service.product.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
@@ -21,23 +20,26 @@ public class ProductController {
         this.productService = productService;
     }
 
-    @GetMapping(value = "/product/{id}")
-    public ModelAndView allProducts(@PathVariable int id) {
-        List<Product> product = productService.allProducts(id);
+    @GetMapping(value = "/product/{idOrder}")
+    public ModelAndView allProducts(@PathVariable int idOrder) {
+        List<Product> product = productService.allProducts(idOrder);
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("ProductPage");
         modelAndView.addObject("productList", product);
         return modelAndView;
     }
 
-    @PostMapping(value = "/product-edit/{id}/{sms}/{minute}")
-    public ModelAndView editProduct(@PathVariable int id, @PathVariable int sms, @PathVariable int minute) {
+    @GetMapping(value = "/product/edit/{id}")
+    public ModelAndView editProduct(@PathVariable int id) {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("redirect:/product/");
-        productService.editProductPhone(sms, minute, id);
+        Product product = productService.getById(id);
+        Tariff tariff = product.getIdTariff(); // ?
+        modelAndView.setViewName("ProductEdit");
+        modelAndView.addObject("product", product);
+        modelAndView.addObject("tariff", tariff);
         return modelAndView;
     }
-
+/*
     @GetMapping(value = "/product-add")
     public ModelAndView addProductPage() {
         ModelAndView modelAndView = new ModelAndView();
@@ -53,13 +55,14 @@ public class ProductController {
         productService.addProduct(product);
         return modelAndView;
     }
-
-    @GetMapping(value = "/product-delete/{id}")
+*/
+    @GetMapping(value = "/product/delete/{id}")
     public ModelAndView deleteProduct(@PathVariable int id) {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("redirect:/product");
+        modelAndView.setViewName("redirect:/product"); // редирект должен быть с idOrder
         Product product = productService.getById(id);
         productService.deleteProduct(product);
         return modelAndView;
     }
+
 }

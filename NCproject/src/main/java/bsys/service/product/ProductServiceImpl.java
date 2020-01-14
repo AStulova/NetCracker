@@ -1,15 +1,23 @@
 package bsys.service.product;
 
+import bsys.model.Order;
 import bsys.model.Product;
+import bsys.repository.OrderRepository;
 import bsys.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import javax.transaction.Transactional;
+
 import java.util.List;
 
 @Service
 public class ProductServiceImpl implements ProductService {
+    private OrderRepository orderRepository;
     private ProductRepository productRepository;
+
+    @Autowired
+    public void setOrderRepository(OrderRepository orderRepository) {
+        this.orderRepository = orderRepository;
+    }
 
     @Autowired
     public void setProductRepository(ProductRepository productRepository) {
@@ -17,7 +25,8 @@ public class ProductServiceImpl implements ProductService {
     }
 
     public List<Product> allProducts(int idOrder) {
-        return productRepository.findByIdOrder(idOrder);
+        Order order = orderRepository.getOne(idOrder);
+        return productRepository.findByIdOrder(order);
     }
 
     public void addProduct(Product product) {

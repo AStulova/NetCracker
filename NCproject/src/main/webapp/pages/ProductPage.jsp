@@ -50,8 +50,13 @@
             <div class="page-header" id="banner">
                 <div class="row">
                     <div class="col-lg-8 col-md-7 col-sm-6">
-                        <h1>Add/Edit Order</h1>
+                        <h1>Edit Order</h1>
                         <p class="lead"> </p>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-6">
+                        <div class="text-sm-right">
+                            <input value="Add Tariff" type="button" class="btn btn-primary btn-lg" onclick="location.href='/tariff'" />
+                        </div>
                     </div>
                 </div>
             </div>
@@ -87,8 +92,8 @@
                         <td class="align-middle">${product.addition}</td>
                         <td class="align-middle">250.00</td>
                         <td class="text-right">
-                            <input value="Edit" type="button" class="btn btn-outline-primary" onclick="location.href='/product-edit${product.idProduct}'" />
-                            <input value="Delete" type="button" class="btn btn-outline-primary" onclick="location.href='/product-delete${product.idProduct}'" />
+                            <input value="Edit" type="button" class="btn btn-outline-primary" onclick="location.href='/product/edit${product.idProduct}'" />
+                            <input value="Delete" type="button" class="btn btn-outline-primary" onclick="location.href='/product/delete${product.idProduct}'" />
                         </td>
                     </tr>
                     <tr class="bg-white">
