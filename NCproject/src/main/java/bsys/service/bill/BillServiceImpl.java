@@ -16,9 +16,11 @@ public class BillServiceImpl implements BillService {
         this.billRepository = billRepository;
     }
 
+/*
     public List<Bill> allBills(int idClient) {
         return billRepository.findAllByIdClient(idClient);
     }
+*/
 
     public void addBill(Bill bill) {
         billRepository.save(bill);

@@ -1,4 +1,3 @@
-<%@ page buffer="8192kb" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
@@ -76,24 +75,24 @@
                 <tbody>
                     <c:forEach var="order" items="${orderList}">
                         <tr class="bg-light">
-                            <td class="align-middle">${order.idClient}</td>
-                            <td class="align-middle">${order.dateOrder}</td>
-                            <td class="align-middle"> </td>
-                            <c:if test="${order.statusOrder eq 'Saved'}">
+                            <td class="align-middle"><c:out value="${order[0]}"/></td>
+                            <td class="align-middle"><c:out value="${order[1]}"/></td>
+                            <td class="align-middle"> ??? </td>
+                            <c:if test="${order[2] eq 'Saved'}">
                                 <td class="align-middle">
                                     <span class="badge badge-warning">Saved</span>
                                 </td>
                                 <td class="text-right">
-                                    <input value="Send" type="button" class="btn btn-primary" onclick="location.href='/order/send/${order.idOrder}'"/>
-                                    <input value="Edit" type="button" class="btn btn-outline-primary" onclick="location.href='/product/${order.idOrder}'" />
+                                    <input value="Send" type="button" class="btn btn-primary" onclick="location.href='/order/send/${order[0]}'"/>
+                                    <input value="Edit" type="button" class="btn btn-outline-primary" onclick="location.href='/product/${order[0]}'" />
                                 </td>
                             </c:if>
-                            <c:if test="${order.statusOrder eq 'Sended'}">
+                            <c:if test="${order[2] eq 'Sended'}">
                                 <td class="align-middle">
                                     <span class="badge badge-success">Sended</span>
                                 </td>
                                 <td class="text-right">
-                                    <input value="Cancel" type="button" class="btn btn-outline-primary" onclick="location.href='/order/delete/${order.idOrder}'" />
+                                    <input value="Cancel" type="button" class="btn btn-outline-primary" onclick="location.href='/order/delete/${order[0]}'" />
                                 </td>
                             </c:if>
                         </tr>

@@ -19,10 +19,10 @@ public class BillController {
 
     @GetMapping(value = "/bill/{id}")
     public ModelAndView allBills(@PathVariable int id) {
-        List<Bill> bill = billService.allBills(id);
+        //List<Bill> bill = billService.allBills(id);
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("BillPage");
-        modelAndView.addObject("billList", bill);
+        //modelAndView.addObject("billList", bill);
         return modelAndView;
     }
 

@@ -7,6 +7,7 @@ import bsys.service.client.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
@@ -26,7 +27,7 @@ public class OrderServiceImpl implements OrderService {
 
     public List<Order> allOrders() {
         Client client = clientService.getAuthClient();
-        return orderRepository.findAllByIdClient(client);
+        return orderRepository.findAllByClient(client);
     }
 
     public void setStatusSend(int idOrder) {

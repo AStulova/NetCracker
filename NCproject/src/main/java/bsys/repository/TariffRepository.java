@@ -8,7 +8,6 @@ import org.springframework.data.jpa.repository.Query;
 import javax.transaction.Transactional;
 import java.util.List;
 
-@Transactional
 public interface TariffRepository extends JpaRepository<Tariff, Integer> {
     Tariff findByIdTariff(int idTariff);
 

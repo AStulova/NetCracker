@@ -22,10 +22,10 @@ public class ProductController {
 
     @GetMapping(value = "/product/{idOrder}")
     public ModelAndView allProducts(@PathVariable int idOrder) {
-        List<Product> product = productService.allProducts(idOrder);
+        List<Product> productList = productService.allProducts(idOrder);
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("ProductPage");
-        modelAndView.addObject("productList", product);
+        modelAndView.addObject("productList", productList);
         return modelAndView;
     }
 
@@ -33,10 +33,8 @@ public class ProductController {
     public ModelAndView editProduct(@PathVariable int id) {
         ModelAndView modelAndView = new ModelAndView();
         Product product = productService.getById(id);
-        Tariff tariff = product.getIdTariff(); // ?
         modelAndView.setViewName("ProductEdit");
         modelAndView.addObject("product", product);
-        modelAndView.addObject("tariff", tariff);
         return modelAndView;
     }
 /*

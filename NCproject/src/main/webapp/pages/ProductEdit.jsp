@@ -80,15 +80,15 @@
                     <form:form action="${var}" method="POST">
                             <div class="form-row">
                                 <div class="form-group col-md-6">
-                                    <label class="h5">${tariff.nameTariff}</label>
+                                    <label class="h5">${product.tariff.nameTariff}</label>
                                     <p>Smart</p>
                                 </div>
                                 <div class="form-group col-md-6">
-                                    <label class="h5">${tariff.typeTariff}</label>
+                                    <label class="h5">${product.tariff.typeTariff}</label>
                                     <p>Internet</p>
                                 </div>
                             </div>
-                            <c:if test="${tariff.typeTariff eq 'Mobile connection and Internet'}">
+                            <c:if test="${product.tariff.typeTariff eq 'Mobile connection and Internet'}">
                                 <div class="form-row">
                                     <div class="form-group col-md-6">
                                         <label class="h5" for="sms">Number of SMS</label>
@@ -134,7 +134,7 @@
                                     </div>
                                 </div>
                             </c:if>
-                            <c:if test="${tariff.typeTariff eq 'Internet'}">
+                            <c:if test="${product.tariff.typeTariff eq 'Internet'}">
                                 <div class="form-row">
                                     <div class="form-group col-md-6">
                                         <label class="h5" for="gb">Number of Gb</label>
@@ -157,7 +157,7 @@
                                     </div>
                                 </div>
                             </c:if>
-                            <c:if test="${tariff.typeTariff eq 'Phone'}">
+                            <c:if test="${product.tariff.typeTariff eq 'Phone'}">
                                 <div class="form-row">
                                     <div class="form-group col-md-6">
                                         <label class="h5" for="sms">Number of SMS</label>

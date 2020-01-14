@@ -1,3 +1,4 @@
+<%@ page buffer="8192kb" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
@@ -72,7 +73,6 @@
                     <th scope="col">Minutes</th>
                     <th scope="col">Speed</th>
                     <th scope="col">Channels</th>
-                    <th scope="col">Addition</th>
                     <th scope="col">Price</th>
                     <th class="text-right"></th>
                 </tr>
@@ -80,20 +80,17 @@
                 <tbody>
                 <c:forEach var="product" items="${productList}">
                     <tr class="bg-light">
-                        <c:forEach var="tariff" items="${productList.idTariff}">
-                            <td class="align-middle">${tariff.nameTariff}</td>
-                            <td class="align-middle">${tariff.typeTariff}</td>
-                        </c:forEach>
-                        <td class="align-middle">${product.sms}</td>
-                        <td class="align-middle">${product.gb}</td>
-                        <td class="align-middle">${product.minute}</td>
-                        <td class="align-middle">${product.speed}</td>
-                        <td class="align-middle">${product.channel}</td>
-                        <td class="align-middle">${product.addition}</td>
-                        <td class="align-middle">250.00</td>
+                        <td class="align-middle"><c:out value="${product.tariff.nameTariff}"/></td>
+                        <td class="align-middle"><c:out value="${product.tariff.typeTariff}"/></td>
+                        <td class="align-middle"><c:out value="${product.sms}"/></td>
+                        <td class="align-middle"><c:out value="${product.gb}"/></td>
+                        <td class="align-middle"><c:out value="${product.minute}"/></td>
+                        <td class="align-middle"><c:out value="${product.speed}"/></td>
+                        <td class="align-middle"><c:out value="${product.channel}"/></td>
+                        <td class="align-middle"> ??? </td>
                         <td class="text-right">
-                            <input value="Edit" type="button" class="btn btn-outline-primary" onclick="location.href='/product/edit${product.idProduct}'" />
-                            <input value="Delete" type="button" class="btn btn-outline-primary" onclick="location.href='/product/delete${product.idProduct}'" />
+                            <input value="Edit" type="button" class="btn btn-outline-primary" onclick="location.href='/product/edit/${product.idProduct}'" />
+                            <input value="Delete" type="button" class="btn btn-outline-primary" onclick="location.href='/product/delete/${product.idProduct}'" />
                         </td>
                     </tr>
                     <tr class="bg-white">

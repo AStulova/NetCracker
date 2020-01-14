@@ -39,26 +39,6 @@ public class OrderController {
         return modelAndView;
     }
 
-/*
-
-    @GetMapping(value = "/add")
-    public ModelAndView addOrderPage() {
-        List<Order> order = orderService.allOrders(); // +
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("ProductPage");
-        modelAndView.addObject("orderList", order); // +
-        return modelAndView;
-    }
-
-    @PostMapping(value = "/add")
-    public ModelAndView addOrder(@AuthenticationPrincipal Client client, @ModelAttribute("order") Order order) {
-        ModelAndView modelAndView = new ModelAndView();
-        order.setIdClient(client);
-        orderService.addOrder(order);
-        modelAndView.setViewName("redirect:/order");
-        return modelAndView;
-    }
-*/
     @GetMapping(value = "/delete/{id}")
     public ModelAndView deleteOrder(@PathVariable int id) {
         ModelAndView modelAndView = new ModelAndView();

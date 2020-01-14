@@ -24,12 +24,10 @@ public class ClientServiceImpl implements ClientService {
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Override
-    @Transactional
     public Client findClientByEmail(String email) {
         return clientRepository.getByEmail(email);
     }
 
-    @Transactional
     public void addClient(Client client) {
         client.setPassword(bCryptPasswordEncoder.encode(client.getPassword()));
         client.setRole("USER");
@@ -37,17 +35,11 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    @Transactional
     public List<Client> findAll() {
         return clientRepository.findAll();
     }
 
-    @Transactional
-    public void deleteClient(Client client) {
-        clientRepository.delete(client);
-    }
-
-    @Transactional
+    @Override
     public void editClient(Client client) {
         int id = getAuthClient().getIdClient();
         if (!client.getFirstName().equals("")) {
@@ -61,9 +53,9 @@ public class ClientServiceImpl implements ClientService {
         }
     }
 
-    @Transactional
+    @Override
     public Client getById(int idClient) {
-        return clientRepository.getByIdClient(idClient);
+        return clientRepository.getOne(idClient);
     }
 
     @Override
@@ -71,4 +63,10 @@ public class ClientServiceImpl implements ClientService {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         return clientRepository.getByEmail(authentication.getName());
     }
+
+    @Override
+    public void deleteClient(Client client) {
+        clientRepository.delete(client);
+    }
+
 }

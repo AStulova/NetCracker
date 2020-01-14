@@ -12,7 +12,7 @@ public class Order {
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_client")
-    private Client idClient;
+    private Client client;
 
     @Column(name = "date_order")
     private String dateOrder;
@@ -28,12 +28,12 @@ public class Order {
         this.idOrder = idOrder;
     }
 
-    public Client getIdClient() {
-        return idClient;
+    public Client getClient() {
+        return client;
     }
 
-    public void setIdClient(Client idClient) {
-        this.idClient = idClient;
+    public void setClient(Client client) {
+        this.client = client;
     }
 
     public String getDateOrder() {

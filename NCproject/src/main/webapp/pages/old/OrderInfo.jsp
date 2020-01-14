@@ -9,8 +9,6 @@
 <table>
     <tr>
         <th>ID order</th>
-        <th>ID client</th>
-        <th>ID tariff</th>
         <th>Price</th>
         <th>Order date</th>
         <th> </th>
@@ -18,11 +16,8 @@
     <c:forEach var="order" items="${orderList}">
         <tr>
             <td>${order.idOrder}</td>
-            <td>${order.idClient}</td>
-            <td>${order.idConnection}</td>
-            <td>${order.priceOrder}</td>
             <td>${order.dateOrder}</td>
-
+            <td>${order.statusOrder}</td>
             <td>
                 <a href="/edit-order/${order.idOrder}">Edit</a>
                 <a href="/delete-order/${order.idOrder}">Delete</a>

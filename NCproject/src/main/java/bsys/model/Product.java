@@ -1,22 +1,25 @@
 package bsys.model;
 
+import org.hibernate.annotations.Proxy;
+
 import javax.persistence.*;
 
 @Entity
 @Table(name = "Product")
+@Proxy(lazy = false)
 public class Product {
     @Id
     @Column(name = "id_product")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idProduct;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "id_order")
-    private Order idOrder;
+    private Order order;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "id_tariff")
-    private Tariff idTariff;
+    private Tariff tariff;
 
     @Column(name = "sms")
     private int sms;
@@ -44,20 +47,20 @@ public class Product {
         this.idProduct = idProduct;
     }
 
-    public Order getIdOrder() {
-        return idOrder;
+    public Order getOrder() {
+        return order;
     }
 
-    public void setIdOrder(Order idOrder) {
-        this.idOrder = idOrder;
+    public void setOrder(Order order) {
+        this.order = order;
     }
 
-    public Tariff getIdTariff() {
-        return idTariff;
+    public Tariff getTariff() {
+        return tariff;
     }
 
-    public void setIdTariff(Tariff idTariff) {
-        this.idTariff = idTariff;
+    public void setTariff(Tariff tariff) {
+        this.tariff = tariff;
     }
 
     public int getSms() {

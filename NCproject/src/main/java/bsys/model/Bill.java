@@ -12,7 +12,7 @@ public class Bill {
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_client")
-    private Client idClient;
+    private Client client;
 
     @Column(name = "date_bill")
     private String dateBill;
@@ -25,12 +25,12 @@ public class Bill {
         this.idBill = idBill;
     }
 
-    public Client getIdClient() {
-        return idClient;
+    public Client getClient() {
+        return client;
     }
 
-    public void setIdClient(Client idClient) {
-        this.idClient = idClient;
+    public void setClient(Client client) {
+        this.client = client;
     }
 
     public String getDateBill() {

@@ -7,6 +7,7 @@ import bsys.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
@@ -26,7 +27,7 @@ public class ProductServiceImpl implements ProductService {
 
     public List<Product> allProducts(int idOrder) {
         Order order = orderRepository.getOne(idOrder);
-        return productRepository.findByIdOrder(order);
+        return productRepository.findByOrder(order);
     }
 
     public void addProduct(Product product) {
@@ -36,19 +37,21 @@ public class ProductServiceImpl implements ProductService {
     public void deleteProduct(Product product) {
         productRepository.delete(product);
     }
+/*
 
-    /*
     public void editProductPhoneAndInternet(int sms, int minute, int gb, int speed, int id) {
         productRepository.editProductPhoneAndInternet(sms, minute, gb, speed, id);
-    }*/
+    }
 
     public void editProductInternet(int gb, int speed, int id) {
         productRepository.editProductInternet(gb, speed, id);
     }
 
+
     public void editProductPhone(int sms, int minute, int id) {
         productRepository.editProductPhone(sms, minute, id);
     }
+*/
 
     public Product getById(int idProduct) {
         return productRepository.getOne(idProduct);
