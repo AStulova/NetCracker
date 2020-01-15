@@ -33,11 +33,27 @@ public class Product {
     @Column(name = "speed")
     private int speed;
 
-    @Column(name = "channel")
-    private int channel;
+    public Product() {    }
 
-    @Column(name = "addition")
-    private String addition;
+    public Product(Tariff tariff, int value) {
+        setTariff(tariff);
+        Order order = new Order();
+        order.setIdOrder(value);
+        setOrder(order);
+        setSms(value);
+        setGb(value);
+        setMinute(value);
+        setSpeed(value);
+    }
+
+    public Product(Order order, Tariff tariff, int value) {
+        setOrder(order);
+        setTariff(tariff);
+        setSms(value);
+        setGb(value);
+        setMinute(value);
+        setSpeed(value);
+    }
 
     public int getIdProduct() {
         return idProduct;
@@ -93,21 +109,5 @@ public class Product {
 
     public void setSpeed(int speed) {
         this.speed = speed;
-    }
-
-    public int getChannel() {
-        return channel;
-    }
-
-    public void setChannel(int channel) {
-        this.channel = channel;
-    }
-
-    public String getAddition() {
-        return addition;
-    }
-
-    public void setAddition(String addition) {
-        this.addition = addition;
     }
 }

@@ -40,6 +40,7 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
+    @Transactional
     public void editClient(Client client) {
         int id = getAuthClient().getIdClient();
         if (!client.getFirstName().equals("")) {

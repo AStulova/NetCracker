@@ -17,8 +17,18 @@ public class TariffController {
         this.tariffService = tariffService;
     }
 
+    @GetMapping(value = "/{idOrder}/add/tariff")
+    public ModelAndView allTariffs(@PathVariable int idOrder) {
+        List<Tariff> tariff =  tariffService.allTariffs();
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("TariffPage");
+        modelAndView.addObject("tariffList", tariff);
+        modelAndView.addObject("idOrder", idOrder);
+        return modelAndView;
+    }
+
     @GetMapping(value = "/tariff")
-    public ModelAndView allTariffs() {
+    public ModelAndView allTariffsNewOrder() {
         List<Tariff> tariff =  tariffService.allTariffs();
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("TariffPage");
@@ -26,7 +36,7 @@ public class TariffController {
         return modelAndView;
     }
 
-    @GetMapping(value = "/tariff-add")
+    /*@GetMapping(value = "/tariff-add")
     public ModelAndView addTariffPage() {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("old/TariffEdit");
@@ -57,5 +67,5 @@ public class TariffController {
         Tariff tariff = tariffService.getById(id);
         tariffService.deleteTariff(tariff);
         return modelAndView;
-    }
+    }*/
 }

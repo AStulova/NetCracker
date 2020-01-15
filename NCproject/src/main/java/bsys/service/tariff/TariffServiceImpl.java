@@ -17,18 +17,23 @@ public class TariffServiceImpl implements TariffService {
         this.tariffRepository = tariffRepository;
     }
 
+    @Override
     public List<Tariff> allTariffs() {
         return tariffRepository.findAll();
     }
 
+    @Override
     public void addTariff(Tariff tariff) {
         tariffRepository.save(tariff);
     }
 
+    @Override
+    @Transactional
     public void deleteTariff(Tariff tariff) {
         tariffRepository.delete(tariff);
     }
 
+    @Override
     public Tariff getById(int idTariff) {
         return tariffRepository.findByIdTariff(idTariff);
     }

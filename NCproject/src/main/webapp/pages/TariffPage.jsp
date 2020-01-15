@@ -75,7 +75,12 @@
                             <td class="align-middle">${tariff.typeTariff}</td>
                             <td class="align-middle">${tariff.priceTariff}</td>
                             <td class="text-right">
-                                <input value="Add Tariff" type="button" onclick="location.href='/order-add/${tariff.idTariff}'" class="btn btn-outline-primary" />
+                                <c:if test="${!empty idOrder}">
+                                    <input value="Add Tariff" type="button" onclick="location.href='/product/${idOrder}/add/${tariff.idTariff}'" class="btn btn-outline-primary" />
+                                </c:if>
+                                <c:if test="${empty idOrder}">
+                                    <input value="Add Tariff" type="button" onclick="location.href='/product/add/${tariff.idTariff}'" class="btn btn-outline-primary" />
+                                </c:if>
                             </td>
                         </tr>
                         <tr class="bg-white">

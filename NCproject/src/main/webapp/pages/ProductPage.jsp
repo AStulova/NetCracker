@@ -56,7 +56,7 @@
                     </div>
                     <div class="col-lg-4 col-md-4 col-sm-6">
                         <div class="text-sm-right">
-                            <input value="Add Tariff" type="button" class="btn btn-primary btn-lg" onclick="location.href='/tariff'" />
+                            <input value="Add Tariff" type="button" class="btn btn-primary btn-lg" onclick="location.href='/${productList[0].order.idOrder}/add/tariff'" />
                         </div>
                     </div>
                 </div>
@@ -72,7 +72,6 @@
                     <th scope="col">Gb</th>
                     <th scope="col">Minutes</th>
                     <th scope="col">Speed</th>
-                    <th scope="col">Channels</th>
                     <th scope="col">Price</th>
                     <th class="text-right"></th>
                 </tr>
@@ -80,17 +79,16 @@
                 <tbody>
                 <c:forEach var="product" items="${productList}">
                     <tr class="bg-light">
-                        <td class="align-middle"><c:out value="${product.tariff.nameTariff}"/></td>
-                        <td class="align-middle"><c:out value="${product.tariff.typeTariff}"/></td>
-                        <td class="align-middle"><c:out value="${product.sms}"/></td>
-                        <td class="align-middle"><c:out value="${product.gb}"/></td>
-                        <td class="align-middle"><c:out value="${product.minute}"/></td>
-                        <td class="align-middle"><c:out value="${product.speed}"/></td>
-                        <td class="align-middle"><c:out value="${product.channel}"/></td>
+                        <td class="align-middle">${product.tariff.nameTariff}</td>
+                        <td class="align-middle">${product.tariff.typeTariff}</td>
+                        <td class="align-middle">${product.sms}</td>
+                        <td class="align-middle">${product.gb}</td>
+                        <td class="align-middle">${product.minute}</td>
+                        <td class="align-middle">${product.speed}</td>
                         <td class="align-middle"> ??? </td>
                         <td class="text-right">
-                            <input value="Edit" type="button" class="btn btn-outline-primary" onclick="location.href='/product/edit/${product.idProduct}'" />
-                            <input value="Delete" type="button" class="btn btn-outline-primary" onclick="location.href='/product/delete/${product.idProduct}'" />
+                            <input value="Edit" type="button" class="btn btn-outline-primary" onclick="location.href='/product/${product.order.idOrder}/edit/${product.idProduct}'" />
+                            <input value="Delete" type="button" class="btn btn-outline-primary" onclick="location.href='/product/${product.order.idOrder}/delete/${product.idProduct}'" />
                         </td>
                     </tr>
                     <tr class="bg-white">

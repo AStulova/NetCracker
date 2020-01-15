@@ -55,7 +55,7 @@
                     </div>
                     <div class="col-lg-4 col-md-4 col-sm-6">
                         <div class="text-sm-right">
-                            <input value="New Order" type="button" class="btn btn-primary btn-lg" onclick="location.href='/order/add/'" />
+                            <input value="New Order" type="button" class="btn btn-primary btn-lg" onclick="location.href='/tariff'" />
                         </div>
                     </div>
                 </div>
@@ -75,8 +75,8 @@
                 <tbody>
                     <c:forEach var="order" items="${orderList}">
                         <tr class="bg-light">
-                            <td class="align-middle"><c:out value="${order[0]}"/></td>
-                            <td class="align-middle"><c:out value="${order[1]}"/></td>
+                            <td class="align-middle">${order[0]}</td>
+                            <td class="align-middle">${order[1]}</td>
                             <td class="align-middle"> ??? </td>
                             <c:if test="${order[2] eq 'Saved'}">
                                 <td class="align-middle">

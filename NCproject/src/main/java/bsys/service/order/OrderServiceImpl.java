@@ -25,24 +25,36 @@ public class OrderServiceImpl implements OrderService {
         this.orderRepository = orderRepository;
     }
 
+    @Override
     public List<Order> allOrders() {
         Client client = clientService.getAuthClient();
         return orderRepository.findAllByClient(client);
     }
 
+    @Override
+    @Transactional
     public void setStatusSend(int idOrder) {
         orderRepository.setStatusSend(idOrder);
     }
 
+    @Override
+    @Transactional
     public void deleteOrder(int idOrder) {
         Order order = getById(idOrder);
         orderRepository.delete(order);
     }
 
+    @Override
     public void addOrder(Order order) {
         orderRepository.save(order);
     }
 
+    @Override
+    public int createOrder() {
+        return orderRepository.createOrder(clientService.getAuthClient().getIdClient());
+    }
+
+    @Override
     public Order getById(int idOrder) {
         return orderRepository.getOne(idOrder);
     }

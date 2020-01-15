@@ -16,4 +16,9 @@ public interface OrderRepository extends JpaRepository<Order,Integer> {
 
     @Query("select o.idOrder, o.dateOrder, o.statusOrder from Order o where o.client = ?1")
     List<Order> findAllByClient(Client client);
+
+    @Query(value = "insert into orders(id_client, date_order, status) " +
+            "values (?1, now(), 'Saved') " +
+            "returning id_order", nativeQuery = true)
+    int createOrder(int idClient);
 }
