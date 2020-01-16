@@ -31,7 +31,7 @@ public class OrderController {
         return modelAndView;
     }
 
-    @PostMapping(value = "/send/{id}")
+    @GetMapping(value = "/send/{id}")
     public ModelAndView sendOrder(@PathVariable int id) {
         ModelAndView modelAndView = new ModelAndView();
         orderService.setStatusSend(id);

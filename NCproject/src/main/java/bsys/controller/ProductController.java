@@ -80,11 +80,12 @@ public class ProductController {
         return modelAndView;
     }
 
-    @PostMapping(value = "/add")
-    public ModelAndView addProduct(@ModelAttribute("product") Product product) {
+    @PostMapping(value = "/{idOrder}/add/{idTariff}")
+    public ModelAndView addProduct(@PathVariable int idOrder, @PathVariable int idTariff, @ModelAttribute("product") Product product) {
         ModelAndView modelAndView = new ModelAndView();
-        int idOrder = productService.addProduct(product);
-        modelAndView.setViewName("redirect:/product" + idOrder);
+        product.setTariff(tariffService.getById(idTariff));
+        int idCurOrder = productService.addProduct(product, idOrder);
+        modelAndView.setViewName("redirect:/product/" + idCurOrder);
         return modelAndView;
     }
 

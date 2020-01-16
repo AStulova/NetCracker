@@ -32,16 +32,17 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     @Transactional
-    public int addProduct(Product product) {
-        if (product.getOrder().getIdOrder() == 0) {
-            int idOrder = orderService.createOrder();
+    public int addProduct(Product product, int idOrder) {
+        if (idOrder == 0) {
+            int idCurOrder = orderService.createOrder();
+            product.setOrder(orderService.getById(idCurOrder));
+            productRepository.save(product);
+            return idCurOrder;
+        }
+        else {
             product.setOrder(orderService.getById(idOrder));
             productRepository.save(product);
             return idOrder;
-        }
-        else {
-            productRepository.save(product);
-            return product.getOrder().getIdOrder();
         }
     }
 

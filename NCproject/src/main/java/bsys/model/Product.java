@@ -17,7 +17,7 @@ public class Product {
     @JoinColumn(name = "id_order")
     private Order order;
 
-    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.REMOVE,CascadeType.DETACH})
     @JoinColumn(name = "id_tariff")
     private Tariff tariff;
 

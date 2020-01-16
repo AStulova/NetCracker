@@ -18,7 +18,7 @@
 </head>
 <body>
     <c:if test="${product.idProduct eq 0}">
-        <c:url value="/product/add" var="var"/>
+        <c:url value="/product/${product.order.idOrder}/add/${product.tariff.idTariff}" var="var"/>
     </c:if>
     <c:if test="${product.idProduct ne 0}">
         <c:url value="/product/${product.order.idOrder}/edit/${product.idProduct}" var="var"/>
