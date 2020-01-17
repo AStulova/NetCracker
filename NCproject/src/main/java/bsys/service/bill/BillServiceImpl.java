@@ -1,26 +1,33 @@
 package bsys.service.bill;
 
 import bsys.model.Bill;
+import bsys.model.Client;
 import bsys.repository.BillRepository;
+import bsys.service.client.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import javax.transaction.Transactional;
+
 import java.util.List;
 
 @Service
 public class BillServiceImpl implements BillService {
     private BillRepository billRepository;
+    private ClientService clientService;
+
+    @Autowired
+    public void setClientService(ClientService clientService) {
+        this.clientService = clientService;
+    }
 
     @Autowired
     public void setBillDAO(BillRepository billRepository) {
         this.billRepository = billRepository;
     }
 
-/*
-    public List<Bill> allBills(int idClient) {
-        return billRepository.findAllByIdClient(idClient);
+    public List<Bill> allBills() {
+        Client client = clientService.getAuthClient();
+        return billRepository.findAllByClient(client);
     }
-*/
 
     public void addBill(Bill bill) {
         billRepository.save(bill);

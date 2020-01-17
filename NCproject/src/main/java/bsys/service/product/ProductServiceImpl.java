@@ -1,8 +1,9 @@
 package bsys.service.product;
 
+import bsys.model.Client;
 import bsys.model.Product;
-import bsys.repository.OrderRepository;
 import bsys.repository.ProductRepository;
+import bsys.service.client.ClientService;
 import bsys.service.order.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,8 +13,14 @@ import java.util.List;
 
 @Service
 public class ProductServiceImpl implements ProductService {
+    private ClientService clientService;
     private OrderService orderService;
     private ProductRepository productRepository;
+
+    @Autowired
+    public void setClientService(ClientService clientService) {
+        this.clientService = clientService;
+    }
 
     @Autowired
     public void setOrderService(OrderService orderService) {
@@ -23,6 +30,12 @@ public class ProductServiceImpl implements ProductService {
     @Autowired
     public void setProductRepository(ProductRepository productRepository) {
         this.productRepository = productRepository;
+    }
+
+    @Override
+    public List<Product> allProducts() {
+        Client client = clientService.getAuthClient();
+        return productRepository.getAllByClient(client);
     }
 
     @Override
@@ -60,6 +73,11 @@ public class ProductServiceImpl implements ProductService {
                 productRepository.editPhone(product.getSms(), product.getMinute(), idProduct);
                 break;
         }
+    }
+
+    @Override
+    public double getProductPrice(int idProduct) {
+        return productRepository.getProductPrice(idProduct);
     }
 
     @Override

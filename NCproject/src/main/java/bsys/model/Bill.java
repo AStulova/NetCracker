@@ -17,6 +17,12 @@ public class Bill {
     @Column(name = "date_bill")
     private String dateBill;
 
+    @Column(name = "discount")
+    private int discount;
+
+    @Column(name = "total")
+    private double total;
+
     public int getIdBill() {
         return idBill;
     }
@@ -39,5 +45,21 @@ public class Bill {
 
     public void setDateBill(String dateBill) {
         this.dateBill = dateBill;
+    }
+
+    public int getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(int discount) {
+        this.discount = discount;
+    }
+
+    public double getTotal() {
+        return total;
+    }
+
+    public void setTotal(double total) {
+        this.total = total;
     }
 }

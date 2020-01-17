@@ -63,7 +63,7 @@
                         <th scope="col">ID Tariff</th>
                         <th scope="col">Tariff name</th>
                         <th scope="col">Type</th>
-                        <th scope="col">Price for 1 SMS/Gb/min</th>
+                        <th scope="col">Price</th>
                         <th class="text-right"></th>
                     </tr>
                 </thead>

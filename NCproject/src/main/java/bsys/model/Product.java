@@ -33,6 +33,9 @@ public class Product {
     @Column(name = "speed")
     private int speed;
 
+    @Transient
+    private double price;
+
     public Product() {    }
 
     public Product(Tariff tariff, int value) {
@@ -44,6 +47,7 @@ public class Product {
         setGb(value);
         setMinute(value);
         setSpeed(value);
+        setPrice(value);
     }
 
     public Product(Order order, Tariff tariff, int value) {
@@ -53,6 +57,7 @@ public class Product {
         setGb(value);
         setMinute(value);
         setSpeed(value);
+        setPrice(value);
     }
 
     public int getIdProduct() {
@@ -109,5 +114,13 @@ public class Product {
 
     public void setSpeed(int speed) {
         this.speed = speed;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
     }
 }

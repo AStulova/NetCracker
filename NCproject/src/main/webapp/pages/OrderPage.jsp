@@ -75,24 +75,24 @@
                 <tbody>
                     <c:forEach var="order" items="${orderList}">
                         <tr class="bg-light">
-                            <td class="align-middle">${order[0]}</td>
-                            <td class="align-middle">${order[1]}</td>
+                            <td class="align-middle">${order.idOrder}</td>
+                            <td class="align-middle">${order.dateOrder}</td>
                             <td class="align-middle"> ??? </td>
-                            <c:if test="${order[2] eq 'Saved'}">
+                            <c:if test="${order.statusOrder eq 'Saved'}">
                                 <td class="align-middle">
                                     <span class="badge badge-warning">Saved</span>
                                 </td>
                                 <td class="text-right">
-                                    <input value="Send" type="button" class="btn btn-primary" onclick="location.href='/order/send/${order[0]}'"/>
-                                    <input value="Edit" type="button" class="btn btn-outline-primary" onclick="location.href='/product/${order[0]}'" />
+                                    <input value="Send" type="button" class="btn btn-primary" onclick="location.href='/order/send/${order.idOrder}'"/>
+                                    <input value="Edit" type="button" class="btn btn-outline-primary" onclick="location.href='/product/${order.idOrder}'" />
                                 </td>
                             </c:if>
-                            <c:if test="${order[2] eq 'Sended'}">
+                            <c:if test="${order.statusOrder eq 'Sended'}">
                                 <td class="align-middle">
                                     <span class="badge badge-success">Sended</span>
                                 </td>
                                 <td class="text-right">
-                                    <input value="Cancel" type="button" class="btn btn-outline-primary" onclick="location.href='/order/delete/${order[0]}'" />
+                                    <input value="Cancel" type="button" class="btn btn-outline-primary" onclick="location.href='/order/delete/${order.idOrder}'" />
                                 </td>
                             </c:if>
                         </tr>

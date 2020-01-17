@@ -57,86 +57,85 @@
             </div>
 
             <!-- Bill Info -->
-            <div class="card bg-light">
-                <div class="card-body m-sm-3 m-md-5">
-                    <div class="mb-4">
-                        Hi <strong>Jane Roe</strong>,
-                        <br>
-                        This is the receipt for a payment of <strong>$268.00</strong> (USD) you made to BilSYS.
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="text-muted">Payment No.</div>
-                            <strong>732047036</strong>
+            <c:forEach var="bill" items="${billList}">
+                <div class="card bg-light mb-4">
+                    <div class="card-body m-sm-3 m-md-5">
+                        <div class="mb-4">
+                            Hi <strong>${bill.client.firstName} ${bill.client.lastName}</strong>,
+                            <br>
+                            This is the receipt for a payment of <strong>$${bill.total}</strong> (USD) you made to BillSYS.
                         </div>
-                        <div class="col-md-6 text-md-right">
-                            <div class="text-muted">Payment Date</div>
-                            <strong>Apr 13, 2018 - 02:55 pm</strong>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="text-muted">Payment No.</div>
+                                <strong>${bill.idBill}</strong>
+                            </div>
+                            <div class="col-md-6 text-md-right">
+                                <div class="text-muted">Payment Date</div>
+                                <strong>${bill.dateBill}</strong>
+                            </div>
                         </div>
-                    </div>
-                    <hr class="my-4">
-                    <div class="row mb-4">
-                        <div class="col-md-6">
-                            <div class="text-muted">Client</div>
-                            <strong>Jane Roe</strong>
-                            <p>
-                                ID: 10011 <br>
-                                Phone: 8910244357<br>
-                                Email: john.roe@gmail.com
-                            </p>
+                        <hr class="my-4">
+                        <div class="row mb-4">
+                            <div class="col-md-6">
+                                <div class="text-muted">Client</div>
+                                <strong>${bill.client.firstName} ${bill.client.lastName}</strong>
+                                <p>
+                                    ID: ${bill.client.idClient} <br>
+                                    Phone: ${bill.client.phone}<br>
+                                    Email: ${bill.client.email}
+                                </p>
+                            </div>
                         </div>
-                    </div>
 
-                    <table class="table table-sm">
-                        <thead>
-                        <tr>
-                            <th>Tariff</th>
-                            <th>Type</th>
-                            <th>Quantity</th>
-                            <th class="text-right">Amount</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr>
-                            <td>Productivity</td>
-                            <td>Internet</td>
-                            <td>20</td>
-                            <td class="text-right">$250.00</td>
-                        </tr>
-                        <tr>
-                            <td>Social</td>
-                            <td>Minutes and SMS</td>
-                            <td>500</td>
-                            <td class="text-right">$250.00</td>
-                        </tr>
-                        <tr>
-                            <th>&nbsp;</th>
-                            <th>&nbsp;</th>
-                            <th>Subtotal</th>
-                            <th class="text-right">$500.00</th>
-                        </tr>
-                        <tr>
-                            <th>&nbsp;</th>
-                            <th>&nbsp;</th>
-                            <th>Discount </th>
-                            <th class="text-right">5%</th>
-                        </tr>
-                        <tr>
-                            <th>&nbsp;</th>
-                            <th>&nbsp;</th>
-                            <th>Total </th>
-                            <th class="text-right">$475.00</th>
-                        </tr>
-                        </tbody>
-                    </table>
+                        <!-- Table of products -->
+                        <table class="table table-sm">
+                            <thead>
+                            <tr>
+                                <th>ID order</th>
+                                <th>Tariff</th>
+                                <th>Type</th>
+                                <th class="text-right">Amount</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <c:forEach var="product" items="${productList}">
+                                <tr>
+                                    <td>${product[0]}</td>
+                                    <td>${product[1]}</td>
+                                    <td>${product[2]}</td>
+                                    <td class="text-right">$${product[3]}</td>
+                                </tr>
+                            </c:forEach>
+                                <tr>
+                                    <th>&nbsp;</th>
+                                    <th>&nbsp;</th>
+                                    <th>Subtotal</th>
+                                    <th class="text-right">$ ???</th>
+                                </tr>
+                                <tr>
+                                    <th>&nbsp;</th>
+                                    <th>&nbsp;</th>
+                                    <th>Discount </th>
+                                    <th class="text-right">${bill.discount}%</th>
+                                </tr>
+                                <tr>
+                                    <th>&nbsp;</th>
+                                    <th>&nbsp;</th>
+                                    <th>Total </th>
+                                    <th class="text-right">$${bill.total}</th>
+                                </tr>
+                            </tbody>
+                        </table>
 
-                    <div class="text-center">
-                        <a href="#" class="btn btn-secondary" download>
-                            Save this receipt
-                        </a>
+                        <div class="text-center">
+                            <a href="#" class="btn btn-secondary" download>
+                                Save this receipt
+                            </a>
+                        </div>
                     </div>
                 </div>
-            </div>
+            </c:forEach>
         </div>
     </div>
 

@@ -14,8 +14,10 @@ public interface OrderRepository extends JpaRepository<Order,Integer> {
     @Query("update Order o set o.statusOrder = 'Sended' where o.idOrder = ?1")
     void setStatusSend(int id);
 
-    @Query("select o.idOrder, o.dateOrder, o.statusOrder from Order o where o.client = ?1")
     List<Order> findAllByClient(Client client);
+
+    /*@Query("select o.idOrder, o.dateOrder, o.statusOrder from Order o where o.client = ?1")
+    List<Order> findAllByClient(Client client);*/
 
     @Query(value = "insert into orders(id_client, date_order, status) " +
             "values (?1, now(), 'Saved') " +

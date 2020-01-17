@@ -43,7 +43,9 @@ create table Product (
 create table Bill (
                       id_bill serial primary key,
                       id_client integer references Client(id_client),
-                      date_bill timestamp NOT NULL
+                      date_bill timestamp NOT NULL,
+                      discount integer default 1,
+                      total numeric(8, 2) NOT NULL
 );
 
 INSERT into client values
@@ -51,9 +53,9 @@ INSERT into client values
 (2, 'Matthew', 'Perry', '+79425684113', 'MPerry@ya.ru', 'dg6f43sa5', 890.23, 'USER');
 
 insert into tariff values
-(1, 'Super', 'Mobile connection and Internet', 9.90),
-(2, 'FIT Internet', 'Internet', 5.50),
-(3, 'Amedia', 'Phone', 10.20);
+(1, 'Super', 'Mobile connection and Internet', 6.12),
+(2, 'FIT Internet', 'Internet', 16.25),
+(3, 'Smart', 'Phone', 9.88);
 
 INSERT into orders values
 (1, 1, '2019-10-25 16:36:45', 'Saved'),
@@ -61,8 +63,7 @@ INSERT into orders values
 
 insert into Product values
 (1, 1, 1, 200, 10, 500, 60),
-(2, 1, 2, 0, 1000, 0, 100);
+(2, 1, 2, 0, 30, 0, 100);
 
 insert into bill values
-(1, 2, '2019-10-05 16:36:45'),
-(2, 1, '2019-10-05 10:21:11');
+(1, 1, '2019-10-05 16:36:45', 5, 245.25);
