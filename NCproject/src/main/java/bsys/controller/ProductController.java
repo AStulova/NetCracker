@@ -84,8 +84,8 @@ public class ProductController {
     public ModelAndView addProduct(@PathVariable int idOrder, @PathVariable int idTariff, @ModelAttribute("product") Product product) {
         ModelAndView modelAndView = new ModelAndView();
         product.setTariff(tariffService.getById(idTariff));
-        int idCurOrder = productService.addProduct(product, idOrder);
-        modelAndView.setViewName("redirect:/product/" + idCurOrder);
+        Product product1 = productService.addProduct(product, idOrder);
+        modelAndView.setViewName("redirect:/product/" + product1.getOrder().getIdOrder());
         return modelAndView;
     }
 

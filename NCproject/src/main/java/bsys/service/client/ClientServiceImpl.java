@@ -42,7 +42,8 @@ public class ClientServiceImpl implements ClientService {
     @Override
     @Transactional
     public void editClient(Client client) {
-        int id = getAuthClient().getIdClient();
+        clientRepository.save(client);
+        /*int id = getAuthClient().getIdClient();
         if (!client.getFirstName().equals("")) {
             clientRepository.editFirstName(client.getFirstName(), id);
         }
@@ -51,7 +52,7 @@ public class ClientServiceImpl implements ClientService {
         }
         if (!client.getPhone().equals("")) {
             clientRepository.editPhone(client.getPhone(), id);
-        }
+        }*/
     }
 
     @Override

@@ -24,18 +24,17 @@
                 <div class="card bg-light">
                     <div class="card-body">
                         <div class="m-sm-4">
-                            <form:errors path="password_message" cssClass="alert alert-danger alert-dismissible">
-                                <button type="button" class="close" data-dismiss="alert">&times;</button>
-                            </form:errors>
                             <form:form action="${var}" method="POST">
-                                <input type="hidden" name="id" value="${client.idClient}">
                                 <div class="form-group">
                                     <label class="h5" for="firstName">First Name</label>
                                     <input class="form-control form-control-lg" type="text" name="firstName" id="firstName" placeholder="Enter your first name" required pattern="^[A-Z][a-z]+$">
                                 </div>
                                 <div class="form-group">
                                     <label class="h5" for="lastName">Last Name</label>
-                                    <input class="form-control form-control-lg" type="text" name="lastName" id="lastName" placeholder="Enter your last name" required pattern="^[A-Z][a-z]+$">
+                                    <input class="form-control form-control-lg ${!empty errorMessage ? 'is-invalid' : ''}" type="text" name="lastName" id="lastName" placeholder="Enter your last name"  >
+                                    <c:if test="${!empty errorMessage}">
+                                        <div class="invalid-feedback">${errorMessage.get(lastName)}</div>
+                                    </c:if>
                                 </div>
                                 <div class="form-group">
                                     <label class="h5" for="phone">Phone</label>

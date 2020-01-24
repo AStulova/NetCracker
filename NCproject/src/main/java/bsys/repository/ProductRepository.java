@@ -34,4 +34,5 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
             "where p.idProduct = ?1")
     double getProductPrice(int idProduct);
 
+
 }

@@ -30,6 +30,9 @@
                                 <div class="form-group">
                                     <label class="h5" for="email">Email</label>
                                     <input class="form-control form-control-lg" type="email" name="email" id="email" placeholder="Enter your email" required>
+                                    <c:if test="${errors[0] eq 'email'}">
+                                    <div class="invalid-feedback">Sorry, that username's taken. Try another?</div>
+                                    </c:if>
                                 </div>
                                 <div class="form-group">
                                     <label class="h5" for="password">Password</label>

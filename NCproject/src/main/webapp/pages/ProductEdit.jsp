@@ -78,9 +78,6 @@
             <div class="card bg-light mb-4">
                 <div class="card-body">
                     <form:form action="${var}" method="POST">
-                        <%--<c:if test="${product.idProduct eq 0}">
-                            <input type="hidden" name="product.order.idOrder" value="0">
-                        </c:if>--%>
                             <div class="form-row">
                                 <div class="form-group col-md-6">
                                     <label class="h5">Name</label>
@@ -95,8 +92,10 @@
                                 <div class="form-row">
                                     <div class="form-group col-md-3">
                                         <label class="h5" for="sms">Number of SMS</label>
-                                        <select class="form-control" name="sms" id="sms">
-                                            <option selected>${product.sms}</option>
+                                        <select class="form-control" name="sms" id="sms" required>
+                                            <c:if test="${product.idProduct ne 0}">
+                                                <option selected>${product.sms}</option>
+                                            </c:if>
                                             <option>200</option>
                                             <option>400</option>
                                             <option>600</option>
@@ -108,8 +107,10 @@
                                     <div class="form-group col-md-3"> </div>
                                     <div class="form-group col-md-3">
                                         <label class="h5" for="minute">Number of minutes</label>
-                                        <select class="form-control" name="minute" id="minute">
-                                            <option selected>${product.minute}</option>
+                                        <select class="form-control" name="minute" id="minute" required>
+                                            <c:if test="${product.idProduct ne 0}">
+                                                <option selected>${product.minute}</option>
+                                            </c:if>
                                             <option>300</option>
                                             <option>600</option>
                                             <option>900</option>
@@ -121,8 +122,10 @@
                                 <div class="form-row">
                                     <div class="form-group col-md-3">
                                         <label class="h5" for="gb">Number of Gb</label>
-                                        <select class="form-control" name="gb" id="gb">
-                                            <option selected>${product.gb}</option>
+                                        <select class="form-control" name="gb" id="gb" required>
+                                            <c:if test="${product.idProduct ne 0}">
+                                                <option selected>${product.gb}</option>
+                                            </c:if>
                                             <option>10</option>
                                             <option>15</option>
                                             <option>20</option>
@@ -133,8 +136,10 @@
                                     <div class="form-group col-md-3"> </div>
                                     <div class="form-group col-md-3">
                                         <label class="h5" for="speed">Maximum speed (Mb/s)</label>
-                                        <select class="form-control" name="speed" id="speed">
-                                            <option selected>${product.speed}</option>
+                                        <select class="form-control" name="speed" id="speed" required>
+                                            <c:if test="${product.idProduct ne 0}">
+                                                <option selected>${product.speed}</option>
+                                            </c:if>
                                             <option>10</option>
                                             <option>30</option>
                                             <option>60</option>
@@ -147,8 +152,10 @@
                                 <div class="form-row">
                                     <div class="form-group col-md-3">
                                         <label class="h5" for="gb">Number of Gb</label>
-                                        <select class="form-control" name="gb" id="gb">
-                                            <option selected>${product.gb}</option>
+                                        <select class="form-control" name="gb" id="gb" required>
+                                            <c:if test="${product.idProduct ne 0}">
+                                                <option selected>${product.gb}</option>
+                                            </c:if>
                                             <option>1000</option>
                                             <option>5000</option>
                                             <option>10000</option>
@@ -159,8 +166,10 @@
                                     <div class="form-group col-md-3"></div>
                                     <div class="form-group col-md-3">
                                         <label class="h5" for="speed">Maximum speed (Mb/s)</label>
-                                        <select class="form-control" name="speed" id="speed">
+                                        <select class="form-control" name="speed" id="speed" required>
+                                        <c:if test="${product.idProduct ne 0}">
                                             <option selected>${product.speed}</option>
+                                        </c:if>
                                             <option>30</option>
                                             <option>60</option>
                                             <option>100</option>
@@ -173,8 +182,10 @@
                                 <div class="form-row">
                                     <div class="form-group col-md-3">
                                         <label class="h5" for="sms">Number of SMS</label>
-                                        <select class="form-control" name="sms" id="sms">
-                                            <option selected>${product.sms}</option>
+                                        <select class="form-control" name="sms" id="sms" required>
+                                            <c:if test="${product.idProduct ne 0}">
+                                                <option selected>${product.sms}</option>
+                                            </c:if>
                                             <option>200</option>
                                             <option>400</option>
                                             <option>600</option>
@@ -186,8 +197,10 @@
                                     <div class="form-group col-md-3"></div>
                                     <div class="form-group col-md-3">
                                         <label class="h5" for="minute">Number of minutes</label>
-                                        <select class="form-control" name="minute" id="minute">
-                                            <option selected>${product.minute}</option>
+                                        <select class="form-control" name="minute" id="minute" required>
+                                            <c:if test="${product.idProduct ne 0}">
+                                                <option selected>${product.minute}</option>
+                                            </c:if>
                                             <option>300</option>
                                             <option>600</option>
                                             <option>900</option>
