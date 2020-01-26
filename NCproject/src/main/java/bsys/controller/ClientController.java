@@ -42,18 +42,22 @@ public class ClientController {
         Client client = clientService.getAuthClient();
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("ClientPage");
-        modelAndView.addObject("clientList", client);
+        modelAndView.addObject("client", client);
         return modelAndView;
     }
 
-    @PostMapping(value = "/client/edit")
-    public ModelAndView editClient(@ModelAttribute("client") Client client) {
+    @PostMapping(value = "/client")
+    public ModelAndView editClient(@Valid @ModelAttribute("client") Client client, BindingResult bindingResult) {
         ModelAndView modelAndView = new ModelAndView();
-        if (client.getFirstName() == null || client.getLastName() == null || client.getPhone() == null) {
-            throw new IllegalArgumentException("Fields must not be empty.");
+        if (bindingResult.hasErrors()) {
+            getErrorMap(client, bindingResult, modelAndView);
+            modelAndView.addObject("client", clientService.getAuthClient());
+            modelAndView.setViewName("ClientPage");
         }
-        clientService.editClient(client);
-        modelAndView.setViewName("redirect:/client");
+        else {
+            clientService.editClient(client);
+            modelAndView.setViewName("redirect:/client");
+        }
         return modelAndView;
     }
 
@@ -65,23 +69,27 @@ public class ClientController {
     }
 
     @PostMapping(value = "/signup")
-    public ModelAndView addClient(@ModelAttribute("client") @Valid Client client, BindingResult bindingResult) {
+    public ModelAndView addClient(@Valid @ModelAttribute("client") Client client, BindingResult bindingResult) {
         ModelAndView modelAndView = new ModelAndView();
         if (bindingResult.hasErrors()) {
-            Collector<FieldError, ?, Map<String, String>> collector = Collectors.toMap(
-                    FieldError::getField,
-                    FieldError::getDefaultMessage
-            );
-            Map<String, String> errors = bindingResult.getFieldErrors().stream().collect(collector);
-            modelAndView.addObject("errorMessage", errors);
-            modelAndView.setViewName("redirect:/signup");
-            //modelAndView.addObject("message", bindingResult.getFieldErrors());
+            getErrorMap(client, bindingResult, modelAndView);
+            modelAndView.setViewName("SignUp");
         }
         else {
             clientService.addClient(client);
             modelAndView.setViewName("redirect:/signin");
         }
         return modelAndView;
+    }
+
+    private void getErrorMap(@Valid @ModelAttribute("client") Client client, BindingResult bindingResult, ModelAndView modelAndView) {
+        Collector<FieldError, ?, Map<String, String>> collector = Collectors.toMap(
+                FieldError::getField,
+                FieldError::getDefaultMessage
+        );
+        Map<String, String> errors = bindingResult.getFieldErrors().stream().collect(collector);
+        modelAndView.addObject("errorMessage", errors);
+        modelAndView.addObject("newClient", client);
     }
 
    /* @GetMapping(value = "/client-delete/{id}")

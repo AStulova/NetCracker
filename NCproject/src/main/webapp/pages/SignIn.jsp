@@ -29,14 +29,11 @@
                             <form:form method="POST" action="signin">
                                 <div class="form-group">
                                     <label class="h5" for="email">Email</label>
-                                    <input class="form-control form-control-lg" type="email" name="email" id="email" placeholder="Enter your email" required>
-                                    <c:if test="${errors[0] eq 'email'}">
-                                    <div class="invalid-feedback">Sorry, that username's taken. Try another?</div>
-                                    </c:if>
+                                    <input class="form-control form-control-lg" type="text" name="email" id="email" placeholder="Enter your email" >
                                 </div>
                                 <div class="form-group">
                                     <label class="h5" for="password">Password</label>
-                                    <input class="form-control form-control-lg" type="password" name="password" id="password" placeholder="Enter your password" required>
+                                    <input class="form-control form-control-lg" type="password" name="password" id="password" placeholder="Enter your password" >
                                 </div>
                                 <label>
                                     Do you want to <a href="/signup">Sign Up?</a>

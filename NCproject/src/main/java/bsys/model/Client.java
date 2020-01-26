@@ -37,7 +37,7 @@ public class Client {
     private String email;
 
     @NotBlank(message = "Password must not be empty.")
-    @Length(min = 8, max = 20, message = "Password must be between 8 and 20 characters")
+    @Length(min = 8, message = "Password must be more than 8 characters")
     @Column(name = "password")
     private String password;
 

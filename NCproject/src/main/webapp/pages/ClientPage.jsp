@@ -63,31 +63,31 @@
                     <form>
                         <div class="form-group">
                             <label class="h5">Personal ID</label>
-                            <p>${clientList.idClient}</p>
+                            <p>${client.idClient}</p>
                         </div>
                         <div class="form-row">
                             <div class="form-group col-md-6">
                                 <label class="h5">First name</label>
-                                <p>${clientList.firstName}</p>
+                                <p>${client.firstName}</p>
                             </div>
                             <div class="form-group col-md-6">
                                 <label class="h5">Last Name</label>
-                                <p>${clientList.lastName}</p>
+                                <p>${client.lastName}</p>
                             </div>
                         </div>
                         <div class="form-row">
                             <div class="form-group col-md-6">
                                 <label class="h5">Email</label>
-                                <p>${clientList.email}</p>
+                                <p>${client.email}</p>
                             </div>
                             <div class="form-group col-md-6">
                                 <label class="h5">Phone</label>
-                                <p>${clientList.phone}</p>
+                                <p>${client.phone}</p>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="h5">Balance</label>
-                            <p>${clientList.balance}</p>
+                            <p>${client.balance}</p>
                         </div>
                     </form>
                 </div>
@@ -97,34 +97,41 @@
             <div class="card bg-light">
                 <div class="card-body">
                     <h4 class="card-title">Edit Information</h4>
-                    <form:form action="/client/edit" method="POST">
-                        <c:if test="${!empty errorMessage}">
-                            <div class="alert alert-dismissible alert-danger">
-                                <button type="button" class="close" data-dismiss="alert">&times;</button>
-                                <strong>Oops!</strong> ${errorMessage}
-                            </div>
-                        </c:if>
+                    <form:form action="/client" method="POST">
                         <div class="form-row">
                             <div class="form-group col-md-6">
                                 <label class="h5" for="firstName">First name</label>
-                                <input type="text" class="form-control" name="firstName" id="firstName" value="${clientList.firstName}" pattern="^[A-Z][a-z]+$" required/>
+                                <input type="text" class="form-control ${not empty errorMessage.get('firstName') ? 'is-invalid' : ''}" name="firstName" id="firstName" value="${not empty newClient.firstName ? newClient.firstName : client.firstName}" />
+                                <c:if test="${not empty errorMessage.get('firstName')}">
+                                    <div class="invalid-feedback">${errorMessage.get('firstName')}</div>
+                                </c:if>
                             </div>
                             <div class="form-group col-md-6">
                                 <label class="h5" for="lastName">Last name</label>
-                                <input type="text" class="form-control" name="lastName" id="lastName" value="${clientList.lastName}" />
+                                <input type="text" class="form-control ${not empty errorMessage.get('lastName') ? 'is-invalid' : ''}" name="lastName" id="lastName" value="${not empty newClient.lastName ? newClient.lastName : client.lastName}" />
+                                <c:if test="${not empty errorMessage.get('lastName')}">
+                                    <div class="invalid-feedback">${errorMessage.get('lastName')}</div>
+                                </c:if>
                             </div>
                         </div>
                         <div class="form-row">
                             <div class="form-group col-md-6">
-                            <label class="h5" for="email">Email</label>
-                            <input type="email" class="form-control" name="email" id="email" value="${clientList.email}" aria-describedby="emailHelp" placeholder="Email"/>
-                        </div>
+                                <label class="h5" for="email">Email</label>
+                                <input type="email" class="form-control ${not empty errorMessage.get('email') ? 'is-invalid' : ''}" name="email" id="email" value="${not empty newClient.email ? newClient.email : client.email}" aria-describedby="emailHelp" placeholder="Email"/>
+                                <c:if test="${not empty errorMessage.get('email')}">
+                                    <div class="invalid-feedback">${errorMessage.get('email')}</div>
+                                </c:if>
+                            </div>
                             <div class="form-group col-md-6">
                                 <label class="h5" for="phone">Phone</label>
-                                <input type="tel" class="form-control" name="phone" id="phone" value="${clientList.phone}" required/>
+                                <input type="tel" class="form-control ${not empty errorMessage.get('phone') ? 'is-invalid' : ''}" name="phone" id="phone" value="${not empty newClient.phone ? newClient.phone : client.phone}" />
+                                <c:if test="${not empty errorMessage.get('phone')}">
+                                    <div class="invalid-feedback">${errorMessage.get('phone')}</div>
+                                </c:if>
                             </div>
                         </div>
-                        <input type="hidden" name="password" value="${clientList.password}"/>
+                        <input type="hidden" name="password" value="${client.password}"/>
+                        <input type="hidden" name="role" value="${client.role}"/>
                         <input value="Save changes" type="submit" class="btn btn-success" />
                     </form:form>
                 </div>
