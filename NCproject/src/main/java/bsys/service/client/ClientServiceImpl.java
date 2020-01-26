@@ -43,16 +43,6 @@ public class ClientServiceImpl implements ClientService {
     @Transactional
     public void editClient(Client client) {
         clientRepository.save(client);
-        /*int id = getAuthClient().getIdClient();
-        if (!client.getFirstName().equals("")) {
-            clientRepository.editFirstName(client.getFirstName(), id);
-        }
-        if (!client.getLastName().equals("")) {
-            clientRepository.editLastName(client.getLastName(), id);
-        }
-        if (!client.getPhone().equals("")) {
-            clientRepository.editPhone(client.getPhone(), id);
-        }*/
     }
 
     @Override

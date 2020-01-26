@@ -60,6 +60,6 @@
 <!-- JavaScript -->
 <script src="http://code.jquery.com/jquery-latest.js"></script>
 <script>
-    <%@include file='../js/bootstrap.min.js' %>
+    <%@include file='js/bootstrap.min.js' %>
 </script></body>
 </html>

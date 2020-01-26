@@ -27,6 +27,13 @@
                     <div class="card-body">
                         <div class="m-sm-4">
                             <form:form method="POST" action="signin">
+                                <c:if test="${not empty param.error}">
+                                    <div class="alert alert-dismissible alert-primary">
+                                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                        <h4 class="alert-heading">Oops!</h4>
+                                        <p class="mb-0"> Wrong email or password! Please try again...</p>
+                                    </div>
+                                </c:if>
                                 <div class="form-group">
                                     <label class="h5" for="email">Email</label>
                                     <input class="form-control form-control-lg" type="text" name="email" id="email" placeholder="Enter your email" >

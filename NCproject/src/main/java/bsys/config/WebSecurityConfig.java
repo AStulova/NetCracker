@@ -77,7 +77,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     .usernameParameter("email").passwordParameter("password")
                     //.loginProcessingUrl("/signin")
                     .defaultSuccessUrl("/client")
-                    .failureUrl("/")
+                    .failureUrl("/signin?error=true")
                     .permitAll()
                 .and()
                     .logout()
@@ -86,11 +86,5 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 /*.and()
                     .exceptionHandling()
                     .accessDeniedPage("/403");*/
-
-        // http.csrf().disable();
-
-        //http.userDetailsService(userDetailsService);
-
-       // http.authorizeRequests().antMatchers("/client", "/order", "/product", "/bill").access("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')");
     }
 }
