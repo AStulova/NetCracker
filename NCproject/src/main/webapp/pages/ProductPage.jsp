@@ -85,7 +85,7 @@
                         <td class="align-middle">${product.gb}</td>
                         <td class="align-middle">${product.minute}</td>
                         <td class="align-middle">${product.speed}</td>
-                        <td class="align-middle"> ??? </td>
+                        <td class="align-middle">${product.price}</td>
                         <td class="text-right">
                             <input value="Edit" type="button" class="btn btn-outline-primary" onclick="location.href='/product/${product.order.idOrder}/edit/${product.idProduct}'" />
                             <input value="Delete" type="button" class="btn btn-outline-primary" onclick="location.href='/product/${product.order.idOrder}/delete/${product.idProduct}'" />

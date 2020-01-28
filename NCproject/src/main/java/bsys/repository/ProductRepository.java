@@ -19,20 +19,10 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
 
     @Modifying
     @Query("update Product p set p.sms = ?1, p.minute = ?2, p.gb = ?3, p.speed = ?4 where p.idProduct = ?5")
-    void editPhoneAndInternet(int sms, int minute, int gb, int speed, int id);
+    void editProduct(int sms, int minute, int gb, int speed, int id);
 
     @Modifying
-    @Query("update Product p set p.gb = ?1, p.speed = ?2 where p.idProduct = ?3")
-    void editInternet(int gb, int speed, int id);
-
-    @Modifying
-    @Query("update Product p set p.sms = ?1, p.minute = ?2 where p.idProduct = ?3")
-    void editPhone(int sms, int minute, int id);
-
-    @Query("select ((p.minute + p.sms + p.gb + p.speed) * t.priceTariff)" +
-            "from Product p inner join Tariff t on p.tariff.idTariff = t.idTariff " +
-            "where p.idProduct = ?1")
-    double getProductPrice(int idProduct);
-
+    @Query(value = "update Product set price = getProductPrice(?1) where id_product = ?1", nativeQuery = true)
+    void setProductPrice(int idProduct);
 
 }

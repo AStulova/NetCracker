@@ -42,29 +42,28 @@ public class ProductController {
         return modelAndView;
     }
 
-    @GetMapping(value = "/{idOrder}/edit/{id}")
-    public ModelAndView editProductPage(@PathVariable int idOrder, @PathVariable int id) {
+    @GetMapping(value = "/{idOrder}/edit/{idProduct}")
+    public ModelAndView editProductPage(@PathVariable int idOrder, @PathVariable int idProduct) {
         ModelAndView modelAndView = new ModelAndView();
-        Product product = productService.getById(id);
+        Product product = productService.getById(idProduct);
         modelAndView.setViewName("ProductEdit");
         modelAndView.addObject("product", product);
         return modelAndView;
     }
 
-    @PostMapping(value = "/{idOrder}/edit/{id}")
-    public ModelAndView editProduct(@PathVariable int idOrder, @PathVariable int id, @ModelAttribute("product") Product product) {
+    @PostMapping(value = "/{idOrder}/edit")
+    public ModelAndView editProduct(@PathVariable int idOrder, @ModelAttribute("product") Product product) {
         ModelAndView modelAndView = new ModelAndView();
-        productService.editProduct(id, product);
+        productService.editProduct(product);
         modelAndView.setViewName("redirect:/product/" + idOrder);
         return modelAndView;
     }
 
-    // Для существующего списка заказов
+    // Для существующего заказа
     @GetMapping(value = "/{idOrder}/add/{idTariff}")
     public ModelAndView addProductPage(@PathVariable int idOrder, @PathVariable int idTariff) {
         ModelAndView modelAndView = new ModelAndView();
         Product product = new Product(orderService.getById(idOrder), tariffService.getById(idTariff), 0);
-        // сделать проверку на то, чтобы не сохранялись 0
         modelAndView.addObject("product", product);
         modelAndView.setViewName("ProductEdit");
         return modelAndView;
@@ -84,18 +83,17 @@ public class ProductController {
     public ModelAndView addProduct(@PathVariable int idOrder, @PathVariable int idTariff, @ModelAttribute("product") Product product) {
         ModelAndView modelAndView = new ModelAndView();
         product.setTariff(tariffService.getById(idTariff));
-        Product product1 = productService.addProduct(product, idOrder);
-        modelAndView.setViewName("redirect:/product/" + product1.getOrder().getIdOrder());
+        int idCurOrder = productService.addProduct(product, idOrder);
+        modelAndView.setViewName("redirect:/product/" + idCurOrder);
         return modelAndView;
     }
 
-    @GetMapping(value = "/{idOrder}/delete/{id}")
-    public ModelAndView deleteProduct(@PathVariable int idOrder, @PathVariable int id) {
+    @GetMapping(value = "/{idOrder}/delete/{idProduct}")
+    public ModelAndView deleteProduct(@PathVariable int idOrder, @PathVariable int idProduct) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("redirect:/product/" + idOrder);
-        Product product = productService.getById(id);
+        Product product = productService.getById(idProduct);
         productService.deleteProduct(product);
         return modelAndView;
     }
-
 }

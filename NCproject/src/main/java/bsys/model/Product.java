@@ -1,6 +1,7 @@
 package bsys.model;
 
 import org.hibernate.annotations.Proxy;
+import org.springframework.web.bind.annotation.ControllerAdvice;
 
 import javax.persistence.*;
 
@@ -17,7 +18,7 @@ public class Product {
     @JoinColumn(name = "id_order")
     private Order order;
 
-    @OneToOne(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.REMOVE,CascadeType.DETACH})
+    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.REMOVE,CascadeType.DETACH})
     @JoinColumn(name = "id_tariff")
     private Tariff tariff;
 
@@ -33,7 +34,7 @@ public class Product {
     @Column(name = "speed")
     private int speed;
 
-    @Transient
+    @Column(name = "price")
     private double price;
 
     public Product() {    }

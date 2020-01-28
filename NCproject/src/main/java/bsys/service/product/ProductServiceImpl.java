@@ -45,7 +45,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     @Transactional
-    public Product addProduct(Product product, int idOrder) {
+    public int addProduct(Product product, int idOrder) {
         if (idOrder == 0) {
             int idCurOrder = orderService.createOrder();
             product.setOrder(orderService.getById(idCurOrder));
@@ -53,28 +53,16 @@ public class ProductServiceImpl implements ProductService {
         else {
             product.setOrder(orderService.getById(idOrder));
         }
-        return productRepository.save(product);
+        Product product1 = productRepository.save(product);
+        productRepository.setProductPrice(product1.getIdProduct());
+        return product1.getOrder().getIdOrder();
     }
 
     @Override
     @Transactional
-    public void editProduct(int idProduct, Product product) {
-        switch (productRepository.getOne(idProduct).getTariff().getTypeTariff()) {
-            case "Mobile connection and Internet":
-                productRepository.editPhoneAndInternet(product.getSms(), product.getMinute(), product.getGb(), product.getSpeed(), idProduct);
-                break;
-            case "Internet":
-                productRepository.editInternet(product.getGb(), product.getSpeed(), idProduct);
-                break;
-            case "Phone":
-                productRepository.editPhone(product.getSms(), product.getMinute(), idProduct);
-                break;
-        }
-    }
-
-    @Override
-    public double getProductPrice(int idProduct) {
-        return productRepository.getProductPrice(idProduct);
+    public void editProduct(Product product) {
+        productRepository.editProduct(product.getSms(), product.getMinute(), product.getGb(), product.getSpeed(), product.getIdProduct());
+        productRepository.setProductPrice(product.getIdProduct());
     }
 
     @Override

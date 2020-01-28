@@ -26,6 +26,7 @@ public class BillServiceImpl implements BillService {
 
     public List<Bill> allBills() {
         Client client = clientService.getAuthClient();
+        billRepository.generateBills(client.getIdClient());
         return billRepository.findAllByClient(client);
     }
 

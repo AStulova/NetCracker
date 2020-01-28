@@ -36,6 +36,7 @@ create table Product (
                          gb integer default 0,
                          minute integer default 0,
                          speed integer default 0,
+                         price numeric(8,2),
                          CONSTRAINT FK_ORDER_ID foreign key (id_order) REFERENCES Orders (id_order),
                          CONSTRAINT FK_TARIFF_ID foreign key (id_tariff) REFERENCES Tariff (id_tariff)
 );
@@ -43,7 +44,7 @@ create table Product (
 create table Bill (
                       id_bill serial primary key,
                       id_client integer references Client(id_client),
-                      date_bill timestamp NOT NULL,
+                      date_bill date NOT NULL,
                       discount integer default 1,
                       total numeric(8, 2) NOT NULL
 );
@@ -62,8 +63,73 @@ INSERT into orders values
 (2, 1, '2019-10-16 10:21:11', 'Sended');
 
 insert into Product values
-(1, 1, 1, 200, 10, 500, 60),
-(2, 1, 2, 0, 30, 0, 100);
+(1, 1, 1, 200, 10, 500, 60, 185.60),
+(2, 1, 2, 0, 30, 0, 100, 265.00);
 
 insert into bill values
-(1, 1, '2019-10-05 16:36:45', 5, 245.25);
+(1, 1, '2019-10-27', 5, 245.25);
+
+
+
+create or replace function getProductPrice(_id_product integer)
+    returns numeric(8,2) as
+    $BODY$
+    declare
+        price numeric(8,2);
+        begin
+            select ((p.minute + p.sms + p.gb + p.speed) * t.price) into strict price
+            from product p inner join tariff t on p.id_tariff = t.id_tariff
+            where p.id_product = _id_product;
+            return price;
+        end;
+    $BODY$
+    language plpgsql volatile;
+
+
+create or replace function getOrdersTotal(_id_client integer)
+    returns numeric(8,2) as
+    $BODY$
+        declare
+            total numeric(8,2);
+            curPrice numeric(8,2);
+            orderId integer;
+        begin
+            total = 0;
+            for orderId in select id_order from orders where id_client = _id_client
+                loop
+                    for curPrice in select price from product where id_order = orderId
+                        loop
+                            total = curPrice + total;
+                        end loop;
+                end loop;
+            return total;
+        end;
+    $BODY$
+    language plpgsql volatile;
+
+
+create or replace function generateBill(_id_client integer)
+    returns void as
+    $BODY$
+    declare
+        rec record;
+        newDate date;
+        begin
+        select id_bill, date_bill from bill order by id_bill desc limit 1 into rec;
+        if rec.date_bill notnull and current_date <= rec.date_bill then
+            update bill set total = getOrdersTotal(_id_client) where id_bill = rec.id_bill;
+        else
+            if rec.date_bill isnull then
+                if extract(day from current_date) <= 27 then
+                    newDate = make_date(27, extract(month from current_date), extract(year from current_date));
+                else
+                    newDate = make_date(27, extract(month from current_date) + interval '1 month', extract(year from current_date));
+                end if;
+            else
+                newDate = rec.date_bill + interval '1 month';
+            end if;
+            insert into bill(id_client, date_bill, total) values (_id_client, newDate, getOrdersTotal(_id_client));
+        end if;
+        end;
+    $BODY$
+language plpgsql volatile;

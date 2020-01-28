@@ -21,7 +21,7 @@
         <c:url value="/product/${product.order.idOrder}/add/${product.tariff.idTariff}" var="var"/>
     </c:if>
     <c:if test="${product.idProduct ne 0}">
-        <c:url value="/product/${product.order.idOrder}/edit/${product.idProduct}" var="var"/>
+        <c:url value="/product/${product.order.idOrder}/edit" var="var"/>
     </c:if>
 
     <!-- Navbar -->
@@ -78,6 +78,9 @@
             <div class="card bg-light mb-4">
                 <div class="card-body">
                     <form:form action="${var}" method="POST">
+                        <c:if test="${product.idProduct ne 0}">
+                            <input type="hidden" name="id" value="${product.idProduct}">
+                        </c:if>
                             <div class="form-row">
                                 <div class="form-group col-md-6">
                                     <label class="h5">Name</label>
