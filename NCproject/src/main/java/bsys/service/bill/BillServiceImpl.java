@@ -24,10 +24,10 @@ public class BillServiceImpl implements BillService {
         this.billRepository = billRepository;
     }
 
-    public List<Bill> allBills() {
+    public List<Object> allBills() {
         Client client = clientService.getAuthClient();
-        billRepository.generateBills(client.getIdClient());
-        return billRepository.findAllByClient(client);
+        return billRepository.generateBills(client.getIdClient());
+        //return billRepository.findAllByClient(client);
     }
 
     public void addBill(Bill bill) {

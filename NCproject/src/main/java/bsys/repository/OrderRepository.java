@@ -11,14 +11,14 @@ import java.util.List;
 
 public interface OrderRepository extends JpaRepository<Order,Integer> {
     @Modifying
-    @Query("update Order o set o.statusOrder = 'Sended' where o.idOrder = ?1")
+    @Query(value = "update orders set date_order = now(), status = 'Sended' where id_order = ?1", nativeQuery = true)
     void setStatusSend(int id);
 
     List<Order> findAllByClient(Client client);
 
-    @Modifying
+    /*@Modifying
     @Query(value = "insert into orders(id_client, date_order, status) " +
-            "values (?1, now(), 'Saved') " +
+            "values (?1, null, 'Saved') " +
             "returning id_order", nativeQuery = true)
-    int createOrder(int idClient);
+    int createOrder(int idClient);*/
 }

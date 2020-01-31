@@ -1,8 +1,11 @@
 package bsys.controller;
 
-import bsys.model.Bill;
+import bsys.model.Client;
+import bsys.model.Order;
 import bsys.model.Product;
 import bsys.service.bill.BillService;
+import bsys.service.client.ClientService;
+import bsys.service.order.OrderService;
 import bsys.service.product.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,6 +20,8 @@ import java.util.List;
 public class BillController {
     private BillService billService;
     private ProductService productService;
+    private OrderService orderService;
+    private ClientService clientService;
 
     @Autowired
     public void setProductService(ProductService productService) {
@@ -24,18 +29,32 @@ public class BillController {
     }
 
     @Autowired
-    public void setClientService(BillService billService) {
+    public void setBillService(BillService billService) {
         this.billService = billService;
+    }
+
+    @Autowired
+    public void setOrderService(OrderService orderService) {
+        this.orderService = orderService;
+    }
+
+    @Autowired
+    public void setClientService(ClientService clientService) {
+        this.clientService = clientService;
     }
 
     @GetMapping
     public ModelAndView allBills() {
-        List<Bill> billList = billService.allBills();
+        List<Object> billList = billService.allBills();
         List<Product> productList = productService.allProducts();
+        List<Order> orderList = orderService.allOrders();
+        Client client = clientService.getAuthClient();
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("BillPage");
         modelAndView.addObject("billList", billList);
         modelAndView.addObject("productList", productList);
+        modelAndView.addObject("orderList", orderList);
+        modelAndView.addObject("client", client);
         return modelAndView;
     }
 

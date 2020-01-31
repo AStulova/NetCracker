@@ -47,7 +47,7 @@ public class ProductServiceImpl implements ProductService {
     @Transactional
     public int addProduct(Product product, int idOrder) {
         if (idOrder == 0) {
-            int idCurOrder = orderService.createOrder();
+            int idCurOrder = orderService.addOrder();
             product.setOrder(orderService.getById(idCurOrder));
         }
         else {
@@ -61,7 +61,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     @Transactional
     public void editProduct(Product product) {
-        productRepository.editProduct(product.getSms(), product.getMinute(), product.getGb(), product.getSpeed(), product.getIdProduct());
+        productRepository.save(product);
         productRepository.setProductPrice(product.getIdProduct());
     }
 

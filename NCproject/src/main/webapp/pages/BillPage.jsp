@@ -1,3 +1,4 @@
+<%@ page buffer="8192kb" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
@@ -61,29 +62,29 @@
                 <div class="card bg-light mb-4">
                     <div class="card-body m-sm-3 m-md-5">
                         <div class="mb-4">
-                            Hi <strong>${bill.client.firstName} ${bill.client.lastName}</strong>,
+                            Hi <strong>${client.firstName} ${client.lastName}</strong>,
                             <br>
-                            This is the receipt for a payment of <strong>$${bill.total}</strong> (USD) you made to BillSYS.
+                            This is the receipt for a payment of <strong>$${bill[5]}</strong> (USD) you made to BillSYS.
                         </div>
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="text-muted">Payment No.</div>
-                                <strong>${bill.idBill}</strong>
+                                <strong>${bill[0]}</strong>
                             </div>
                             <div class="col-md-6 text-md-right">
                                 <div class="text-muted">Payment Date</div>
-                                <strong>${bill.dateBill}</strong>
+                                <strong>${bill[2]}</strong>
                             </div>
                         </div>
                         <hr class="my-4">
                         <div class="row mb-4">
                             <div class="col-md-6">
                                 <div class="text-muted">Client</div>
-                                <strong>${bill.client.firstName} ${bill.client.lastName}</strong>
+                                <strong>${client.firstName} ${client.lastName}</strong>
                                 <p>
-                                    ID: ${bill.client.idClient} <br>
-                                    Phone: ${bill.client.phone}<br>
-                                    Email: ${bill.client.email}
+                                    ID: ${client.idClient} <br>
+                                    Phone: ${client.phone}<br>
+                                    Email: ${client.email}
                                 </p>
                             </div>
                         </div>
@@ -93,38 +94,51 @@
                             <thead>
                             <tr>
                                 <th>ID order</th>
+                                <th>Order date</th>
                                 <th>Tariff</th>
-                                <th>Type</th>
-                                <th class="text-right">Amount</th>
+                                <th class="text-right">Type</th>
+                                    <%-- <th >Amount</th>--%>
                             </tr>
                             </thead>
                             <tbody>
-                            <c:forEach var="product" items="${productList}">
-                                <tr>
-                                    <td>${product[0]}</td>
-                                    <td>${product[1]}</td>
-                                    <td>${product[2]}</td>
-                                    <td class="text-right">$${product[3]}</td>
-                                </tr>
+                            <c:forEach var="order" items="${orderList}">
+                                <c:if test="${order.statusOrder eq 'Sended'}">
+                                    <tr>
+                                        <td>${order.idOrder}</td>
+                                        <td>${order.dateOrder}</td>
+                                        <td>&nbsp;</td>
+                                        <td class="text-right">&nbsp;</td>
+                                    </tr>
+                                    <c:forEach var="product" items="${productList}">
+                                        <c:if test="${order.idOrder eq product[0]}">
+                                            <tr>
+                                                <td>&nbsp;</td>
+                                                <td>&nbsp;</td>
+                                                <td>${product[1]}</td>
+                                                <td class="text-right">${product[2]}</td>
+                                            </tr>
+                                        </c:if>
+                                    </c:forEach>
+                                </c:if>
                             </c:forEach>
-                                <tr>
-                                    <th>&nbsp;</th>
-                                    <th>&nbsp;</th>
-                                    <th>Subtotal</th>
-                                    <th class="text-right">$ ???</th>
-                                </tr>
-                                <tr>
-                                    <th>&nbsp;</th>
-                                    <th>&nbsp;</th>
-                                    <th>Discount </th>
-                                    <th class="text-right">${bill.discount}%</th>
-                                </tr>
-                                <tr>
-                                    <th>&nbsp;</th>
-                                    <th>&nbsp;</th>
-                                    <th>Total </th>
-                                    <th class="text-right">$${bill.total}</th>
-                                </tr>
+                            <tr>
+                                <th>&nbsp;</th>
+                                <th>&nbsp;</th>
+                                <th>Subtotal</th>
+                                <th class="text-right">$${bill[4]}</th>
+                            </tr>
+                            <tr>
+                                <th>&nbsp;</th>
+                                <th>&nbsp;</th>
+                                <th>Discount </th>
+                                <th class="text-right">${bill[3]}%</th>
+                            </tr>
+                            <tr>
+                                <th>&nbsp;</th>
+                                <th>&nbsp;</th>
+                                <th>Total </th>
+                                <th class="text-right">$${bill[5]}</th>
+                            </tr>
                             </tbody>
                         </table>
 

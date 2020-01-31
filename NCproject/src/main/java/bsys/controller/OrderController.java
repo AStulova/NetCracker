@@ -46,5 +46,4 @@ public class OrderController {
         modelAndView.setViewName("redirect:/order");
         return modelAndView;
     }
-
 }

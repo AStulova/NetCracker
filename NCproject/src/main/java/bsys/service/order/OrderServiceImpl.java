@@ -45,14 +45,18 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public void addOrder(Order order) {
-        orderRepository.save(order);
+    public int addOrder() {
+        Order order = new Order();
+        order.setClient(clientService.getAuthClient());
+        order.setDateOrder(null);
+        order.setStatusOrder("Saved");
+        return orderRepository.save(order).getIdOrder();
     }
 
-    @Override
+    /*@Override
     public int createOrder() {
         return orderRepository.createOrder(clientService.getAuthClient().getIdClient());
-    }
+    }*/
 
     @Override
     public Order getById(int idOrder) {

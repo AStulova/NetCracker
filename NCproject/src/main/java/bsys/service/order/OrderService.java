@@ -7,8 +7,8 @@ import java.util.List;
 public interface OrderService {
     List<Order> allOrders();
     void setStatusSend(int idOrder);
-    int createOrder();
-    void addOrder(Order order);
+    //int createOrder();
+    int addOrder();
     void deleteOrder(int idOrder);
     Order getById(int idOrder);
 }

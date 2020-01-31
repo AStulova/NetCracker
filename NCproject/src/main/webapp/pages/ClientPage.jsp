@@ -98,6 +98,7 @@
                 <div class="card-body">
                     <h4 class="card-title">Edit Information</h4>
                     <form:form action="/client" method="POST">
+                        <input type="hidden" id="idClient" name="idClient" value="${client.idClient}">
                         <div class="form-row">
                             <div class="form-group col-md-6">
                                 <label class="h5" for="firstName">First name</label>

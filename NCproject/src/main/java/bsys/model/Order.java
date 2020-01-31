@@ -1,6 +1,7 @@
 package bsys.model;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Table(name = "Orders")
@@ -15,7 +16,7 @@ public class Order {
     private Client client;
 
     @Column(name = "date_order")
-    private String dateOrder;
+    private Date dateOrder;
 
     @Column(name = "status")
     private String statusOrder;
@@ -36,11 +37,11 @@ public class Order {
         this.client = client;
     }
 
-    public String getDateOrder() {
+    public Date getDateOrder() {
         return dateOrder;
     }
 
-    public void setDateOrder(String dateOrder) {
+    public void setDateOrder(Date dateOrder) {
         this.dateOrder = dateOrder;
     }
 

@@ -11,6 +11,6 @@ import java.util.List;
 public interface BillRepository extends JpaRepository<Bill, Integer> {
     List<Bill> findAllByClient(Client client);
 
-    @Query(value = "perform generatebill(?1) ", nativeQuery = true)
-    void generateBills(int idClient);
+    @Query(value = "select * from generatebill(?1)", nativeQuery = true)
+    List<Object> generateBills(int idClient);
 }
