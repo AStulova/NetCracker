@@ -29,14 +29,11 @@
                     <li class="nav-item">
                         <a class="nav-link" href="/bill">Bills</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/payment">Payment</a>
-                    </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id="download">Personal Information<span class="caret"></span></a>
                         <div class="dropdown-menu" aria-labelledby="download">
                             <a class="dropdown-item" href="/client">Info</a>
-                            <a class="dropdown-item" href="/">Sign out</a>
+                            <a class="dropdown-item" href="/signout">Sign out</a>
                         </div>
                     </li>
                 </ul>
@@ -67,7 +64,7 @@
                 <tr>
                     <th scope="col">ID Order</th>
                     <th scope="col">Order date</th>
-                    <th scope="col">Order price</th>
+                    <th scope="col">Order price per month</th>
                     <th scope="col">Status</th>
                     <th class="text-right"></th>
                 </tr>
@@ -76,15 +73,22 @@
                     <c:forEach var="order" items="${orderList}">
                         <tr class="bg-light">
                             <td class="align-middle">${order.idOrder}</td>
-                            <td class="align-middle">${order.dateOrder}</td>
+                            <c:if test="${order.dateOrder eq null}">
+                                <td class="align-middle">Wasn't sent</td>
+                            </c:if>
+                            <c:if test="${order.dateOrder ne null}">
+                                <td class="align-middle">${order.dateOrder}</td>
+                            </c:if>
                             <td class="align-middle"> ??? </td>
                             <c:if test="${order.statusOrder eq 'Saved'}">
                                 <td class="align-middle">
                                     <span class="badge badge-warning">Saved</span>
                                 </td>
                                 <td class="text-right">
-                                    <input value="Send" type="button" class="btn btn-primary" onclick="location.href='/order/send/${order.idOrder}'"/>
-                                    <input value="Edit" type="button" class="btn btn-outline-primary" onclick="location.href='/product/${order.idOrder}'" />
+                                    <div class="btn-group" role="group" aria-label="Basic example">
+                                        <input value="Send" type="button" class="btn btn-primary" onclick="location.href='/order/send/${order.idOrder}'"/>
+                                        <input value="Edit" type="button" class="btn btn-outline-primary" onclick="location.href='/product/${order.idOrder}'" />
+                                    </div>
                                 </td>
                             </c:if>
                             <c:if test="${order.statusOrder eq 'Sended'}">
@@ -92,7 +96,18 @@
                                     <span class="badge badge-success">Sended</span>
                                 </td>
                                 <td class="text-right">
-                                    <input value="Cancel" type="button" class="btn btn-outline-primary" onclick="location.href='/order/delete/${order.idOrder}'" />
+                                    <div class="btn-group" role="group" aria-label="Basic example">
+                                        <input value="Cancel" type="button" class="btn btn-outline-primary" onclick="location.href='/order/cancel/${order.idOrder}'" />
+                                        <input value="View" type="button" class="btn btn-outline-primary" onclick="location.href='/product/${order.idOrder}'" />
+                                    </div>
+                                </td>
+                            </c:if>
+                            <c:if test="${order.statusOrder eq 'Canceled'}">
+                                <td class="align-middle">
+                                    <span class="badge badge-secondary">Canceled</span>
+                                </td>
+                                <td class="text-right">
+                                    <input value="View" type="button" class="btn btn-outline-primary" onclick="location.href='/product/${order.idOrder}'" />
                                 </td>
                             </c:if>
                         </tr>

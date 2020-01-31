@@ -3,16 +3,15 @@ package bsys.repository;
 import bsys.model.Client;
 import bsys.model.Order;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Modifying;
-import org.springframework.data.jpa.repository.Query;
 
-import javax.transaction.Transactional;
 import java.util.List;
 
 public interface OrderRepository extends JpaRepository<Order,Integer> {
+/*
     @Modifying
-    @Query(value = "update orders set date_order = now(), status = 'Sended' where id_order = ?1", nativeQuery = true)
-    void setStatusSend(int id);
+    @Query(value = "update orders set date_order = now(), status = ?1 where id_order = ?2", nativeQuery = true)
+    void setStatus(String status, int id);
+*/
 
     List<Order> findAllByClient(Client client);
 

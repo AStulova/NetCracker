@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -34,14 +35,18 @@ public class OrderServiceImpl implements OrderService {
     @Override
     @Transactional
     public void setStatusSend(int idOrder) {
-        orderRepository.setStatusSend(idOrder);
+        Order order = getById(idOrder);
+        order.setStatusOrder("Sended");
+        order.setDateOrder(new Date());
+        orderRepository.save(order);
     }
 
     @Override
     @Transactional
-    public void deleteOrder(int idOrder) {
+    public void cancelOrder(int idOrder) {
         Order order = getById(idOrder);
-        orderRepository.delete(order);
+        order.setStatusOrder("Canceled");
+        orderRepository.save(order);
     }
 
     @Override

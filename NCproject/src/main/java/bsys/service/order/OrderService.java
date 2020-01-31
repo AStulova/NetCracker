@@ -9,6 +9,6 @@ public interface OrderService {
     void setStatusSend(int idOrder);
     //int createOrder();
     int addOrder();
-    void deleteOrder(int idOrder);
+    void cancelOrder(int idOrder);
     Order getById(int idOrder);
 }

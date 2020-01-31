@@ -2,9 +2,11 @@ package bsys.service.product;
 
 import bsys.model.Client;
 import bsys.model.Product;
+import bsys.model.Tariff;
 import bsys.repository.ProductRepository;
 import bsys.service.client.ClientService;
 import bsys.service.order.OrderService;
+import bsys.service.tariff.TariffService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +17,7 @@ import java.util.List;
 public class ProductServiceImpl implements ProductService {
     private ClientService clientService;
     private OrderService orderService;
+    private TariffService tariffService;
     private ProductRepository productRepository;
 
     @Autowired
@@ -25,6 +28,11 @@ public class ProductServiceImpl implements ProductService {
     @Autowired
     public void setOrderService(OrderService orderService) {
         this.orderService = orderService;
+    }
+
+    @Autowired
+    public void setTariffService(TariffService tariffService) {
+        this.tariffService = tariffService;
     }
 
     @Autowired
@@ -53,16 +61,17 @@ public class ProductServiceImpl implements ProductService {
         else {
             product.setOrder(orderService.getById(idOrder));
         }
+        product.setPrice((product.getMinute() + product.getSms() + product.getGb() + product.getSpeed()) * product.getTariff().getPriceTariff());
         Product product1 = productRepository.save(product);
-        productRepository.setProductPrice(product1.getIdProduct());
         return product1.getOrder().getIdOrder();
     }
 
     @Override
     @Transactional
     public void editProduct(Product product) {
+        product.setPrice((product.getMinute() + product.getSms() + product.getGb() + product.getSpeed())
+                * tariffService.getById(product.getTariff().getIdTariff()).getPriceTariff());
         productRepository.save(product);
-        productRepository.setProductPrice(product.getIdProduct());
     }
 
     @Override

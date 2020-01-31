@@ -30,14 +30,11 @@
                     <li class="nav-item">
                         <a class="nav-link" href="/bill">Bills</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/payment">Payment</a>
-                    </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id="download">Personal Information<span class="caret"></span></a>
                         <div class="dropdown-menu" aria-labelledby="download">
                             <a class="dropdown-item" href="/client">Info</a>
-                            <a class="dropdown-item" href="/">Sign out</a>
+                            <a class="dropdown-item" href="/signout">Sign out</a>
                         </div>
                     </li>
                 </ul>
@@ -51,13 +48,20 @@
             <div class="page-header" id="banner">
                 <div class="row">
                     <div class="col-lg-8 col-md-7 col-sm-6">
-                        <h1>Edit Order</h1>
+                        <c:if test="${productList[0].order.statusOrder eq 'Saved'}">
+                            <h1>Edit Order <small>#${productList[0].order.idOrder}</small></h1>
+                        </c:if>
+                        <c:if test="${productList[0].order.statusOrder ne 'Saved'}">
+                            <h1>Order <small>#${productList[0].order.idOrder}</small></h1>
+                        </c:if>
                         <p class="lead"> </p>
                     </div>
                     <div class="col-lg-4 col-md-4 col-sm-6">
-                        <div class="text-sm-right">
-                            <input value="Add Tariff" type="button" class="btn btn-primary btn-lg" onclick="location.href='/${productList[0].order.idOrder}/add/tariff'" />
-                        </div>
+                        <c:if test="${productList[0].order.statusOrder eq 'Saved'}">
+                            <div class="text-sm-right">
+                                <input value="Add Tariff" type="button" class="btn btn-primary btn-lg" onclick="location.href='/${productList[0].order.idOrder}/add/tariff'" />
+                            </div>
+                        </c:if>
                     </div>
                 </div>
             </div>
@@ -73,7 +77,9 @@
                     <th scope="col">Minutes</th>
                     <th scope="col">Speed</th>
                     <th scope="col">Price</th>
-                    <th class="text-right"></th>
+                    <c:if test="${productList[0].order.statusOrder eq 'Saved'}">
+                        <th class="text-right"></th>
+                    </c:if>
                 </tr>
                 </thead>
                 <tbody>
@@ -86,10 +92,12 @@
                         <td class="align-middle">${product.minute}</td>
                         <td class="align-middle">${product.speed}</td>
                         <td class="align-middle">${product.price}</td>
-                        <td class="text-right">
-                            <input value="Edit" type="button" class="btn btn-outline-primary" onclick="location.href='/product/${product.order.idOrder}/edit/${product.idProduct}'" />
-                            <input value="Delete" type="button" class="btn btn-outline-primary" onclick="location.href='/product/${product.order.idOrder}/delete/${product.idProduct}'" />
-                        </td>
+                        <c:if test="${productList[0].order.statusOrder eq 'Saved'}">
+                            <td class="text-right">
+                                <input value="Edit" type="button" class="btn btn-outline-primary" onclick="location.href='/product/${product.order.idOrder}/edit/${product.idProduct}'" />
+                                <input value="Delete" type="button" class="btn btn-outline-primary" onclick="location.href='/product/${product.order.idOrder}/delete/${product.idProduct}'" />
+                            </td>
+                        </c:if>
                     </tr>
                     <tr class="bg-white">
                         <td colspan="5"></td>

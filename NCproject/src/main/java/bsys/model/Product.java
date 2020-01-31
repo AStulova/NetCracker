@@ -14,11 +14,11 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idProduct;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "id_order")
     private Order order;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.REMOVE,CascadeType.DETACH})
+    @ManyToOne
     @JoinColumn(name = "id_tariff")
     private Tariff tariff;
 

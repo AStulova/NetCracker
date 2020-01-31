@@ -42,14 +42,11 @@
                     <li class="nav-item">
                         <a class="nav-link" href="/bill">Bills</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/payment">Payment</a>
-                    </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id="download">Personal Information<span class="caret"></span></a>
                         <div class="dropdown-menu" aria-labelledby="download">
                             <a class="dropdown-item" href="/client">Info</a>
-                            <a class="dropdown-item" href="/">Sign out</a>
+                            <a class="dropdown-item" href="/signout">Sign out</a>
                         </div>
                     </li>
                 </ul>
@@ -78,8 +75,10 @@
             <div class="card bg-light mb-4">
                 <div class="card-body">
                     <form:form action="${var}" method="POST">
+                        <input type="hidden" name="order.idOrder" value="${product.order.idOrder}">
+                        <input type="hidden" name="tariff.idTariff" value="${product.tariff.idTariff}">
                         <c:if test="${product.idProduct ne 0}">
-                            <input type="hidden" name="id" value="${product.idProduct}">
+                            <input type="hidden" name="idProduct" value="${product.idProduct}">                            <input type="hidden" name="id" value="${product.idProduct}">
                         </c:if>
                             <div class="form-row">
                                 <div class="form-group col-md-6">
