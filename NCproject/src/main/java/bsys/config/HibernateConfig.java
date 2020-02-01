@@ -49,15 +49,6 @@ public class HibernateConfig {
         return dataSource;
     }
 
-    /*@Bean
-    public LocalSessionFactoryBean sessionFactory() {
-        LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
-        sessionFactory.setDataSource(dataSource());
-        sessionFactory.setPackagesToScan("bsys.model");
-        sessionFactory.setHibernateProperties(hibernateProperties());
-        return sessionFactory;
-    }*/
-
     @Bean
     JpaTransactionManager transactionManager(EntityManagerFactory entityManagerFactory) {
         JpaTransactionManager transactionManager = new JpaTransactionManager();
@@ -94,6 +85,8 @@ public class HibernateConfig {
         //statements to the console.
         jpaProperties.put("hibernate.show_sql", env.getRequiredProperty("hibernate.show_sql"));
 
+
+        jpaProperties.put("hibernate.enable_lazy_load_no_trans", env.getRequiredProperty("hibernate.enable_lazy_load_no_trans"));
 
 
         entityManagerFactoryBean.setJpaProperties(jpaProperties);

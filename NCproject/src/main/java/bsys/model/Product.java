@@ -39,26 +39,17 @@ public class Product {
 
     public Product() {    }
 
-    public Product(Tariff tariff, int value) {
+    public Product(Tariff tariff, Client client) {
         setTariff(tariff);
         Order order = new Order();
-        order.setIdOrder(value);
+        order.setIdOrder(0);
+        order.setClient(client);
         setOrder(order);
-        setSms(value);
-        setGb(value);
-        setMinute(value);
-        setSpeed(value);
-        setPrice(value);
     }
 
-    public Product(Order order, Tariff tariff, int value) {
+    public Product(Order order, Tariff tariff) {
         setOrder(order);
         setTariff(tariff);
-        setSms(value);
-        setGb(value);
-        setMinute(value);
-        setSpeed(value);
-        setPrice(value);
     }
 
     public int getIdProduct() {

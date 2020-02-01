@@ -1,8 +1,11 @@
 package bsys.controller;
 
+import bsys.model.Client;
 import bsys.model.Tariff;
+import bsys.service.client.ClientService;
 import bsys.service.tariff.TariffService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -11,10 +14,16 @@ import java.util.List;
 @Controller
 public class TariffController {
     private TariffService tariffService;
+    private ClientService clientService;
 
     @Autowired
     public void setTariffService(TariffService tariffService) {
         this.tariffService = tariffService;
+    }
+
+    @Autowired
+    public void setClientService(ClientService clientService) {
+        this.clientService = clientService;
     }
 
     @GetMapping(value = "/{idOrder}/add/tariff")
@@ -24,6 +33,7 @@ public class TariffController {
         modelAndView.setViewName("TariffPage");
         modelAndView.addObject("tariffList", tariff);
         modelAndView.addObject("idOrder", idOrder);
+        modelAndView.addObject("role", clientService.getAuthClient().getRole());
         return modelAndView;
     }
 
@@ -33,8 +43,22 @@ public class TariffController {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("TariffPage");
         modelAndView.addObject("tariffList", tariff);
+        modelAndView.addObject("role", clientService.getAuthClient().getRole());
         return modelAndView;
     }
+
+    @PreAuthorize("hasRole('EMPLOYEE')")
+    @GetMapping(value = "/tariff/{idClient}")
+    public ModelAndView allTariffsNewOrder(@PathVariable int idClient) {
+        List<Tariff> tariff =  tariffService.allTariffs();
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("TariffPage");
+        modelAndView.addObject("tariffList", tariff);
+        modelAndView.addObject("idClient", idClient);
+        modelAndView.addObject("role", clientService.getAuthClient().getRole());
+        return modelAndView;
+    }
+
 
     /*@GetMapping(value = "/tariff-add")
     public ModelAndView addTariffPage() {

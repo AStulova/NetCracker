@@ -7,37 +7,35 @@ import bsys.service.client.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
 public class BillServiceImpl implements BillService {
     private BillRepository billRepository;
-    private ClientService clientService;
 
     @Autowired
-    public void setClientService(ClientService clientService) {
-        this.clientService = clientService;
-    }
-
-    @Autowired
-    public void setBillDAO(BillRepository billRepository) {
+    public void setBillRepository(BillRepository billRepository) {
         this.billRepository = billRepository;
     }
 
-    public List<Object> allBills() {
-        Client client = clientService.getAuthClient();
-        return billRepository.generateBills(client.getIdClient());
-        //return billRepository.findAllByClient(client);
+    @Override
+    @Transactional
+    public List<Object> allBills(int idClient) {
+        return billRepository.generateBills(idClient);
     }
 
+    @Override
     public void addBill(Bill bill) {
         billRepository.save(bill);
     }
 
+    @Override
     public void deleteBill(Bill bill) {
         billRepository.delete(bill);
     }
 
+    @Override
     public Bill getById(int idBill) {
         return billRepository.getOne(idBill);
     }

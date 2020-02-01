@@ -1,12 +1,14 @@
 package bsys.controller;
 
+import bsys.model.Client;
 import bsys.model.Order;
+import bsys.service.client.ClientService;
 import bsys.service.order.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -16,6 +18,12 @@ import java.util.List;
 @RequestMapping(value = "/order")
 public class OrderController {
     private OrderService orderService;
+    private ClientService clientService;
+
+    @Autowired
+    public void setClientService(ClientService clientService) {
+        this.clientService = clientService;
+    }
 
     @Autowired
     public void setOrderService(OrderService orderService) {
@@ -24,26 +32,52 @@ public class OrderController {
 
     @GetMapping
     public ModelAndView allOrders() {
-        List<Order> orderList = orderService.allOrders();
+        Client client = clientService.getAuthClient();
+        List<Order> orderList = orderService.allOrders(client);
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("OrderPage");
         modelAndView.addObject("orderList", orderList);
+        modelAndView.addObject("role", client.getRole());
         return modelAndView;
     }
 
-    @GetMapping(value = "/send/{id}")
-    public ModelAndView sendOrder(@PathVariable int id) {
+    @PreAuthorize("hasRole('EMPLOYEE')")
+    @GetMapping(value = "/{idClient}")
+    public ModelAndView allClientOrders(@PathVariable int idClient) {
+        String role = clientService.getAuthClient().getRole();
+        Client client = clientService.getById(idClient);
+        List<Order> orderList = orderService.allOrders(client);
         ModelAndView modelAndView = new ModelAndView();
-        orderService.setStatusSend(id);
-        modelAndView.setViewName("redirect:/order");
+        modelAndView.setViewName("OrderPage");
+        modelAndView.addObject("orderList", orderList);
+        modelAndView.addObject("curClient", client.getIdClient());
+        modelAndView.addObject("role", role);
         return modelAndView;
     }
 
-    @GetMapping(value = "/cancel/{id}")
-    public ModelAndView cancelOrder(@PathVariable int id) {
+    @GetMapping(value = "/send/{idOrder}")
+    public ModelAndView sendOrder(@PathVariable int idOrder) {
         ModelAndView modelAndView = new ModelAndView();
-        orderService.cancelOrder(id);
-        modelAndView.setViewName("redirect:/order");
+        orderService.setStatusSend(idOrder);
+        if (clientService.getAuthClient().getRole().equals("EMPLOYEE")) {
+            modelAndView.setViewName("redirect:/order" + orderService.getById(idOrder).getClient().getIdClient());
+        }
+        else {
+            modelAndView.setViewName("redirect:/order");
+        }
+        return modelAndView;
+    }
+
+    @GetMapping(value = "/cancel/{idOrder}")
+    public ModelAndView cancelOrder(@PathVariable int idOrder) {
+        ModelAndView modelAndView = new ModelAndView();
+        orderService.cancelOrder(idOrder);
+        if (clientService.getAuthClient().getRole().equals("EMPLOYEE")) {
+            modelAndView.setViewName("redirect:/order" + orderService.getById(idOrder).getClient().getIdClient());
+        }
+        else {
+            modelAndView.setViewName("redirect:/order");
+        }
         return modelAndView;
     }
 }

@@ -21,6 +21,11 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarResponsive" style>
                 <ul class="navbar-nav mr-auto">
+                    <c:if test="${role eq 'EMPLOYEE'}">
+                        <li class="nav-item">
+                            <a class="nav-link" href="/clients">Clients</a>
+                        </li>
+                    </c:if>
                     <li class="nav-item">
                         <a class="nav-link" href="/tariff">Tariffs</a>
                     </li>
@@ -55,7 +60,19 @@
             </div>
 
             <!-- Bill Info -->
-            <c:forEach var="bill" items="${billList}">
+            <c:if test="${empty billList}">
+                <div class="container">
+                    <div class="row h-50 align-items-center">
+                        <div class="col-sm-10 col-md-8 col-lg-6 mx-auto">
+                            <div class="text-center">
+                                <p class="lead text-secondary">You have no bills yet.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </c:if>
+            <c:if test="${!empty billList}">
+                <c:forEach var="bill" items="${billList}">
                 <div class="card bg-light mb-4">
                     <div class="card-body m-sm-3 m-md-5">
                         <div class="mb-4">
@@ -153,6 +170,7 @@
                     </div>
                 </div>
             </c:forEach>
+            </c:if>
         </div>
     </div>
 

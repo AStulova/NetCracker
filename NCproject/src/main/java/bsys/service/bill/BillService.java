@@ -5,7 +5,7 @@ import bsys.model.Bill;
 import java.util.List;
 
 public interface BillService {
-    List<Object> allBills();
+    List<Object> allBills(int idClient);
     void addBill(Bill bill);
     void deleteBill(Bill bill);
     Bill getById(int idBill);

@@ -23,11 +23,6 @@ public class ClientServiceImpl implements ClientService {
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    @Override
-    public Client findClientByEmail(String email) {
-        return clientRepository.getByEmail(email);
-    }
-
     public void addClient(Client client) {
         client.setPassword(bCryptPasswordEncoder.encode(client.getPassword()));
         client.setRole("USER");
@@ -35,8 +30,8 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public List<Client> findAll() {
-        return clientRepository.findAll();
+    public List<Client> findAll(String role) {
+        return clientRepository.findAllByRole(role);
     }
 
     @Override
@@ -46,6 +41,7 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
+    @Transactional
     public Client getById(int idClient) {
         return clientRepository.getOne(idClient);
     }

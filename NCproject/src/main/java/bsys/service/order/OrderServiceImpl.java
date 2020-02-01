@@ -27,8 +27,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public List<Order> allOrders() {
-        Client client = clientService.getAuthClient();
+    public List<Order> allOrders(Client client) {
         return orderRepository.findAllByClient(client);
     }
 
@@ -50,9 +49,9 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public int addOrder() {
+    public int addOrder(int idClient) {
         Order order = new Order();
-        order.setClient(clientService.getAuthClient());
+        order.setClient(clientService.getById(idClient));
         order.setDateOrder(null);
         order.setStatusOrder("Saved");
         return orderRepository.save(order).getIdOrder();

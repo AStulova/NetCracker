@@ -41,8 +41,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<Product> allProducts() {
-        Client client = clientService.getAuthClient();
+    public List<Product> allProducts(Client client) {
         return productRepository.getAllByClient(client);
     }
 
@@ -55,7 +54,7 @@ public class ProductServiceImpl implements ProductService {
     @Transactional
     public int addProduct(Product product, int idOrder) {
         if (idOrder == 0) {
-            int idCurOrder = orderService.addOrder();
+            int idCurOrder = orderService.addOrder(product.getOrder().getClient().getIdClient());
             product.setOrder(orderService.getById(idCurOrder));
         }
         else {

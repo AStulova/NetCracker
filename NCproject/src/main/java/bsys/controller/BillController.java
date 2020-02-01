@@ -7,9 +7,12 @@ import bsys.service.bill.BillService;
 import bsys.service.client.ClientService;
 import bsys.service.order.OrderService;
 import bsys.service.product.ProductService;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -45,16 +48,29 @@ public class BillController {
 
     @GetMapping
     public ModelAndView allBills() {
-        List<Object> billList = billService.allBills();
-        List<Product> productList = productService.allProducts();
-        List<Order> orderList = orderService.allOrders();
         Client client = clientService.getAuthClient();
+        List<Object> billList = billService.allBills(client.getIdClient());
+        return getClientOrders(client, billList);
+    }
+
+    @PreAuthorize("hasRole('EMPLOYEE')")
+    @GetMapping(value = "/{idClient}")
+    public ModelAndView allClientBills(@PathVariable int idClient) {
+        Client client = clientService.getById(idClient);
+        List<Object> billList = billService.allBills(idClient);
+        return getClientOrders(client, billList);
+    }
+
+    private ModelAndView getClientOrders(Client client, List<Object> billList) {
+        List<Product> productList = productService.allProducts(client);
+        List<Order> orderList = orderService.allOrders(client);
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("BillPage");
         modelAndView.addObject("billList", billList);
         modelAndView.addObject("productList", productList);
         modelAndView.addObject("orderList", orderList);
         modelAndView.addObject("client", client);
+        modelAndView.addObject("role", clientService.getAuthClient().getRole());
         return modelAndView;
     }
 

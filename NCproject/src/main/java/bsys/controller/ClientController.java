@@ -3,6 +3,7 @@ package bsys.controller;
 import bsys.model.Client;
 import bsys.service.client.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
+import java.util.List;
 import java.util.Map;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
@@ -35,6 +37,17 @@ public class ClientController {
     @GetMapping(value="/signin")
     public ModelAndView loginForm() {
         return new ModelAndView("SignIn");
+    }
+
+    @PreAuthorize("hasRole('EMPLOYEE')")
+    @GetMapping(value = "/clients")
+    public ModelAndView getAllClients() {
+        List<Client> clientList = clientService.findAll("USER");
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("AllClientsPage");
+        modelAndView.addObject("clientList", clientList);
+        modelAndView.addObject("role", clientService.getAuthClient().getRole());
+        return modelAndView;
     }
 
     @GetMapping(value = "/client")

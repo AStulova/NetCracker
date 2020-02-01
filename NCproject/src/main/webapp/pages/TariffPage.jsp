@@ -20,6 +20,11 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarResponsive" style>
                 <ul class="navbar-nav mr-auto">
+                    <c:if test="${role eq 'EMPLOYEE'}">
+                        <li class="nav-item">
+                            <a class="nav-link" href="/clients">Clients</a>
+                        </li>
+                    </c:if>
                     <li class="nav-item">
                         <a class="nav-link" href="/tariff">Tariffs</a>
                     </li>
@@ -76,7 +81,12 @@
                                     <input value="Add Tariff" type="button" onclick="location.href='/product/${idOrder}/add/${tariff.idTariff}'" class="btn btn-outline-primary" />
                                 </c:if>
                                 <c:if test="${empty idOrder}">
-                                    <input value="Add Tariff" type="button" onclick="location.href='/product/add/${tariff.idTariff}'" class="btn btn-outline-primary" />
+                                    <c:if test="${role eq 'USER'}">
+                                        <input value="Add Tariff" type="button" onclick="location.href='/product/add/${tariff.idTariff}'" class="btn btn-outline-primary" />
+                                    </c:if>
+                                    <c:if test="${role eq 'EMPLOYEE'}">
+                                        <input value="Add Tariff" type="button" onclick="location.href='/product/add/${idClient}/${tariff.idTariff}'" class="btn btn-outline-primary" />
+                                    </c:if>
                                 </c:if>
                             </td>
                         </tr>

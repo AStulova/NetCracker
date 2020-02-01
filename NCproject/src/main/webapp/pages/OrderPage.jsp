@@ -20,6 +20,11 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarResponsive" style>
                 <ul class="navbar-nav mr-auto">
+                    <c:if test="${role eq 'EMPLOYEE'}">
+                        <li class="nav-item">
+                            <a class="nav-link" href="/clients">Clients</a>
+                        </li>
+                    </c:if>
                     <li class="nav-item">
                         <a class="nav-link" href="/tariff">Tariffs</a>
                     </li>
@@ -52,24 +57,43 @@
                     </div>
                     <div class="col-lg-4 col-md-4 col-sm-6">
                         <div class="text-sm-right">
-                            <input value="New Order" type="button" class="btn btn-primary btn-lg" onclick="location.href='/tariff'" />
+                            <c:if test="${role eq 'USER'}">
+                                <c:set var="var" value="/tariff"/>
+                            </c:if>
+                            <c:if test="${role eq 'EMPLOYEE'}">
+                                <c:set var="var" value="/tariff/${curClient}"/>
+                            </c:if>
+                            <input value="New Order" type="button" class="btn btn-primary btn-lg" onclick="location.href='${var}'" />
                         </div>
                     </div>
                 </div>
             </div>
 
             <!-- Table of orders -->
-            <table class="table table-borderless">
-                <thead>
-                <tr>
-                    <th scope="col">ID Order</th>
-                    <th scope="col">Order date</th>
-                    <th scope="col">Order price per month</th>
-                    <th scope="col">Status</th>
-                    <th class="text-right"></th>
-                </tr>
-                </thead>
-                <tbody>
+            <c:if test="${empty orderList}">
+                <div class="container">
+                    <div class="row h-50 align-items-center">
+                        <div class="col-sm-10 col-md-8 col-lg-6 mx-auto">
+                            <div class="text-center">
+                                <p class="lead text-secondary">There are no orders.</p>
+                                <p class="lead text-secondary">You can add new order <a href="${var}">right here</a>.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </c:if>
+            <c:if test="${!empty orderList}">
+                <table class="table table-borderless">
+                    <thead>
+                    <tr>
+                        <th scope="col">ID Order</th>
+                        <th scope="col">Order date</th>
+                        <th scope="col">Order price per month</th>
+                        <th scope="col">Status</th>
+                        <th class="text-right"></th>
+                    </tr>
+                    </thead>
+                    <tbody>
                     <c:forEach var="order" items="${orderList}">
                         <tr class="bg-light">
                             <td class="align-middle">${order.idOrder}</td>
@@ -115,8 +139,9 @@
                             <td colspan="5"></td>
                         </tr>
                     </c:forEach>
-                </tbody>
-            </table>
+                    </tbody>
+                </table>
+            </c:if>
         </div>
     </div>
 

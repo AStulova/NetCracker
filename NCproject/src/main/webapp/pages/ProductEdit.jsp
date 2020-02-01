@@ -33,6 +33,11 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarResponsive" style>
                 <ul class="navbar-nav mr-auto">
+                    <c:if test="${role eq 'EMPLOYEE'}">
+                        <li class="nav-item">
+                            <a class="nav-link" href="/clients">Clients</a>
+                        </li>
+                    </c:if>
                     <li class="nav-item">
                         <a class="nav-link" href="/tariff">Tariffs</a>
                     </li>
@@ -76,9 +81,11 @@
                 <div class="card-body">
                     <form:form action="${var}" method="POST">
                         <input type="hidden" name="order.idOrder" value="${product.order.idOrder}">
+                        <input type="hidden" name="order.client.idClient" value="${product.order.client.idClient}">
                         <input type="hidden" name="tariff.idTariff" value="${product.tariff.idTariff}">
                         <c:if test="${product.idProduct ne 0}">
-                            <input type="hidden" name="idProduct" value="${product.idProduct}">                            <input type="hidden" name="id" value="${product.idProduct}">
+                            <input type="hidden" name="idProduct" value="${product.idProduct}">
+                            <input type="hidden" name="id" value="${product.idProduct}">
                         </c:if>
                             <div class="form-row">
                                 <div class="form-group col-md-6">
