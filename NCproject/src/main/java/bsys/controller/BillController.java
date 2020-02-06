@@ -1,5 +1,6 @@
 package bsys.controller;
 
+import bsys.model.Bill;
 import bsys.model.Client;
 import bsys.model.Order;
 import bsys.model.Product;
@@ -7,16 +8,19 @@ import bsys.service.bill.BillService;
 import bsys.service.client.ClientService;
 import bsys.service.order.OrderService;
 import bsys.service.product.ProductService;
-import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.validation.Valid;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping(value = "/bill")
@@ -48,20 +52,33 @@ public class BillController {
 
     @GetMapping
     public ModelAndView allBills() {
-        Client client = clientService.getAuthClient();
-        List<Object> billList = billService.allBills(client.getIdClient());
-        return getClientOrders(client, billList);
+        return getClientBills(clientService.getAuthClient());
     }
 
     @PreAuthorize("hasRole('EMPLOYEE')")
     @GetMapping(value = "/{idClient}")
     public ModelAndView allClientBills(@PathVariable int idClient) {
-        Client client = clientService.getById(idClient);
-        List<Object> billList = billService.allBills(idClient);
-        return getClientOrders(client, billList);
+        return getClientBills(clientService.getById(idClient));
     }
 
-    private ModelAndView getClientOrders(Client client, List<Object> billList) {
+    @PreAuthorize("hasRole('EMPLOYEE')")
+    @PostMapping(value = "/edit")
+    public ModelAndView allClientBills(@Valid @ModelAttribute Bill bill, BindingResult bindingResult) {
+        ModelAndView modelAndView = new ModelAndView();
+        if (bindingResult.hasErrors()) {
+            getErrorMap(bindingResult, modelAndView);
+            return getClientBills(bill.getClient());
+        }
+        else {
+            billService.editBill(bill);
+            modelAndView.setViewName("redirect:/bill/" + bill.getClient().getIdClient());
+        }
+
+        return modelAndView;
+    }
+
+    private ModelAndView getClientBills(Client client) {
+        List<Bill> billList = billService.allBills(client.getIdClient());
         List<Product> productList = productService.allProducts(client);
         List<Order> orderList = orderService.allOrders(client);
         ModelAndView modelAndView = new ModelAndView();
@@ -74,36 +91,12 @@ public class BillController {
         return modelAndView;
     }
 
-
-    /*@PostMapping(value = "/bill-edit")
-    public ModelAndView editBill(@ModelAttribute("bill") Bill bill) {
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("redirect:/bill");
-        billService.editBill(bill);
-        return modelAndView;
+    private void getErrorMap(BindingResult bindingResult, ModelAndView modelAndView) {
+        Collector<FieldError, ?, Map<String, String>> collector = Collectors.toMap(
+                FieldError::getField,
+                FieldError::getDefaultMessage
+        );
+        Map<String, String> errors = bindingResult.getFieldErrors().stream().collect(collector);
+        modelAndView.addObject("errorMessage", errors);
     }
-
-    @GetMapping(value = "/bill-add")
-    public ModelAndView addBillPage() {
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("old/BillEdit");
-        return modelAndView;
-    }
-
-    @PostMapping(value = "/bill-add")
-    public ModelAndView addBill(@ModelAttribute("bill") Bill bill) {
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("redirect:/bill");
-        billService.addBill(bill);
-        return modelAndView;
-    }
-
-    @GetMapping(value = "/bill-delete/{id}")
-    public ModelAndView deleteBill(@PathVariable int id) {
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("redirect:/bill");
-        Bill bill = billService.getById(id);
-        billService.deleteBill(bill);
-        return modelAndView;
-    }*/
 }

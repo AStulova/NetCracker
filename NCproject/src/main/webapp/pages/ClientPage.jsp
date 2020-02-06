@@ -22,10 +22,10 @@
             <div class="collapse navbar-collapse" id="navbarResponsive" style>
                 <ul class="navbar-nav mr-auto">
                     <c:if test="${client.role eq 'EMPLOYEE'}">
-                        <li class="nav-item">
-                            <a class="nav-link" href="/clients">Clients</a>
-                        </li>
-                    </c:if>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/clients">Clients</a>
+                    </li>
+                </c:if>
                     <li class="nav-item">
                         <a class="nav-link" href="/tariff">Tariffs</a>
                     </li>

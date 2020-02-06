@@ -1,3 +1,5 @@
+@import '../fonts';
+
 tr {
     display: table-row;
     vertical-align: inherit;
