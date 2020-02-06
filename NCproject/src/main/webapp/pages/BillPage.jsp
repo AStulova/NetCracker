@@ -74,6 +74,18 @@
             </c:if>
             <c:if test="${!empty billList}">
                 <c:forEach var="bill" items="${billList}">
+                    <%--Error message--%>
+                    <c:if test="${curBill.idBill eq bill.idBill}">
+                        <div class="alert alert-dismissible alert-warning">
+                            <button type="button" class="close" data-dismiss="alert">&times;</button>
+                            <h4 class="alert-heading">Warning!</h4>
+                            <p class="mb-0">
+                                Changes wasn't accepted for Bill #${curBill.idBill}. <br>
+                                ${errorMessage.get('discount')}
+                            </p>
+                        </div>
+                    </c:if>
+
                     <div class="card bg-light mb-4">
                         <div class="card-body m-sm-3 m-md-5">
                             <div class="mb-4">
@@ -172,12 +184,6 @@
                                 </tbody>
                             </table>
 
-                            <c:if test="${not empty errorMessage.get('discount')}">
-                                <script type="text/javascript">
-                                    $('#discount-modal').modal('show')
-                                </script>
-                            </c:if>
-
                             <div class="text-center">
                                 <a href="#" class="btn btn-secondary" download>
                                     Save this receipt
@@ -200,10 +206,7 @@
                                     <div class="modal-body">
                                         <div class="form-group">
                                             <label for="discount" class="text-left">Set new discount:</label>
-                                            <input type="number" class="form-control ${not empty errorMessage.get('discount') ? 'is-invalid' : ''}" id="discount" name="discount" value="${bill.discount}">
-                                            <c:if test="${not empty errorMessage.get('discount')}">
-                                                <div class="invalid-feedback">${errorMessage.get('discount')}</div>
-                                            </c:if>
+                                            <input type="number" class="form-control" id="discount" name="discount" value="${bill.discount}">
                                         </div>
                                     </div>
                                     <div class="modal-footer">

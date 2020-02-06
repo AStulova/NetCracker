@@ -67,13 +67,13 @@ public class BillController {
         ModelAndView modelAndView = new ModelAndView();
         if (bindingResult.hasErrors()) {
             getErrorMap(bindingResult, modelAndView);
-            return getClientBills(bill.getClient());
+            modelAndView.addObject("curBill", bill);
+            return getClientBills(clientService.getById(bill.getClient().getIdClient()));
         }
         else {
             billService.editBill(bill);
             modelAndView.setViewName("redirect:/bill/" + bill.getClient().getIdClient());
         }
-
         return modelAndView;
     }
 
