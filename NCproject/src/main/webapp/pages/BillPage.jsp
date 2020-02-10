@@ -1,6 +1,6 @@
-<%@ page buffer="8192kb" %>
+<%--<%@ page buffer="8192kb" %>--%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -40,7 +40,9 @@
                         <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id="download">Personal Information<span class="caret"></span></a>
                         <div class="dropdown-menu" aria-labelledby="download">
                             <a class="dropdown-item" href="/client">Info</a>
-                            <a class="dropdown-item" href="/signout">Sign out</a>
+                            <form:form action="/logout" method="post">
+                                <input class="dropdown-item" type="submit" value="Sign out">
+                            </form:form>
                         </div>
                     </li>
                 </ul>
@@ -72,20 +74,18 @@
                     </div>
                 </div>
             </c:if>
+            <%--Error message--%>
+            <c:if test="${not empty errorMessage.get('discount')}">
+                <div class="alert alert-dismissible alert-warning">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    <h4 class="alert-heading">Warning!</h4>
+                    <p class="mb-0">
+                        Changes wasn't accepted for Bill #${curBill.idBill}. <br> ${errorMessage.get('discount')}
+                    </p>
+                </div>
+            </c:if>
             <c:if test="${!empty billList}">
                 <c:forEach var="bill" items="${billList}">
-                    <%--Error message--%>
-                    <c:if test="${curBill.idBill eq bill.idBill}">
-                        <div class="alert alert-dismissible alert-warning">
-                            <button type="button" class="close" data-dismiss="alert">&times;</button>
-                            <h4 class="alert-heading">Warning!</h4>
-                            <p class="mb-0">
-                                Changes wasn't accepted for Bill #${curBill.idBill}. <br>
-                                ${errorMessage.get('discount')}
-                            </p>
-                        </div>
-                    </c:if>
-
                     <div class="card bg-light mb-4">
                         <div class="card-body m-sm-3 m-md-5">
                             <div class="mb-4">
@@ -168,7 +168,7 @@
                                     <th class="text-right">
                                             ${bill.discount}%
                                         <c:if test="${role eq 'EMPLOYEE'}">
-                                            <button type="button" class="btn btn-default btn-xs" data-toggle="modal" data-target="#discount-modal" >
+                                            <button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#discount-modal" >
                                                 <%--<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>--%>
                                                 <span aria-hidden="true">✍</span>
                                             </button>
@@ -186,7 +186,7 @@
 
                             <div class="text-center">
                                 <a href="#" class="btn btn-secondary" download>
-                                    Save this receipt
+                                    Save this bill
                                 </a>
                             </div>
                         </div>
@@ -217,7 +217,7 @@
                                         <input type="hidden" id="subtotal" name="subtotal" value="${bill.subtotal}">
                                         <input type="hidden" id="total" name="total" value="${bill.total}">
 --%>
-                                        <input type="submit" class="btn btn-primary" value="Confirm">
+                                        <input type="submit" class="btn btn-success" value="Confirm">
                                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                                     </div>
                                 </form:form>

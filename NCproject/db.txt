@@ -139,19 +139,21 @@ declare
 begin
     select id_bill, date_bill, discount from bill where id_client = _id_client_ order by id_bill desc limit 1 into rec;
     newTotal = getOrdersTotal(_id_client_);
-    if rec.date_bill notnull and current_date <= rec.date_bill then
-        update bill set subtotal = newTotal - (newTotal * rec.discount / 100), total = newTotal where id_bill = rec.id_bill;
-    else
-        if rec.date_bill isnull then
-            if extract(day from current_date) <= 27 then
-                newDate = make_date(extract(year from current_date)::int, extract(month from current_date)::int, 27);
-            else
-                newDate = make_date(extract(year from current_date)::int, extract(month from current_date)::int, 27) + interval '1 month';
-            end if;
+    if newTotal != 0 then
+        if rec.date_bill notnull and current_date <= rec.date_bill then
+            update bill set subtotal = newTotal - (newTotal * rec.discount / 100), total = newTotal where id_bill = rec.id_bill;
         else
-            newDate = rec.date_bill + interval '1 month';
+            if rec.date_bill isnull then
+                if extract(day from current_date) <= 27 then
+                    newDate = make_date(extract(year from current_date)::int, extract(month from current_date)::int, 27);
+                else
+                    newDate = make_date(extract(year from current_date)::int, extract(month from current_date)::int, 27) + interval '1 month';
+                end if;
+            else
+                newDate = rec.date_bill + interval '1 month';
+            end if;
+            insert into bill(id_client, date_bill, subtotal, total) values (_id_client_, newDate::date, newTotal, newTotal);
         end if;
-        insert into bill(id_client, date_bill, subtotal, total) values (_id_client_, newDate::date, newTotal, newTotal);
     end if;
 end;
 $BODY$
@@ -170,22 +172,25 @@ create or replace function generateBill(_id_client_ integer)
     begin
         select id_bill, date_bill, discount from bill where id_client = _id_client_ order by id_bill desc limit 1 into rec;
         newTotal = getOrdersTotal(_id_client_);
-        if rec.date_bill notnull and current_date <= rec.date_bill then
-            update bill set subtotal = newTotal - (newTotal * rec.discount / 100), total = newTotal where id_bill = rec.id_bill;
-        else
-            if rec.date_bill isnull then
-                if extract(day from current_date) <= 27 then
-                    newDate = make_date(extract(year from current_date)::int, extract(month from current_date)::int, 27);
-                else
-                    newDate = make_date(extract(year from current_date)::int, extract(month from current_date)::int, 27) + interval '1 month';
-                end if;
+        if newTotal != 0 then
+            if rec.date_bill notnull and current_date <= rec.date_bill then
+                update bill set subtotal = newTotal - (newTotal * rec.discount / 100), total = newTotal where id_bill = rec.id_bill;
             else
-                newDate = rec.date_bill + interval '1 month';
+                if rec.date_bill isnull then
+                    if extract(day from current_date) <= 27 then
+                        newDate = make_date(extract(year from current_date)::int, extract(month from current_date)::int, 27);
+                    else
+                        newDate = make_date(extract(year from current_date)::int, extract(month from current_date)::int, 27) + interval '1 month';
+                    end if;
+                else
+                    newDate = rec.date_bill + interval '1 month';
+                end if;
+                insert into bill(id_client, date_bill, subtotal, total) values (_id_client_, newDate::date, newTotal, newTotal);
             end if;
-            insert into bill(id_client, date_bill, subtotal, total) values (_id_client_, newDate::date, newTotal, newTotal);
         end if;
         return query select * from bill where id_client = _id_client_ order by date_bill;
     end;
     $BODY$
 language plpgsql volatile;
+
 

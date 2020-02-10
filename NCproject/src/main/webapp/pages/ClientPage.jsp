@@ -39,7 +39,9 @@
                         <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id="download">Personal Information<span class="caret"></span></a>
                         <div class="dropdown-menu" aria-labelledby="download">
                             <a class="dropdown-item" href="/client">Info</a>
-                            <a class="dropdown-item" href="/signout">Sign out</a>
+                            <form:form action="/logout" method="post">
+                                <input class="dropdown-item" type="submit" value="Sign out">
+                            </form:form>
                         </div>
                     </li>
                 </ul>

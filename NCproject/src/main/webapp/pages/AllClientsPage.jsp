@@ -1,5 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -39,7 +39,9 @@
                     <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id="download">Personal Information<span class="caret"></span></a>
                     <div class="dropdown-menu" aria-labelledby="download">
                         <a class="dropdown-item" href="/client">Info</a>
-                        <a class="dropdown-item" href="/signout">Sign out</a>
+                        <form:form action="/logout" method="post">
+                            <input class="dropdown-item" type="submit" value="Sign out">
+                        </form:form>
                     </div>
                 </li>
             </ul>

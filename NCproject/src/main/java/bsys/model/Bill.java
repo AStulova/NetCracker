@@ -1,7 +1,5 @@
 package bsys.model;
 
-import org.jetbrains.annotations.Range;
-
 import javax.persistence.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
@@ -20,7 +18,7 @@ public class Bill {
     private Client client;
 
     @Column(name = "date_bill")
-    private Date dateBill;
+    private Date dateBill; // LocalDate ?
 
     @Max(value = 100, message = "Discount must be between 0 and 100!")
     @Min(value = 0, message = "Discount must be between 0 and 100!")
