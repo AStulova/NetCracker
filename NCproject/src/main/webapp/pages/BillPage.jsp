@@ -202,7 +202,7 @@
                                         <span aria-hidden="true">&times;</span>
                                     </button>
                                 </div>
-                                <form:form action="/bill/edit" method="POST">
+                                <form:form action="/bill" method="POST">
                                     <div class="modal-body">
                                         <div class="form-group">
                                             <label for="discount" class="text-left">Set new discount:</label>

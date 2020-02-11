@@ -18,7 +18,7 @@ public class Bill {
     private Client client;
 
     @Column(name = "date_bill")
-    private Date dateBill; // LocalDate ?
+    private Date dateBill; // LocalDate Calendar ?
 
     @Max(value = 100, message = "Discount must be between 0 and 100!")
     @Min(value = 0, message = "Discount must be between 0 and 100!")

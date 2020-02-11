@@ -19,6 +19,10 @@ th {
 }
 
 .py-6 {
-    padding-top: 4rem!important;
-	padding-bottom: 4.5rem!important;
+    padding-top: 10rem!important;
+	padding-bottom: 10rem!important;
+}
+
+.py-7 {
+    padding-top: 9.5rem!important;
 }

@@ -62,7 +62,7 @@ public class BillController {
     }
 
     @PreAuthorize("hasRole('EMPLOYEE')")
-    @PostMapping(value = "/edit")
+    @PostMapping
     public ModelAndView allClientBills(@Valid @ModelAttribute Bill bill, BindingResult bindingResult) {
         ModelAndView modelAndView = new ModelAndView();
         if (bindingResult.hasErrors()) {
@@ -73,8 +73,8 @@ public class BillController {
         else {
             billService.editBill(bill);
             modelAndView.setViewName("redirect:/bill/" + bill.getClient().getIdClient());
+            return modelAndView;
         }
-        return modelAndView;
     }
 
     private ModelAndView getClientBills(Client client) {

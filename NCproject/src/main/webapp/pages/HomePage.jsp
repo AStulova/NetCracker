@@ -26,7 +26,7 @@
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-12 col-sm-10 col-md-8 col-lg-6 mx-auto text-center">
-                    <h1 class="my-3 display-4 d-none d-lg-inline-block">Welcome in BillSYS!</h1>
+                    <h1 class="my-3 display-4 d-lg-inline-block">Welcome in BillSYS!</h1>
                     <span class="h1 my-3 d-inline-block d-lg-none"></span>
                     <p class="lead mb-3">Before start you need to...</p>
                     <a class="btn btn-success btn-lg mr-lg-2 my-1" href="/signin" role="button">Sign In</a>
@@ -35,6 +35,28 @@
             </div>
         </div>
     </div>
+
+    <main class="main" role="main">
+        <div class="bg-white py-7">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-10 mx-auto">
+                        <div class="row">
+                            <div class="col-md-4 ml-auto">
+                                <h2>Be in touch!</h2>
+                            </div>
+                            <div class="col-md-6 mr-auto">
+                                <p class="lead text-dark">
+                                    Use mobile and Internet services and record your expenses for communication with us.                               </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+
 
    <%-- <div class="bg-white py-5">
         <div class="container">
