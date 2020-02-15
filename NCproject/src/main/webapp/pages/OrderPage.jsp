@@ -1,5 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -60,7 +61,7 @@
                     </div>
                     <div class="col-lg-4 col-md-4 col-sm-6">
                         <div class="text-sm-right">
-                            <c:if test="${role eq 'USER'}">
+                            <c:if test="${role eq 'USER' or role eq 'MANAGER'}">
                                 <c:set var="var" value="/tariff"/>
                             </c:if>
                             <c:if test="${role eq 'EMPLOYEE'}">
@@ -104,9 +105,9 @@
                                 <td class="align-middle">Wasn't sent</td>
                             </c:if>
                             <c:if test="${order.dateOrder ne null}">
-                                <td class="align-middle">${order.dateOrder}</td>
+                                <td class="align-middle"> <fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${order.dateOrder}"/> </td>
                             </c:if>
-                            <td class="align-middle"> ??? </td>
+                            <td class="align-middle">${order.priceOrder}</td>
                             <c:if test="${order.statusOrder eq 'Saved'}">
                                 <td class="align-middle">
                                     <span class="badge badge-warning">Saved</span>
@@ -118,13 +119,13 @@
                                     </div>
                                 </td>
                             </c:if>
-                            <c:if test="${order.statusOrder eq 'Sended'}">
+                            <c:if test="${order.statusOrder eq 'Sent'}">
                                 <td class="align-middle">
-                                    <span class="badge badge-success">Sended</span>
+                                    <span class="badge badge-success">Sent</span>
                                 </td>
                                 <td class="text-right">
                                     <div class="btn-group" role="group" aria-label="Basic example">
-                                        <input value="Cancel" type="button" class="btn btn-outline-primary" onclick="location.href='/order/cancel/${order.idOrder}'" />
+                                        <input value="Cancel" type="button" class="btn btn-secondary" onclick="location.href='/order/cancel/${order.idOrder}'" />
                                         <input value="View" type="button" class="btn btn-outline-primary" onclick="location.href='/product/${order.idOrder}'" />
                                     </div>
                                 </td>

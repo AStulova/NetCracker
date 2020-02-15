@@ -4,6 +4,7 @@ import bsys.model.Client;
 import bsys.service.client.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.List;
 import java.util.Map;
@@ -68,8 +70,14 @@ public class ClientController {
             modelAndView.setViewName("ClientPage");
         }
         else {
+            if (!client.getEmail().equals(clientService.getAuthClient().getEmail())) {
+                SecurityContextHolder.clearContext();
+                modelAndView.setViewName("redirect:/signin");
+            }
+            else {
+                modelAndView.setViewName("redirect:/client");
+            }
             clientService.editClient(client);
-            modelAndView.setViewName("redirect:/client");
         }
         return modelAndView;
     }
@@ -104,13 +112,4 @@ public class ClientController {
         modelAndView.addObject("errorMessage", errors);
         modelAndView.addObject("newClient", client);
     }
-
-   /* @GetMapping(value = "/client-delete/{id}")
-    public ModelAndView deleteClient(@PathVariable int id) {
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("redirect:/client/"+id);
-        Client client = clientService.getById(id);
-        clientService.deleteClient(client);
-        return modelAndView;
-    }*/
 }

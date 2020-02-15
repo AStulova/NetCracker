@@ -15,6 +15,7 @@ create table Orders (
                         id_order serial NOT NULL,
                         id_client integer references Client(id_client),
                         date_order timestamp(0) DEFAULT NULL,
+                        price numeric(8, 2) default '0.0',
                         status varchar(255) NOT NULL,
                         CONSTRAINT PK_ORDER_ID primary key (id_order)
 );
@@ -55,13 +56,13 @@ INSERT into client values
 (2, 'Matthew', 'Perry', '89425684113', 'MPerry@ya.ru', 'asdf1234', 890.23, 'USER');
 
 insert into tariff values
-(1, 'Super', 'Mobile connection and Internet', 6.12),
-(2, 'FIT Internet', 'Internet', 16.25),
-(3, 'Smart', 'Phone', 9.88);
+(1, 'Super', 'Mobile connection and Internet', 0.89),
+(2, 'FIT Internet', 'Internet', 0.26),
+(3, 'Smart', 'Phone', 0.21);
 
 INSERT into orders values
-(1, 1, '2019-10-25 16:36:45', 'Saved'),
-(2, 1, '2019-10-16 10:21:11', 'Sended');
+(1, 1, '2019-10-25 16:36:45', 0.0,'Saved'),
+(2, 1, '2019-10-16 10:21:11', 0.0,'Sent');
 
 insert into Product values
 (1, 1, 1, 200, 10, 500, 60, 185.60),
@@ -104,7 +105,7 @@ create or replace function getOrdersTotal(_id_client integer)
             priceOrder = 0;
             for curOrder in select id_order, date_order, status from orders where id_client = _id_client
                 loop
-                    if curOrder.status = 'Sended' then
+                    if curOrder.status = 'Sent' then
                         if curOrder.date_order notnull then
                             if extract(day from current_date) <= 27 then
                                 dateB = make_date(extract(year from current_date)::integer, extract(month from current_date)::int, 27);
@@ -129,37 +130,6 @@ create or replace function getOrdersTotal(_id_client integer)
         end;
     $BODY$
     language plpgsql volatile;
-
-create or replace procedure generateBill(_id_client_ integer) as
-$BODY$
-declare
-    rec record;
-    newDate date;
-    newTotal numeric(8,2);
-begin
-    select id_bill, date_bill, discount from bill where id_client = _id_client_ order by id_bill desc limit 1 into rec;
-    newTotal = getOrdersTotal(_id_client_);
-    if newTotal != 0 then
-        if rec.date_bill notnull and current_date <= rec.date_bill then
-            update bill set subtotal = newTotal - (newTotal * rec.discount / 100), total = newTotal where id_bill = rec.id_bill;
-        else
-            if rec.date_bill isnull then
-                if extract(day from current_date) <= 27 then
-                    newDate = make_date(extract(year from current_date)::int, extract(month from current_date)::int, 27);
-                else
-                    newDate = make_date(extract(year from current_date)::int, extract(month from current_date)::int, 27) + interval '1 month';
-                end if;
-            else
-                newDate = rec.date_bill + interval '1 month';
-            end if;
-            insert into bill(id_client, date_bill, subtotal, total) values (_id_client_, newDate::date, newTotal, newTotal);
-        end if;
-    end if;
-end;
-$BODY$
-    language plpgsql volatile;
-
-
 
 
 create or replace function generateBill(_id_client_ integer)
@@ -192,5 +162,4 @@ create or replace function generateBill(_id_client_ integer)
     end;
     $BODY$
 language plpgsql volatile;
-
 

@@ -1,15 +1,24 @@
 package bsys.controller;
 
-import bsys.model.Client;
 import bsys.model.Tariff;
 import bsys.service.client.ClientService;
 import bsys.service.tariff.TariffService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
+
+import javax.validation.Valid;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 @Controller
 public class TariffController {
@@ -59,37 +68,48 @@ public class TariffController {
         return modelAndView;
     }
 
-
-    /*@GetMapping(value = "/tariff-add")
+    @PreAuthorize("hasRole('MANAGER')")
+    @GetMapping(value = "/tariff/add")
     public ModelAndView addTariffPage() {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("old/TariffEdit");
+        modelAndView.addObject("role", clientService.getAuthClient().getRole());
+        modelAndView.setViewName("TariffEdit");
         return modelAndView;
     }
 
-    @GetMapping(value = "/tariff-edit/{id}")
-    public ModelAndView editTariffPage(@PathVariable int id) {
-        Tariff tariff = tariffService.getById(id);
+    @PreAuthorize("hasRole('MANAGER')")
+    @GetMapping(value = "/tariff/edit/{idTariff}")
+    public ModelAndView editTariffPage(@PathVariable int idTariff) {
+        Tariff tariff = tariffService.getById(idTariff);
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("old/TariffEdit");
         modelAndView.addObject("tariff", tariff);
+        modelAndView.addObject("role", clientService.getAuthClient().getRole());
+        modelAndView.setViewName("TariffEdit");
         return modelAndView;
     }
 
-    @PostMapping(value = "/tariff-add")
-    public ModelAndView addTariff(@ModelAttribute("tariff") Tariff tariff) {
+    @PreAuthorize("hasRole('MANAGER')")
+    @PostMapping(value = "/tariff/add")
+    public ModelAndView addTariff(@Valid @ModelAttribute("tariff") Tariff tariff, BindingResult bindingResult) {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("redirect:/tariff");
-        tariffService.addTariff(tariff);
+        if (bindingResult.hasErrors()) {
+            getErrorMap(tariff, bindingResult, modelAndView);
+            modelAndView.setViewName("TariffEdit");
+        }
+        else {
+            tariffService.addTariff(tariff);
+            modelAndView.setViewName("redirect:/tariff");
+        }
         return modelAndView;
     }
 
-    @GetMapping(value = "/tariff-delete/{id}")
-    public ModelAndView deleteConnection(@PathVariable int id) {
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("redirect:/tariff");
-        Tariff tariff = tariffService.getById(id);
-        tariffService.deleteTariff(tariff);
-        return modelAndView;
-    }*/
+    private void getErrorMap(@Valid @ModelAttribute("tariff") Tariff tariff, BindingResult bindingResult, ModelAndView modelAndView) {
+        Collector<FieldError, ?, Map<String, String>> collector = Collectors.toMap(
+                FieldError::getField,
+                FieldError::getDefaultMessage
+        );
+        Map<String, String> errors = bindingResult.getFieldErrors().stream().collect(collector);
+        modelAndView.addObject("errorMessage", errors);
+        modelAndView.addObject("newTariff", tariff);
+    }
 }

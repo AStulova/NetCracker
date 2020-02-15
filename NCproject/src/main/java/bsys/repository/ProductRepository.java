@@ -17,9 +17,7 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
             "where o.client = ?1")
     List<Product> getAllByClient(Client client);
 
-/*
     @Modifying
-    @Query(value = "update Product set price = getProductPrice(?1) where id_product = ?1", nativeQuery = true)
-    void setProductPrice(int idProduct);
-*/
+    @Query("update Product set price = ?1 where idProduct = ?2")
+    void updateProductPrice(double price, int idProduct);
 }

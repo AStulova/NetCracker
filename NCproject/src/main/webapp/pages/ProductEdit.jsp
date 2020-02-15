@@ -222,7 +222,7 @@
                                 </div>
                             </c:if>
                             <input type="submit" class="btn btn-success" value="Save"/>
-                            <button type="button" class="btn btn-outline-secondary" onclick="history.back()">Cancel</button>
+                            <button type="button" class="btn btn-secondary" onclick="history.back()">Cancel</button>
                     </form:form>
                 </div>
             </div>

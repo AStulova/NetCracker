@@ -60,7 +60,11 @@
                             <h1>Edit Order <small>#${productList[0].order.idOrder}</small></h1>
                         </c:if>
                         <c:if test="${productList[0].order.statusOrder ne 'Saved'}">
-                            <h1>Order <small>#${productList[0].order.idOrder}</small></h1>
+                            <h1>Order
+                                <c:if test="${!empty productList}">
+                                <small>#${productList[0].order.idOrder}</small>
+                                </c:if>
+                            </h1>
                         </c:if>
                         <p class="lead"> </p>
                     </div>
@@ -75,45 +79,58 @@
             </div>
 
             <!-- Table of products -->
-            <table class="table table-borderless">
-                <thead>
-                <tr>
-                    <th scope="col">Tariff name</th>
-                    <th scope="col">Tariff type</th>
-                    <th scope="col">SMS</th>
-                    <th scope="col">Gb</th>
-                    <th scope="col">Minutes</th>
-                    <th scope="col">Speed</th>
-                    <th scope="col">Price</th>
-                    <c:if test="${productList[0].order.statusOrder eq 'Saved'}">
-                        <th class="text-right"></th>
-                    </c:if>
-                </tr>
-                </thead>
-                <tbody>
-                <c:forEach var="product" items="${productList}">
-                    <tr class="bg-light">
-                        <td class="align-middle">${product.tariff.nameTariff}</td>
-                        <td class="align-middle">${product.tariff.typeTariff}</td>
-                        <td class="align-middle">${product.sms}</td>
-                        <td class="align-middle">${product.gb}</td>
-                        <td class="align-middle">${product.minute}</td>
-                        <td class="align-middle">${product.speed}</td>
-                        <td class="align-middle">${product.price}</td>
+            <c:if test="${empty productList}">
+                <div class="container">
+                    <div class="row h-50 align-items-center">
+                        <div class="col-sm-10 col-md-8 col-lg-6 mx-auto">
+                            <div class="text-center">
+                                <p class="lead text-secondary">There are no products.</p>
+                                <p class="lead text-secondary">You can return to <a href="/order">your orders</a>.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </c:if>
+            <c:if test="${!empty productList}">
+                <table class="table table-borderless">
+                    <thead>
+                    <tr>
+                        <th scope="col">Tariff name</th>
+                        <th scope="col">Tariff type</th>
+                        <th scope="col">SMS</th>
+                        <th scope="col">Gb</th>
+                        <th scope="col">Minutes</th>
+                        <th scope="col">Speed</th>
+                        <th scope="col">Price</th>
                         <c:if test="${productList[0].order.statusOrder eq 'Saved'}">
-                            <td class="text-right">
-                                <input value="Edit" type="button" class="btn btn-outline-primary" onclick="location.href='/product/${product.order.idOrder}/edit/${product.idProduct}'" />
-                                <input value="Delete" type="button" class="btn btn-outline-primary" onclick="location.href='/product/${product.order.idOrder}/delete/${product.idProduct}'" />
-                            </td>
+                            <th class="text-right"></th>
                         </c:if>
                     </tr>
-                    <tr class="bg-white">
-                        <td colspan="5"></td>
-                    </tr>
-                </c:forEach>
-                </tbody>
-            </table>
-
+                    </thead>
+                    <tbody>
+                    <c:forEach var="product" items="${productList}">
+                        <tr class="bg-light">
+                            <td class="align-middle">${product.tariff.nameTariff}</td>
+                            <td class="align-middle">${product.tariff.typeTariff}</td>
+                            <td class="align-middle">${product.sms}</td>
+                            <td class="align-middle">${product.gb}</td>
+                            <td class="align-middle">${product.minute}</td>
+                            <td class="align-middle">${product.speed}</td>
+                            <td class="align-middle">${product.price}</td>
+                            <c:if test="${productList[0].order.statusOrder eq 'Saved'}">
+                                <td class="text-right">
+                                    <input value="Edit" type="button" class="btn btn-outline-primary" onclick="location.href='/product/${product.order.idOrder}/edit/${product.idProduct}'" />
+                                    <input value="Delete" type="button" class="btn btn-outline-primary" onclick="location.href='/product/${product.order.idOrder}/delete/${product.idProduct}'" />
+                                </td>
+                            </c:if>
+                        </tr>
+                        <tr class="bg-white">
+                            <td colspan="5"></td>
+                        </tr>
+                    </c:forEach>
+                    </tbody>
+                </table>
+            </c:if>
         </div>
     </div>
 

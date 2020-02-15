@@ -11,12 +11,15 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idOrder;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "id_client")
     private Client client;
 
     @Column(name = "date_order")
     private Date dateOrder;
+
+    @Column(name = "price")
+    private double priceOrder;
 
     @Column(name = "status")
     private String statusOrder;
@@ -43,6 +46,14 @@ public class Order {
 
     public void setDateOrder(Date dateOrder) {
         this.dateOrder = dateOrder;
+    }
+
+    public double getPriceOrder() {
+        return priceOrder;
+    }
+
+    public void setPriceOrder(double priceOrder) {
+        this.priceOrder = priceOrder;
     }
 
     public String getStatusOrder() {

@@ -1,8 +1,6 @@
 package bsys.model;
 
 import javax.persistence.*;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
 import java.util.Date;
 
 @Entity
@@ -18,10 +16,12 @@ public class Bill {
     private Client client;
 
     @Column(name = "date_bill")
-    private Date dateBill; // LocalDate Calendar ?
+    private Date dateBill;
 
+/*
     @Max(value = 100, message = "Discount must be between 0 and 100!")
     @Min(value = 0, message = "Discount must be between 0 and 100!")
+*/
     @Column(name = "discount")
     private int discount;
 

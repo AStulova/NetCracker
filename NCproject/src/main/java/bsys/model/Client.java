@@ -115,7 +115,7 @@ public class Client implements UserDetails {
 
     @Override
     public String getUsername() {
-        return null;
+        return email; //
     }
 
     @Override

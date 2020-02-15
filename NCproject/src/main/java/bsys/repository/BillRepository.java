@@ -3,7 +3,6 @@ package bsys.repository;
 import bsys.model.Bill;
 import bsys.model.Client;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
@@ -15,7 +14,7 @@ public interface BillRepository extends JpaRepository<Bill, Integer> {
             "from generatebill(?1)", nativeQuery = true)
     List<Bill> generateBills(int idClient);
 
-    @Modifying
+   /* @Modifying
     @Query("update Bill set discount = ?1 where idBill = ?2")
-    void editDiscount(int Discount, int idBill);
+    void editDiscount(int Discount, int idBill);*/
 }

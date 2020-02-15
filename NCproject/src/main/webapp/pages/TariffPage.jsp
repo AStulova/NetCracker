@@ -58,6 +58,19 @@
                         <h1>Tariffs</h1>
                         <p class="lead"> </p>
                     </div>
+                    <div class="col-lg-4 col-md-4 col-sm-6">
+                        <div class="text-sm-right">
+                            <c:if test="${role eq 'USER' or role eq 'EMPLOYEE'}">
+                                <input value="Back" type="button" class="btn btn-secondary btn-lg" onclick="history.back()" />
+                            </c:if>
+                            <c:if test="${role eq 'MANAGER'}">
+                                <div class="btn-group" role="group" aria-label="Basic example">
+                                    <input value="Add Tariff" type="button" class="btn btn-primary" onclick="location.href='/tariff/add'"/>
+                                    <input value="Back" type="button" class="btn btn-secondary" onclick="history.back()"/>
+                                </div>
+                            </c:if>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -81,14 +94,20 @@
                             <td class="align-middle">${tariff.priceTariff}</td>
                             <td class="text-right">
                                 <c:if test="${!empty idOrder}">
-                                    <input value="Add Tariff" type="button" onclick="location.href='/product/${idOrder}/add/${tariff.idTariff}'" class="btn btn-outline-primary" />
+                                    <input value="Add Product" type="button" onclick="location.href='/product/${idOrder}/add/${tariff.idTariff}'" class="btn btn-outline-primary" />
                                 </c:if>
                                 <c:if test="${empty idOrder}">
                                     <c:if test="${role eq 'USER'}">
-                                        <input value="Add Tariff" type="button" onclick="location.href='/product/add/${tariff.idTariff}'" class="btn btn-outline-primary" />
+                                        <input value="Create order" type="button" onclick="location.href='/product/add/${tariff.idTariff}'" class="btn btn-outline-primary" />
                                     </c:if>
                                     <c:if test="${role eq 'EMPLOYEE'}">
-                                        <input value="Add Tariff" type="button" onclick="location.href='/product/add/${idClient}/${tariff.idTariff}'" class="btn btn-outline-primary" />
+                                        <input value="Create order" type="button" onclick="location.href='/product/add/${idClient}/${tariff.idTariff}'" class="btn btn-outline-primary" />
+                                    </c:if>
+                                    <c:if test="${role eq 'MANAGER'}">
+                                        <div class="btn-group" role="group" aria-label="Basic example">
+                                            <input value="Edit Tariff" type="button" class="btn btn-primary" onclick="location.href='/tariff/edit/${tariff.idTariff}'"/>
+                                            <input value="Create order" type="button" class="btn btn-outline-primary" onclick="location.href='/product/add/${tariff.idTariff}'"/>
+                                        </div>
                                     </c:if>
                                 </c:if>
                             </td>

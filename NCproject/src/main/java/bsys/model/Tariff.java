@@ -1,20 +1,26 @@
 package bsys.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.Digits;
+import javax.validation.constraints.Pattern;
 
 @Entity
 @Table(name = "Tariff")
 public class Tariff {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_tariff")
     private int idTariff;
 
+    @Pattern(regexp = "^[a-zA-Z0-9]{1,255}$", message = "Incorrect tariff name!")
     @Column(name = "name_tariff")
     private String nameTariff;
 
+    //@Pattern(regexp = "^[a-zA-Z0-9]{1,255}$", message = "Incorrect tariff type!")
     @Column(name = "type")
     private String typeTariff;
 
+    @Digits(integer = 8, fraction = 2, message = "Incorrect price!")
     @Column(name = "price")
     private double priceTariff;
 

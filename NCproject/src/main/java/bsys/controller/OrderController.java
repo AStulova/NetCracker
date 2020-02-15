@@ -4,6 +4,7 @@ import bsys.model.Client;
 import bsys.model.Order;
 import bsys.service.client.ClientService;
 import bsys.service.order.OrderService;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -57,23 +58,22 @@ public class OrderController {
 
     @GetMapping(value = "/send/{idOrder}")
     public ModelAndView sendOrder(@PathVariable int idOrder) {
-        ModelAndView modelAndView = new ModelAndView();
         orderService.setStatusSend(idOrder);
-        if (clientService.getAuthClient().getRole().equals("EMPLOYEE")) {
-            modelAndView.setViewName("redirect:/order" + orderService.getById(idOrder).getClient().getIdClient());
-        }
-        else {
-            modelAndView.setViewName("redirect:/order");
-        }
-        return modelAndView;
+        return getModelAndView(idOrder);
     }
 
     @GetMapping(value = "/cancel/{idOrder}")
     public ModelAndView cancelOrder(@PathVariable int idOrder) {
-        ModelAndView modelAndView = new ModelAndView();
         orderService.cancelOrder(idOrder);
-        if (clientService.getAuthClient().getRole().equals("EMPLOYEE")) {
-            modelAndView.setViewName("redirect:/order" + orderService.getById(idOrder).getClient().getIdClient());
+        return getModelAndView(idOrder);
+    }
+
+    private ModelAndView getModelAndView(@PathVariable int idOrder) {
+        ModelAndView modelAndView = new ModelAndView();
+        Client curClient = clientService.getAuthClient();
+        int idClientByOrder = orderService.getById(idOrder).getClient().getIdClient();
+        if (curClient.getRole().equals("EMPLOYEE") && curClient.getIdClient() != idClientByOrder) {
+            modelAndView.setViewName("redirect:/order" + idClientByOrder);
         }
         else {
             modelAndView.setViewName("redirect:/order");

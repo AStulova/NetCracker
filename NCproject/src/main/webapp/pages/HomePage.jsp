@@ -47,7 +47,8 @@
                             </div>
                             <div class="col-md-6 mr-auto">
                                 <p class="lead text-dark">
-                                    Use mobile and Internet services and record your expenses for communication with us.                               </p>
+                                    Use mobile and Internet services and record your expenses for communication.
+                                </p>
                             </div>
                         </div>
                     </div>
