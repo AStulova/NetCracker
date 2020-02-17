@@ -39,7 +39,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) {
-        //auth.userDetailsService(userDetailsService()).passwordEncoder(passwordEncoder());
         auth.authenticationProvider(authenticationProvider());
     }
 
@@ -67,6 +66,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         managerBuilder.userDetailsService(userDetailsService);
     }
 */
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
@@ -77,17 +77,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     .formLogin()
                     .loginPage("/signin")
                     .usernameParameter("email").passwordParameter("password")
-                    //.loginProcessingUrl("/signin")
                     .defaultSuccessUrl("/client")
                     .failureUrl("/signin?error=true")
                     .permitAll()
                 .and()
                     .logout()
-                    //.logoutUrl("/logout")
                     .logoutSuccessUrl("/")
                     .permitAll();
                 /*.and()
                     .exceptionHandling()
-                    .accessDeniedPage("/403");*/
+                    .accessDeniedPage("Page403");*/
     }
 }

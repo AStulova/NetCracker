@@ -71,7 +71,15 @@
                     <div class="col-lg-4 col-md-4 col-sm-6">
                         <c:if test="${productList[0].order.statusOrder eq 'Saved'}">
                             <div class="text-sm-right">
-                                <input value="Add Tariff" type="button" class="btn btn-primary btn-lg" onclick="location.href='/${productList[0].order.idOrder}/add/tariff'" />
+                                <div class="btn-group" role="group" aria-label="Basic example">
+                                    <input value="Add Tariff" type="button" class="btn btn-primary btn-lg" onclick="location.href='/${productList[0].order.idOrder}/add/tariff'" />
+                                    <input value="Back" type="button" class="btn btn-secondary" onclick="history.back()"/>
+                                </div>
+                            </div>
+                        </c:if>
+                        <c:if test="${productList[0].order.statusOrder ne 'Saved'}">
+                            <div class="text-sm-right">
+                                <input value="Back" type="button" class="btn btn-secondary btn-lg" onclick="history.back()"/>
                             </div>
                         </c:if>
                     </div>

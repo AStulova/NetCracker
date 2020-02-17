@@ -88,7 +88,7 @@ public class ProductServiceImpl implements ProductService {
                 orderService.deleteOrder(order);
             }
             else if (order.getStatusOrder().equals("Sent")) {
-                orderService.setStatusSend(order.getIdOrder());
+                orderService.sendOrder(order.getIdOrder());
             }
         }
     }

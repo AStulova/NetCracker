@@ -14,7 +14,8 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
     List<Product> findByOrder(Order order);
 
     @Query("select p.order.idOrder, p.tariff.nameTariff, p.tariff.typeTariff, p.price from Product p inner join Order o on p.order.idOrder = o.idOrder " +
-            "where o.client = ?1")
+            "where o.client = ?1 " +
+            "order by p.idProduct")
     List<Product> getAllByClient(Client client);
 
     @Modifying

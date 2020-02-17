@@ -58,7 +58,7 @@ public class OrderController {
 
     @GetMapping(value = "/send/{idOrder}")
     public ModelAndView sendOrder(@PathVariable int idOrder) {
-        orderService.setStatusSend(idOrder);
+        orderService.sendOrder(idOrder);
         return getModelAndView(idOrder);
     }
 
@@ -73,7 +73,7 @@ public class OrderController {
         Client curClient = clientService.getAuthClient();
         int idClientByOrder = orderService.getById(idOrder).getClient().getIdClient();
         if (curClient.getRole().equals("EMPLOYEE") && curClient.getIdClient() != idClientByOrder) {
-            modelAndView.setViewName("redirect:/order" + idClientByOrder);
+            modelAndView.setViewName("redirect:/order/" + idClientByOrder);
         }
         else {
             modelAndView.setViewName("redirect:/order");

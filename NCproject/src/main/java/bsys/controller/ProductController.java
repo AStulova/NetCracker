@@ -1,5 +1,6 @@
 package bsys.controller;
 
+import bsys.model.Client;
 import bsys.model.Product;
 import bsys.service.client.ClientService;
 import bsys.service.order.OrderService;
@@ -43,6 +44,7 @@ public class ProductController {
 
     @GetMapping(value = "/{idOrder}")
     public ModelAndView allProducts(@PathVariable int idOrder) {
+        verifyClient(idOrder);
         List<Product> productList = productService.allProducts(idOrder);
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("ProductPage");
@@ -53,6 +55,7 @@ public class ProductController {
 
     @GetMapping(value = "/{idOrder}/edit/{idProduct}")
     public ModelAndView editProductPage(@PathVariable int idOrder, @PathVariable int idProduct) {
+        verifyClient(idOrder);
         ModelAndView modelAndView = new ModelAndView();
         Product product = productService.getById(idProduct);
         modelAndView.setViewName("ProductEdit");
@@ -72,6 +75,7 @@ public class ProductController {
     // For current order
     @GetMapping(value = "/{idOrder}/add/{idTariff}")
     public ModelAndView addProductPage(@PathVariable int idOrder, @PathVariable int idTariff) {
+        verifyClient(idOrder);
         Product product = new Product(orderService.getById(idOrder), tariffService.getById(idTariff));
         return getInfoPage(product);
     }
@@ -110,10 +114,18 @@ public class ProductController {
 
     @GetMapping(value = "/{idOrder}/delete/{idProduct}")
     public ModelAndView deleteProduct(@PathVariable int idOrder, @PathVariable int idProduct) {
+        verifyClient(idOrder);
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("redirect:/product/" + idOrder);
         Product product = productService.getById(idProduct);
         productService.deleteProduct(product);
         return modelAndView;
+    }
+
+    public void verifyClient(int idOrder) {
+        Client curClient = clientService.getAuthClient();
+        if (curClient.getRole().equals("USER") && curClient.getIdClient() != orderService.getById(idOrder).getClient().getIdClient()) {
+            throw new SecurityException("Access denied");
+        }
     }
 }

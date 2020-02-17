@@ -92,6 +92,7 @@
                     <tr>
                         <th scope="col">ID Order</th>
                         <th scope="col">Order date</th>
+                        <th scope="col">Cancel date</th>
                         <th scope="col">Order price per month</th>
                         <th scope="col">Status</th>
                         <th class="text-right"></th>
@@ -101,12 +102,22 @@
                     <c:forEach var="order" items="${orderList}">
                         <tr class="bg-light">
                             <td class="align-middle">${order.idOrder}</td>
-                            <c:if test="${order.dateOrder eq null}">
-                                <td class="align-middle">Wasn't sent</td>
-                            </c:if>
-                            <c:if test="${order.dateOrder ne null}">
-                                <td class="align-middle"> <fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${order.dateOrder}"/> </td>
-                            </c:if>
+                            <td class="align-middle">
+                                <c:if test="${order.dateOrder eq null}">
+                                    —
+                                </c:if>
+                                <c:if test="${order.dateOrder ne null}">
+                                    <fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${order.dateOrder}"/>
+                                </c:if>
+                            </td>
+                            <td class="align-middle">
+                                <c:if test="${order.dateCancel eq null}">
+                                    —
+                                </c:if>
+                                <c:if test="${order.dateCancel ne null}">
+                                    <fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${order.dateCancel}"/>
+                                </c:if>
+                            </td>
                             <td class="align-middle">${order.priceOrder}</td>
                             <c:if test="${order.statusOrder eq 'Saved'}">
                                 <td class="align-middle">

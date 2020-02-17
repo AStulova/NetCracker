@@ -120,8 +120,9 @@
                                 </thead>
                                 <tbody>
                                     <c:forEach var="order" items="${orderList}">
-                                        <c:if test="${order.statusOrder eq 'Sent'}">
-                                            <c:if test="${order.dateOrder le bill.dateBill}">
+                                        <c:if test="${order.statusOrder ne 'Saved'}">
+                                            <c:set var="lastBill" value="${bill.dateBill.time - 2592000000}"/>
+                                            <c:if test="${order.dateOrder le bill.dateBill or (order.dateCancel < bill.dateBill and order.dateCancel > lastBill)}">
                                                 <tr>
                                                     <td>${order.idOrder}</td>
                                                     <td><fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${order.dateOrder}"/></td>

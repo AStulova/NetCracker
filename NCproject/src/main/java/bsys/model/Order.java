@@ -18,6 +18,9 @@ public class Order {
     @Column(name = "date_order")
     private Date dateOrder;
 
+    @Column(name = "date_cancel")
+    private Date dateCancel;
+
     @Column(name = "price")
     private double priceOrder;
 
@@ -46,6 +49,14 @@ public class Order {
 
     public void setDateOrder(Date dateOrder) {
         this.dateOrder = dateOrder;
+    }
+
+    public Date getDateCancel() {
+        return dateCancel;
+    }
+
+    public void setDateCancel(Date dateCancel) {
+        this.dateCancel = dateCancel;
     }
 
     public double getPriceOrder() {

@@ -60,9 +60,10 @@
                                         <div class="invalid-feedback">${errorMessage.get('password')}</div>
                                     </c:if>
                                 </div>
-                                <label>
-                                    Do you want to <a href="/signin">Sign In?</a>
-                                </label>
+                                <div class="row">
+                                    <div class="col-md-8 text-left">Do you want to <a href="/signin">Sign In?</a></div>
+                                    <div class="col-md-4  text-right">...or return <a href="/">home</a></div>
+                                </div>
                                 <div class="text-center mt-3">
                                    <input value="Sign Up" type="submit" class="btn btn-lg btn-primary"/>
                                 </div>

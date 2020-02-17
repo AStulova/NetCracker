@@ -7,6 +7,7 @@ import bsys.repository.TariffRepository;
 import bsys.service.order.OrderService;
 import bsys.service.product.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -63,6 +64,6 @@ public class TariffServiceImpl implements TariffService {
 
     @Override
     public Tariff getById(int idTariff) {
-        return tariffRepository.findByIdTariff(idTariff);
+        return tariffRepository.findByIdTariff(idTariff, Sort.by(Sort.Direction.ASC, "idTariff"));
     }
 }

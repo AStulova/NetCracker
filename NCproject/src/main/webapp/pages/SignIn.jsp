@@ -42,9 +42,10 @@
                                     <label class="h5" for="password">Password</label>
                                     <input class="form-control form-control-lg" type="password" name="password" id="password" placeholder="Enter your password" >
                                 </div>
-                                <label>
-                                    Do you want to <a href="/signup">Sign Up?</a>
-                                </label>
+                                <div class="row">
+                                    <div class="col-md-8 text-left">Do you want to <a href="/signup">Sign Up?</a> </div>
+                                    <div class="col-md-4  text-right">...or return <a href="/">home</a></div>
+                                </div>
                                 <div class="text-center mt-3">
                                     <input value="Sign in" type="submit" class="btn btn-lg btn-primary"/>
                                 </div>

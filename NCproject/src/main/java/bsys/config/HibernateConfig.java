@@ -8,8 +8,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-import org.springframework.orm.hibernate5.HibernateTransactionManager;
-import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
@@ -69,7 +67,7 @@ public class HibernateConfig {
         //that is optimized for the used database.
         jpaProperties.put("hibernate.dialect", env.getRequiredProperty("hibernate.dialect"));
 
-   /*     //Specifies the action that is invoked to the database when the Hibernate
+   /*   //Specifies the action that is invoked to the database when the Hibernate
         //SessionFactory is created or closed.
         jpaProperties.put("hibernate.hbm2ddl.auto", env.getRequiredProperty("hibernate.hbm2ddl.auto"));
 */

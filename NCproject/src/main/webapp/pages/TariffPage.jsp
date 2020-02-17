@@ -65,7 +65,7 @@
                             </c:if>
                             <c:if test="${role eq 'MANAGER'}">
                                 <div class="btn-group" role="group" aria-label="Basic example">
-                                    <input value="Add Tariff" type="button" class="btn btn-primary" onclick="location.href='/tariff/add'"/>
+                                    <input value="New Tariff" type="button" class="btn btn-primary" onclick="location.href='/tariff/add'"/>
                                     <input value="Back" type="button" class="btn btn-secondary" onclick="history.back()"/>
                                 </div>
                             </c:if>

@@ -90,7 +90,8 @@
                         </c:if>
                         <div class="form-group col-md-6">
                             <label class="h5" for="nameTariff">Tariff name</label>
-                            <input type="text" class="form-control ${not empty errorMessage.get('nameTariff') ? 'is-invalid' : ''}" name="nameTariff" id="nameTariff" value="${not empty tariff.nameTariff ? tariff.nameTariff : not empty newTariff.nameTariff ? newTariff.nameTariff : 'Enter name'}" />
+                            <c:set var="varName" value="${not empty tariff.nameTariff ? tariff.nameTariff : not empty newTariff.nameTariff ? newTariff.nameTariff : ''}" />
+                            <input type="text" class="form-control ${not empty errorMessage.get('nameTariff') ? 'is-invalid' : ''}" name="nameTariff" id="nameTariff" value="${varName}" placeholder="${empty varName ? 'Enter name' : ''}" />
                             <c:if test="${not empty errorMessage.get('nameTariff')}">
                                 <div class="invalid-feedback">${errorMessage.get('nameTariff')}</div>
                             </c:if>
@@ -112,7 +113,8 @@
                     <div class="form-row">
                         <div class="form-group col-md-6">
                             <label class="h5" for="priceTariff">Tariff price</label>
-                            <input type="text" class="form-control ${not empty errorMessage.get('priceTariff') ? 'is-invalid' : ''}" name="priceTariff" id="priceTariff" value="${not empty tariff.priceTariff ? tariff.priceTariff : not empty newTariff.priceTariff ? newTariff.priceTariff : 'Enter price'}" />
+                            <c:set var="varPrice" value="${not empty tariff.priceTariff ? tariff.priceTariff : not empty newTariff.priceTariff ? newTariff.priceTariff : ''}" />
+                            <input type="text" class="form-control ${not empty errorMessage.get('priceTariff') ? 'is-invalid' : ''}" name="priceTariff" id="priceTariff" value="${varPrice}" placeholder="${empty varPrice ? 'Enter price' : ''}" />
                             <c:if test="${not empty errorMessage.get('priceTariff')}">
                                 <div class="invalid-feedback">${errorMessage.get('priceTariff')}</div>
                             </c:if>
