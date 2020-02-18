@@ -36,7 +36,7 @@ public class TariffServiceImpl implements TariffService {
 
     @Override
     public List<Tariff> allTariffs() {
-        return tariffRepository.findAll();
+        return tariffRepository.findAll(Sort.by(Sort.Direction.ASC, "idTariff"));
     }
 
     @Override
@@ -64,6 +64,6 @@ public class TariffServiceImpl implements TariffService {
 
     @Override
     public Tariff getById(int idTariff) {
-        return tariffRepository.findByIdTariff(idTariff, Sort.by(Sort.Direction.ASC, "idTariff"));
+        return tariffRepository.findByIdTariff(idTariff);
     }
 }

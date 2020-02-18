@@ -41,7 +41,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public List<Order> allOrders(Client client) {
-        return orderRepository.findAllByClient(client);
+        return orderRepository.findAllByClientOrderByIdOrder(client);
     }
 
     @Override

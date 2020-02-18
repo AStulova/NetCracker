@@ -161,7 +161,7 @@ create or replace function generateBill(_id_client_ integer)
                 insert into bill(id_client, date_bill, subtotal, total) values (_id_client_, newDate::date, newTotal, newTotal);
             end if;
         end if;
-        return query select * from bill where id_client = _id_client_ order by date_bill;
+        return query select * from bill where id_client = _id_client_ order by date_bill desc;
     end;
     $BODY$
 language plpgsql volatile;

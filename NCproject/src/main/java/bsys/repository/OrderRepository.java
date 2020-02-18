@@ -9,7 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
 public interface OrderRepository extends JpaRepository<Order,Integer> {
-    List<Order> findAllByClient(Client client);
+    List<Order> findAllByClientOrderByIdOrder(Client client);
 
 /*
     @Modifying

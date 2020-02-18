@@ -21,14 +21,6 @@ public class BillServiceImpl implements BillService {
         return billRepository.generateBills(idClient);
     }
 
-/*
-    @Override
-    @Transactional
-    public int generateBill(int idClient) {
-        return billRepository.generateBills(idClient);
-    }
-*/
-
     /*@Override
     @Transactional
     public void editBill(Bill bill) {
