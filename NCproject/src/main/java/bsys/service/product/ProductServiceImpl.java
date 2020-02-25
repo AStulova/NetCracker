@@ -84,11 +84,8 @@ public class ProductServiceImpl implements ProductService {
         orderService.updateOrderPrice(order.getIdOrder());
         List<Product> productList = allProducts(order.getIdOrder());
         if (productList.isEmpty()) {
-            if (order.getStatusOrder().equals("Saved")) {
+            if (order.getStatusOrder() == 0) {
                 orderService.deleteOrder(order);
-            }
-            else if (order.getStatusOrder().equals("Sent")) {
-                orderService.sendOrder(order.getIdOrder());
             }
         }
     }
@@ -101,8 +98,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     @Transactional
     public void updateProductPrice(Product product) {
-        double price = 0;
-        price = (product.getMinute() + product.getSms() + product.getGb() + product.getSpeed())
+        double price = (product.getMinute() + product.getSms() + product.getGb() + product.getSpeed())
                 * tariffService.getById(product.getTariff().getIdTariff()).getPriceTariff();
         productRepository.updateProductPrice(price, product.getIdProduct());
     }

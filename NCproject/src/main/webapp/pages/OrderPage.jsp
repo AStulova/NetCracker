@@ -16,7 +16,7 @@
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary" style> <!-- fixed-top -->
         <div class="container">
-            <a class="navbar-brand" href="/client">BillSYS</a>
+            <a class="navbar-brand" href="/BillingSystem-1.0/client">BillSYS</a>
             <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -24,23 +24,23 @@
                 <ul class="navbar-nav mr-auto">
                     <c:if test="${role eq 'EMPLOYEE'}">
                         <li class="nav-item">
-                            <a class="nav-link" href="/clients">Clients</a>
+                            <a class="nav-link" href="/BillingSystem-1.0/clients">Clients</a>
                         </li>
                     </c:if>
                     <li class="nav-item">
-                        <a class="nav-link" href="/tariff">Tariffs</a>
+                        <a class="nav-link" href="/BillingSystem-1.0/tariff">Tariffs</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/order">Orders</a>
+                        <a class="nav-link" href="/BillingSystem-1.0/order">Orders</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/bill">Bills</a>
+                        <a class="nav-link" href="/BillingSystem-1.0/bill">Bills</a>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id="download">Personal Information<span class="caret"></span></a>
                         <div class="dropdown-menu" aria-labelledby="download">
-                            <a class="dropdown-item" href="/client">Info</a>
-                            <form:form action="/logout" method="post">
+                            <a class="dropdown-item" href="/BillingSystem-1.0/client">Info</a>
+                            <form:form action="/BillingSystem-1.0/logout" method="post">
                                 <input class="dropdown-item" type="submit" value="Sign out">
                             </form:form>
                         </div>
@@ -61,11 +61,11 @@
                     </div>
                     <div class="col-lg-4 col-md-4 col-sm-6">
                         <div class="text-sm-right">
-                            <c:if test="${role eq 'USER' or role eq 'MANAGER'}">
-                                <c:set var="var" value="/tariff"/>
+                            <c:if test="${role ne 'EMPLOYEE'}">
+                                <c:set var="var" value="/BillingSystem-1.0/tariff"/>
                             </c:if>
                             <c:if test="${role eq 'EMPLOYEE'}">
-                                <c:set var="var" value="/tariff/${curClient}"/>
+                                <c:set var="var" value="/BillingSystem-1.0/tariff/${curClient}"/>
                             </c:if>
                             <input value="New Order" type="button" class="btn btn-primary btn-lg" onclick="location.href='${var}'" />
                         </div>
@@ -119,34 +119,34 @@
                                 </c:if>
                             </td>
                             <td class="align-middle">${order.priceOrder}</td>
-                            <c:if test="${order.statusOrder eq 'Saved'}">
+                            <c:if test="${order.statusOrder eq 0}">
                                 <td class="align-middle">
                                     <span class="badge badge-warning">Saved</span>
                                 </td>
                                 <td class="text-right">
                                     <div class="btn-group" role="group" aria-label="Basic example">
-                                        <input value="Send" type="button" class="btn btn-primary" onclick="location.href='/order/send/${order.idOrder}'"/>
-                                        <input value="Edit" type="button" class="btn btn-outline-primary" onclick="location.href='/product/${order.idOrder}'" />
+                                        <input value="Activate" type="button" class="btn btn-primary" onclick="location.href='/BillingSystem-1.0/order/activate/${order.idOrder}'"/>
+                                        <input value="Edit" type="button" class="btn btn-outline-primary" onclick="location.href='/BillingSystem-1.0/product/${order.idOrder}'" />
                                     </div>
                                 </td>
                             </c:if>
-                            <c:if test="${order.statusOrder eq 'Sent'}">
+                            <c:if test="${order.statusOrder eq 1}">
                                 <td class="align-middle">
-                                    <span class="badge badge-success">Sent</span>
+                                    <span class="badge badge-success">Active</span>
                                 </td>
                                 <td class="text-right">
                                     <div class="btn-group" role="group" aria-label="Basic example">
-                                        <input value="Cancel" type="button" class="btn btn-secondary" onclick="location.href='/order/cancel/${order.idOrder}'" />
-                                        <input value="View" type="button" class="btn btn-outline-primary" onclick="location.href='/product/${order.idOrder}'" />
+                                        <input value="Cancel" type="button" class="btn btn-secondary" onclick="location.href='/BillingSystem-1.0/order/cancel/${order.idOrder}'" />
+                                        <input value="View" type="button" class="btn btn-primary" onclick="location.href='/BillingSystem-1.0/product/${order.idOrder}'" />
                                     </div>
                                 </td>
                             </c:if>
-                            <c:if test="${order.statusOrder eq 'Canceled'}">
+                            <c:if test="${order.statusOrder eq 2}">
                                 <td class="align-middle">
                                     <span class="badge badge-secondary">Canceled</span>
                                 </td>
                                 <td class="text-right">
-                                    <input value="View" type="button" class="btn btn-outline-primary" onclick="location.href='/product/${order.idOrder}'" />
+                                    <input value="View" type="button" class="btn btn-outline-primary" onclick="location.href='/BillingSystem-1.0/product/${order.idOrder}'" />
                                 </td>
                             </c:if>
                         </tr>

@@ -1,5 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page isELIgnored="false"%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
@@ -43,8 +43,8 @@
                                     <input class="form-control form-control-lg" type="password" name="password" id="password" placeholder="Enter your password" >
                                 </div>
                                 <div class="row">
-                                    <div class="col-md-8 text-left">Do you want to <a href="/signup">Sign Up?</a> </div>
-                                    <div class="col-md-4  text-right">...or return <a href="/">home</a></div>
+                                    <div class="col-md-8 text-left">Do you want to <a href="/BillingSystem-1.0/signup">Sign Up?</a> </div>
+                                    <div class="col-md-4  text-right">...or return <a href="/BillingSystem-1.0/">home</a></div>
                                 </div>
                                 <div class="text-center mt-3">
                                     <input value="Sign in" type="submit" class="btn btn-lg btn-primary"/>

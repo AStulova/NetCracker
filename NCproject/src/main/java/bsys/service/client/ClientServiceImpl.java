@@ -52,9 +52,8 @@ public class ClientServiceImpl implements ClientService {
         return clientRepository.getByEmail(authentication.getName());
     }
 
-    @Override
+    /*@Override
     public void deleteClient(Client client) {
         clientRepository.delete(client);
-    }
-
+    }*/
 }

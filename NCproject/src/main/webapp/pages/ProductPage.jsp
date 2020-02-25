@@ -16,7 +16,7 @@
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary" style> <!-- fixed-top -->
         <div class="container">
-            <a class="navbar-brand" href="/client">BillSYS</a>
+            <a class="navbar-brand" href="/BillingSystem-1.0/client">BillSYS</a>
             <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -24,23 +24,23 @@
                 <ul class="navbar-nav mr-auto">
                     <c:if test="${role eq 'EMPLOYEE'}">
                         <li class="nav-item">
-                            <a class="nav-link" href="/clients">Clients</a>
+                            <a class="nav-link" href="/BillingSystem-1.0/clients">Clients</a>
                         </li>
                     </c:if>
                     <li class="nav-item">
-                        <a class="nav-link" href="/tariff">Tariffs</a>
+                        <a class="nav-link" href="/BillingSystem-1.0/tariff">Tariffs</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/order">Orders</a>
+                        <a class="nav-link" href="/BillingSystem-1.0/order">Orders</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/bill">Bills</a>
+                        <a class="nav-link" href="/BillingSystem-1.0/bill">Bills</a>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id="download">Personal Information<span class="caret"></span></a>
                         <div class="dropdown-menu" aria-labelledby="download">
-                            <a class="dropdown-item" href="/client">Info</a>
-                            <form:form action="/logout" method="post">
+                            <a class="dropdown-item" href="/BillingSystem-1.0/client">Info</a>
+                            <form:form action="/BillingSystem-1.0/logout" method="post">
                                 <input class="dropdown-item" type="submit" value="Sign out">
                             </form:form>
                         </div>
@@ -56,10 +56,10 @@
             <div class="page-header" id="banner">
                 <div class="row">
                     <div class="col-lg-8 col-md-7 col-sm-6">
-                        <c:if test="${productList[0].order.statusOrder eq 'Saved'}">
+                        <c:if test="${productList[0].order.statusOrder eq 0}">
                             <h1>Edit Order <small>#${productList[0].order.idOrder}</small></h1>
                         </c:if>
-                        <c:if test="${productList[0].order.statusOrder ne 'Saved'}">
+                        <c:if test="${productList[0].order.statusOrder ne 0}">
                             <h1>Order
                                 <c:if test="${!empty productList}">
                                 <small>#${productList[0].order.idOrder}</small>
@@ -69,15 +69,15 @@
                         <p class="lead"> </p>
                     </div>
                     <div class="col-lg-4 col-md-4 col-sm-6">
-                        <c:if test="${productList[0].order.statusOrder eq 'Saved'}">
+                        <c:if test="${productList[0].order.statusOrder eq 0}">
                             <div class="text-sm-right">
                                 <div class="btn-group" role="group" aria-label="Basic example">
-                                    <input value="Add Tariff" type="button" class="btn btn-primary btn-lg" onclick="location.href='/${productList[0].order.idOrder}/add/tariff'" />
+                                    <input value="Add Tariff" type="button" class="btn btn-primary btn-lg" onclick="location.href='/BillingSystem-1.0/${productList[0].order.idOrder}/add/tariff'" />
                                     <input value="Back" type="button" class="btn btn-secondary" onclick="history.back()"/>
                                 </div>
                             </div>
                         </c:if>
-                        <c:if test="${productList[0].order.statusOrder ne 'Saved'}">
+                        <c:if test="${productList[0].order.statusOrder ne 0}">
                             <div class="text-sm-right">
                                 <input value="Back" type="button" class="btn btn-secondary btn-lg" onclick="history.back()"/>
                             </div>
@@ -93,7 +93,7 @@
                         <div class="col-sm-10 col-md-8 col-lg-6 mx-auto">
                             <div class="text-center">
                                 <p class="lead text-secondary">There are no products.</p>
-                                <p class="lead text-secondary">You can return to <a href="/order">your orders</a>.</p>
+                                <p class="lead text-secondary">You can return to <a href="/BillingSystem-1.0/order">your orders</a>.</p>
                             </div>
                         </div>
                     </div>
@@ -110,7 +110,7 @@
                         <th scope="col">Minutes</th>
                         <th scope="col">Speed</th>
                         <th scope="col">Price</th>
-                        <c:if test="${productList[0].order.statusOrder eq 'Saved'}">
+                        <c:if test="${productList[0].order.statusOrder eq 0}">
                             <th class="text-right"></th>
                         </c:if>
                     </tr>
@@ -125,10 +125,10 @@
                             <td class="align-middle">${product.minute}</td>
                             <td class="align-middle">${product.speed}</td>
                             <td class="align-middle">${product.price}</td>
-                            <c:if test="${productList[0].order.statusOrder eq 'Saved'}">
+                            <c:if test="${productList[0].order.statusOrder eq 0}">
                                 <td class="text-right">
-                                    <input value="Edit" type="button" class="btn btn-outline-primary" onclick="location.href='/product/${product.order.idOrder}/edit/${product.idProduct}'" />
-                                    <input value="Delete" type="button" class="btn btn-outline-primary" onclick="location.href='/product/${product.order.idOrder}/delete/${product.idProduct}'" />
+                                    <input value="Edit" type="button" class="btn btn-outline-primary" onclick="location.href='/BillingSystem-1.0/product/${product.order.idOrder}/edit/${product.idProduct}'" />
+                                    <input value="Delete" type="button" class="btn btn-outline-primary" onclick="location.href='/BillingSystem-1.0/product/${product.order.idOrder}/delete/${product.idProduct}'" />
                                 </td>
                             </c:if>
                         </tr>

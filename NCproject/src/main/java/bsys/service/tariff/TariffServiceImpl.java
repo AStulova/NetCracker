@@ -56,11 +56,11 @@ public class TariffServiceImpl implements TariffService {
         }
     }
 
-    @Override
+    /*@Override
     @Transactional
     public void deleteTariff(Tariff tariff) {
         tariffRepository.delete(tariff);
-    }
+    }*/
 
     @Override
     public Tariff getById(int idTariff) {

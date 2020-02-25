@@ -2,6 +2,7 @@ package bsys.service.product;
 
 import bsys.model.Client;
 import bsys.model.Product;
+
 import java.util.List;
 
 public interface ProductService {

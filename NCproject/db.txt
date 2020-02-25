@@ -10,14 +10,13 @@ create table Client (
                         UNIQUE(phone, email)
 );
 
-
 create table Orders (
                         id_order serial NOT NULL,
                         id_client integer references Client(id_client),
                         date_order timestamp(0) DEFAULT NULL,
                         date_cancel timestamp(0) DEFAULT NULL,
                         price numeric(8, 2) default '0.0',
-                        status varchar(255) NOT NULL,
+                        status integer default '0',
                         CONSTRAINT PK_ORDER_ID primary key (id_order)
 );
 
@@ -53,26 +52,13 @@ create table Bill (
 );
 
 INSERT into client values
-(1, 'Courteney', 'Cox', '89106845169', 'CourteneyCox@gmail.com', '2fg56gsg', 578.47, 'USER'),
+(1, 'Courteney', 'Cox', '89106845169', 'Cox@gmail.com', '2fg56gsg', 578.47, 'USER'),
 (2, 'Matthew', 'Perry', '89425684113', 'MPerry@ya.ru', 'asdf1234', 890.23, 'USER');
 
 insert into tariff values
 (1, 'Super', 'Mobile connection and Internet', 0.89),
 (2, 'FIT Internet', 'Internet', 0.26),
 (3, 'Smart', 'Phone', 0.21);
-
-INSERT into orders values
-(1, 1, null, null, 0.0,'Saved'),
-(2, 1, '2019-10-16 10:21:11', null, 0.0,'Sent');
-
-insert into Product values
-(1, 1, 1, 200, 10, 500, 60, 185.60),
-(2, 1, 2, 0, 30, 0, 100, 265.00),
-(3, 2, 1, 200, 10, 500, 60, 185.60);
-
-insert into bill values
-(1, 1, '2019-10-27', 5, 245.25);
-
 
 create or replace function getProductPrice(_id_product integer)
     returns numeric(8,2) as
@@ -87,7 +73,6 @@ create or replace function getProductPrice(_id_product integer)
         end;
     $BODY$
     language plpgsql volatile;
-
 
 
 
@@ -106,7 +91,7 @@ create or replace function getOrdersTotal(_id_client integer)
             priceOrder = 0;
             for curOrder in select id_order, date_order, date_cancel, status from orders where id_client = _id_client
                 loop
-                    if curOrder.status = 'Sent' or curOrder.status = 'Canceled' then
+                    if curOrder.status = '1' or curOrder.status = '2' then
                         if curOrder.date_order notnull then
                             if extract(day from current_date) <= 27 then
                                 dateB = make_date(extract(year from current_date)::integer, extract(month from current_date)::int, 27);

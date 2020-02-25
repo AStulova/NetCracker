@@ -14,7 +14,7 @@
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary" style> <!-- fixed-top -->
         <div class="container">
-            <a class="navbar-brand" href="/">BillSYS</a>
+            <a class="navbar-brand" href="/BillingSystem-1.0/">BillSYS</a>
             <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -29,8 +29,8 @@
                     <h1 class="my-3 display-4 d-lg-inline-block">Welcome in BillSYS!</h1>
                     <span class="h1 my-3 d-inline-block d-lg-none"></span>
                     <p class="lead mb-3">Before start you need to...</p>
-                    <a class="btn btn-success btn-lg mr-lg-2 my-1" href="/signin" role="button">Sign In</a>
-                    <a class="btn btn-success btn-lg my-1" href="/signup" role="button">Sign Up</a>
+                    <a class="btn btn-success btn-lg mr-lg-2 my-1" href="/BillingSystem-1.0/signin" role="button">Sign In</a>
+                    <a class="btn btn-success btn-lg my-1" href="/BillingSystem-1.0/signup" role="button">Sign Up</a>
                 </div>
             </div>
         </div>
@@ -56,77 +56,6 @@
             </div>
         </div>
     </main>
-
-
-
-   <%-- <div class="bg-white py-5">
-        <div class="container">
-            <div class="text-center mb-5">
-                <h3>You can see</h3>
-            </div>
-            <div class="row justify-content-center">
-                <div class="col-md-9">
-                    <div class="row">
-                        <div class="col-6 col-lg-4">
-                            <a class="card bg-light mb-4" href="#">
-                                <div class="card-body my-3 text-center">
-                                    <i class="far fa-3x fa-user-circle mb-2 text-primary"></i>
-                                    <h5 class="mb-0 font-weight-light">Account</h5>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="col-6 col-lg-4">
-                            <a class="card bg-light mb-4" href="#">
-                                <div class="card-body my-3 text-center">
-                                    <i class="far fa-3x fa-chart-bar mb-2 text-warning"></i>
-                                    <h5 class="mb-0 font-weight-light">Analytics</h5>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="col-6 col-lg-4">
-                            <a class="card bg-light mb-4" href="#">
-                                <div class="card-body my-3 text-center">
-                                    <i class="far fa-3x fa-money-bill-alt mb-2 text-info"></i>
-                                    <h5 class="mb-0 font-weight-light">Billing</h5>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="col-6 col-lg-4">
-                            <a class="card bg-light mb-4" href="#">
-                                <div class="card-body my-3 text-center">
-                                    <i class="far fa-3x fa-file-code mb-2 text-danger"></i>
-                                    <h5 class="mb-0 font-weight-light">Development</h5>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="col-6 col-lg-4">
-                            <a class="card bg-light mb-4" href="#">
-                                <div class="card-body my-3 text-center">
-                                    <i class="fas fa-3x fa-project-diagram  mb-2 text-success"></i>
-                                    <h5 class="mb-0 font-weight-light">Projects</h5>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="col-6 col-lg-4">
-                            <a class="card bg-light mb-4" href="#">
-                                <div class="card-body my-3 text-center">
-                                    <i class="fas fa-3x fa-unlock-alt mb-2 text-primary"></i>
-                                    <h5 class="mb-0 font-weight-light">Security</h5>
-                                </div>
-                            </a>
-                        </div>
-                    </div><!-- /.row -->
-                </div>
-            </div><!-- /.row -->
-            <div class="row justify-content-center">
-
-            </div>
-            <div class="row justify-content-center">
-
-            </div><!-- /.row -->
-        </div>
-    </div>--%>
-
 
     <!-- JavaScript -->
     <script src="http://code.jquery.com/jquery-latest.js"></script>

@@ -56,9 +56,9 @@ public class OrderController {
         return modelAndView;
     }
 
-    @GetMapping(value = "/send/{idOrder}")
-    public ModelAndView sendOrder(@PathVariable int idOrder) {
-        orderService.sendOrder(idOrder);
+    @GetMapping(value = "/activate/{idOrder}")
+    public ModelAndView activateOrder(@PathVariable int idOrder) {
+        orderService.activateOrder(idOrder);
         return getModelAndView(idOrder);
     }
 

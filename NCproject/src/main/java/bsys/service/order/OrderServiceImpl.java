@@ -46,9 +46,9 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     @Transactional
-    public void sendOrder(int idOrder) {
+    public void activateOrder(int idOrder) {
         Order order = getById(idOrder);
-        order.setStatusOrder("Sent");
+        order.setStatusOrder(1);
         order.setDateOrder(new Date());
         orderRepository.save(order);
     }
@@ -57,7 +57,7 @@ public class OrderServiceImpl implements OrderService {
     @Transactional
     public void cancelOrder(int idOrder) {
         Order order = getById(idOrder);
-        order.setStatusOrder("Canceled");
+        order.setStatusOrder(2);
         order.setDateCancel(new Date());
         orderRepository.save(order);
     }
@@ -66,9 +66,6 @@ public class OrderServiceImpl implements OrderService {
     public int addOrder(int idClient) {
         Order order = new Order();
         order.setClient(clientService.getById(idClient));
-        //order.setDateOrder(null);
-        //order.setDateCancel(null);
-        order.setStatusOrder("Saved");
         return orderRepository.save(order).getIdOrder();
     }
 

@@ -4,7 +4,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>BillSYS | Profile</title>
+    <title>BillSYS | Clients</title>
     <!-- Bootstrap -->
     <style>
         <%@include file='css/bootstrap.min.css' %>
@@ -15,7 +15,7 @@
 <!-- Navbar -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary" style> <!-- fixed-top -->
     <div class="container">
-        <a class="navbar-brand" href="/client">BillSYS</a>
+        <a class="navbar-brand" href="/BillingSystem-1.0/client">BillSYS</a>
         <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -23,23 +23,23 @@
             <ul class="navbar-nav mr-auto">
                 <c:if test="${role eq 'EMPLOYEE'}">
                     <li class="nav-item">
-                        <a class="nav-link" href="/clients">Clients</a>
+                        <a class="nav-link" href="/BillingSystem-1.0/clients">Clients</a>
                     </li>
                 </c:if>
                 <li class="nav-item">
-                    <a class="nav-link" href="/tariff">Tariffs</a>
+                    <a class="nav-link" href="/BillingSystem-1.0/tariff">Tariffs</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/order">Orders</a>
+                    <a class="nav-link" href="/BillingSystem-1.0/order">Orders</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/bill">Bills</a>
+                    <a class="nav-link" href="/BillingSystem-1.0/bill">Bills</a>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id="download">Personal Information<span class="caret"></span></a>
                     <div class="dropdown-menu" aria-labelledby="download">
-                        <a class="dropdown-item" href="/client">Info</a>
-                        <form:form action="/logout" method="post">
+                        <a class="dropdown-item" href="/BillingSystem-1.0/client">Info</a>
+                        <form:form action="/BillingSystem-1.0/logout" method="post">
                             <input class="dropdown-item" type="submit" value="Sign out">
                         </form:form>
                     </div>
@@ -85,8 +85,8 @@
                         <td class="align-middle">${client.balance}</td>
                         <td class="text-right">
                             <div class="btn-group" role="group" aria-label="Basic example">
-                                <input value="Orders" type="button" class="btn btn-primary" onclick="location.href='/order/${client.idClient}'"/>
-                                <input value="Bills" type="button" class="btn btn-primary" onclick="location.href='/bill/${client.idClient}'"/>
+                                <input value="Orders" type="button" class="btn btn-primary" onclick="location.href='/BillingSystem-1.0/order/${client.idClient}'"/>
+                                <input value="Bills" type="button" class="btn btn-primary" onclick="location.href='/BillingSystem-1.0/bill/${client.idClient}'"/>
                             </div>
                         </td>
                     </tr>

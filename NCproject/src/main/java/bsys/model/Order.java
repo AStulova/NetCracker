@@ -25,7 +25,12 @@ public class Order {
     private double priceOrder;
 
     @Column(name = "status")
-    private String statusOrder;
+    private int statusOrder;
+    /*
+        0 - Saved
+        1 - Active
+        2 - Canceled
+     */
 
     public int getIdOrder() {
         return idOrder;
@@ -67,11 +72,11 @@ public class Order {
         this.priceOrder = priceOrder;
     }
 
-    public String getStatusOrder() {
+    public int getStatusOrder() {
         return statusOrder;
     }
 
-    public void setStatusOrder(String statusOrder) {
+    public void setStatusOrder(int statusOrder) {
         this.statusOrder = statusOrder;
     }
 }

@@ -24,7 +24,7 @@
                 <div class="card bg-light">
                     <div class="card-body">
                         <div class="m-sm-4">
-                            <form:form action="${var}" method="POST">
+                            <form:form method="POST">
                                 <div class="form-group">
                                     <label class="h5" for="firstName">First Name</label>
                                     <input class="form-control form-control-lg ${not empty errorMessage.get('firstName') ? 'is-invalid' : ''}" type="text" value="${not empty newClient.firstName ? newClient.firstName : ''}" name="firstName" id="firstName" placeholder="Enter your first name" required/>
@@ -61,8 +61,8 @@
                                     </c:if>
                                 </div>
                                 <div class="row">
-                                    <div class="col-md-8 text-left">Do you want to <a href="/signin">Sign In?</a></div>
-                                    <div class="col-md-4  text-right">...or return <a href="/">home</a></div>
+                                    <div class="col-md-8 text-left">Do you want to <a href="/BillingSystem-1.0/signin">Sign In?</a></div>
+                                    <div class="col-md-4  text-right">...or return <a href="/BillingSystem-1.0/">home</a></div>
                                 </div>
                                 <div class="text-center mt-3">
                                    <input value="Sign Up" type="submit" class="btn btn-lg btn-primary"/>
