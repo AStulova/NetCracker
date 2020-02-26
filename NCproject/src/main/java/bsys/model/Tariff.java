@@ -1,8 +1,10 @@
 package bsys.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.Pattern;
+import java.math.BigDecimal;
 
 @Entity
 @Table(name = "Tariff")
@@ -20,9 +22,10 @@ public class Tariff {
     @Column(name = "type")
     private String typeTariff;
 
-    @Digits(integer = 8, fraction = 2, message = "Incorrect price!")
+    @DecimalMin(value = "0.0", message = "Incorrect price!") // ?
+    @Digits(integer = 4, fraction = 2, message = "Incorrect price!")
     @Column(name = "price")
-    private double priceTariff;
+    private BigDecimal priceTariff;
 
     public int getIdTariff() {
         return idTariff;
@@ -48,11 +51,11 @@ public class Tariff {
         this.typeTariff = typeTariff;
     }
 
-    public double getPriceTariff() {
+    public BigDecimal getPriceTariff() {
         return priceTariff;
     }
 
-    public void setPriceTariff(double priceTariff) {
+    public void setPriceTariff(BigDecimal priceTariff) {
         this.priceTariff = priceTariff;
     }
 }

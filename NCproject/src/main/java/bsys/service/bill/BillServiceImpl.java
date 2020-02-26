@@ -1,7 +1,9 @@
 package bsys.service.bill;
 
 import bsys.model.Bill;
+import bsys.model.Client;
 import bsys.repository.BillRepository;
+import bsys.service.client.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,16 +19,14 @@ public class BillServiceImpl implements BillService {
     }
 
     @Override
-    public List<Bill> allBills(int idClient) {
-        return billRepository.generateBills(idClient);
+    public List<Bill> getBills(Client client) {
+        return billRepository.findAllByClient(client);
     }
 
-    /*@Override
-    @Transactional
-    public void editBill(Bill bill) {
-        billRepository.editDiscount(bill.getDiscount(), bill.getIdBill());
-        //billRepository.save(bill);
-    }*/
+    @Override
+    public void updateBill(int idClient) {
+        billRepository.updateBill(idClient);
+    }
 
     @Override
     public Bill getById(int idBill) {

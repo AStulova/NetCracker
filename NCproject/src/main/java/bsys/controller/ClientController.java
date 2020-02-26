@@ -29,21 +29,21 @@ public class ClientController {
     }
 
     @GetMapping(value = "/")
-    public ModelAndView HomePage() {
+    public ModelAndView homePage() {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("HomePage");
         return modelAndView;
     }
 
     @GetMapping(value="/signin")
-    public ModelAndView loginForm() {
+    public ModelAndView signInPage() {
         return new ModelAndView("SignIn");
     }
 
     @PreAuthorize("hasRole('EMPLOYEE')")
     @GetMapping(value = "/clients")
-    public ModelAndView getAllClients() {
-        List<Client> clientList = clientService.findAll("USER");
+    public ModelAndView allClientsPage() {
+        List<Client> clientList = clientService.findAllClients("USER");
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("AllClientsPage");
         modelAndView.addObject("clientList", clientList);
@@ -52,7 +52,7 @@ public class ClientController {
     }
 
     @GetMapping(value = "/client")
-    public ModelAndView findClient() {
+    public ModelAndView clientPage() {
         Client client = clientService.getAuthClient();
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("ClientPage");
@@ -82,7 +82,7 @@ public class ClientController {
     }
 
     @GetMapping(value = "/signup")
-    public ModelAndView addClientPage() {
+    public ModelAndView signUpPage() {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("SignUp");
         return modelAndView;

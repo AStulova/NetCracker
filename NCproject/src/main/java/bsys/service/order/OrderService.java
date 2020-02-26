@@ -6,8 +6,8 @@ import bsys.model.Order;
 import java.util.List;
 
 public interface OrderService {
-    List<Order> allOrdersForUpdate();
-    List<Order> allOrders(Client client);
+    List<Order> getOrdersForUpdate();
+    List<Order> getOrders(Client client);
     void activateOrder(int idOrder);
     int addOrder(int idClient);
     void cancelOrder(int idOrder);

@@ -1,6 +1,7 @@
 package bsys.model;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.Date;
 
 @Entity
@@ -22,7 +23,7 @@ public class Order {
     private Date dateCancel;
 
     @Column(name = "price")
-    private double priceOrder;
+    private BigDecimal priceOrder;
 
     @Column(name = "status")
     private int statusOrder;
@@ -64,11 +65,11 @@ public class Order {
         this.dateCancel = dateCancel;
     }
 
-    public double getPriceOrder() {
+    public BigDecimal getPriceOrder() {
         return priceOrder;
     }
 
-    public void setPriceOrder(double priceOrder) {
+    public void setPriceOrder(BigDecimal priceOrder) {
         this.priceOrder = priceOrder;
     }
 

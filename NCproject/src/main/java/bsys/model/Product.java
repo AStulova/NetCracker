@@ -1,13 +1,10 @@
 package bsys.model;
 
-import org.hibernate.annotations.Proxy;
-import org.springframework.web.bind.annotation.ControllerAdvice;
-
 import javax.persistence.*;
+import java.math.BigDecimal;
 
 @Entity
 @Table(name = "Product")
-@Proxy(lazy = false)
 public class Product {
     @Id
     @Column(name = "id_product")
@@ -35,7 +32,7 @@ public class Product {
     private int speed;
 
     @Column(name = "price")
-    private double price;
+    private BigDecimal price;
 
     public Product() {    }
 
@@ -108,11 +105,11 @@ public class Product {
         this.speed = speed;
     }
 
-    public double getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
     }
 }

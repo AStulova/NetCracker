@@ -6,8 +6,8 @@ import bsys.model.Product;
 import java.util.List;
 
 public interface ProductService {
-    List<Product> allProducts(Client client);
-    List<Product> allProducts(int idOrder);
+    List<Product> getProducts(Client client);
+    List<Product> getProducts(int idOrder);
     int addProduct(Product product, int idOrder);
     void editProduct(Product product);
     void deleteProduct(Product product);

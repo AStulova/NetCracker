@@ -30,7 +30,7 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public List<Client> findAll(String role) {
+    public List<Client> findAllClients(String role) {
         return clientRepository.findAllByRole(role);
     }
 
@@ -51,9 +51,4 @@ public class ClientServiceImpl implements ClientService {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         return clientRepository.getByEmail(authentication.getName());
     }
-
-    /*@Override
-    public void deleteClient(Client client) {
-        clientRepository.delete(client);
-    }*/
 }

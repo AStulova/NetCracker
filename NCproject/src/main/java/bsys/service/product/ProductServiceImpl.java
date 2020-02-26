@@ -3,28 +3,21 @@ package bsys.service.product;
 import bsys.model.Client;
 import bsys.model.Order;
 import bsys.model.Product;
-import bsys.model.Tariff;
 import bsys.repository.ProductRepository;
-import bsys.service.client.ClientService;
 import bsys.service.order.OrderService;
 import bsys.service.tariff.TariffService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.math.BigDecimal;
 import java.util.List;
 
 @Service
 public class ProductServiceImpl implements ProductService {
-    private ClientService clientService;
     private OrderService orderService;
     private TariffService tariffService;
     private ProductRepository productRepository;
-
-    @Autowired
-    public void setClientService(ClientService clientService) {
-        this.clientService = clientService;
-    }
 
     @Autowired
     public void setOrderService(OrderService orderService) {
@@ -42,12 +35,12 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<Product> allProducts(Client client) {
+    public List<Product> getProducts(Client client) {
         return productRepository.getAllByClient(client);
     }
 
     @Override
-    public List<Product> allProducts(int idOrder) {
+    public List<Product> getProducts(int idOrder) {
         return productRepository.findByOrder(orderService.getById(idOrder));
     }
 
@@ -61,7 +54,7 @@ public class ProductServiceImpl implements ProductService {
         else {
             product.setOrder(orderService.getById(idOrder));
         }
-        product.setPrice((product.getMinute() + product.getSms() + product.getGb() + product.getSpeed()) * product.getTariff().getPriceTariff());
+        product.setPrice(calculateProductPrice(product));
         Product product1 = productRepository.save(product);
         orderService.updateOrderPrice(product.getOrder().getIdOrder());
         return product1.getOrder().getIdOrder();
@@ -70,8 +63,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     @Transactional
     public void editProduct(Product product) {
-        product.setPrice((product.getMinute() + product.getSms() + product.getGb() + product.getSpeed())
-                * tariffService.getById(product.getTariff().getIdTariff()).getPriceTariff());
+        product.setPrice(calculateProductPrice(product));
         productRepository.save(product);
         orderService.updateOrderPrice(product.getOrder().getIdOrder());
     }
@@ -82,7 +74,7 @@ public class ProductServiceImpl implements ProductService {
         Order order = orderService.getById(product.getOrder().getIdOrder());
         productRepository.delete(product);
         orderService.updateOrderPrice(order.getIdOrder());
-        List<Product> productList = allProducts(order.getIdOrder());
+        List<Product> productList = getProducts(order.getIdOrder());
         if (productList.isEmpty()) {
             if (order.getStatusOrder() == 0) {
                 orderService.deleteOrder(order);
@@ -98,8 +90,12 @@ public class ProductServiceImpl implements ProductService {
     @Override
     @Transactional
     public void updateProductPrice(Product product) {
-        double price = (product.getMinute() + product.getSms() + product.getGb() + product.getSpeed())
-                * tariffService.getById(product.getTariff().getIdTariff()).getPriceTariff();
-        productRepository.updateProductPrice(price, product.getIdProduct());
+        product.setPrice(calculateProductPrice(product));
+        productRepository.save(product);
+    }
+
+    private BigDecimal calculateProductPrice (Product product) {
+        return tariffService.getById(product.getTariff().getIdTariff()).getPriceTariff()
+                .multiply(new BigDecimal(product.getMinute() + product.getSms() + product.getGb() + product.getSpeed()));
     }
 }

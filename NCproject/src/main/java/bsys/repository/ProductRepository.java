@@ -17,8 +17,4 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
             "where o.client = ?1 " +
             "order by p.idProduct")
     List<Product> getAllByClient(Client client);
-
-    @Modifying
-    @Query("update Product set price = ?1 where idProduct = ?2")
-    void updateProductPrice(double price, int idProduct);
 }

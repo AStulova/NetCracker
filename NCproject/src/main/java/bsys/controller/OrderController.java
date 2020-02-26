@@ -32,9 +32,9 @@ public class OrderController {
     }
 
     @GetMapping
-    public ModelAndView allOrders() {
+    public ModelAndView ordersByAuthClientPage() {
         Client client = clientService.getAuthClient();
-        List<Order> orderList = orderService.allOrders(client);
+        List<Order> orderList = orderService.getOrders(client);
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("OrderPage");
         modelAndView.addObject("orderList", orderList);
@@ -44,10 +44,10 @@ public class OrderController {
 
     @PreAuthorize("hasRole('EMPLOYEE')")
     @GetMapping(value = "/{idClient}")
-    public ModelAndView allClientOrders(@PathVariable int idClient) {
+    public ModelAndView OrdersByClientPage(@PathVariable int idClient) {
         String role = clientService.getAuthClient().getRole();
         Client client = clientService.getById(idClient);
-        List<Order> orderList = orderService.allOrders(client);
+        List<Order> orderList = orderService.getOrders(client);
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("OrderPage");
         modelAndView.addObject("orderList", orderList);

@@ -36,8 +36,8 @@ public class TariffController {
     }
 
     @GetMapping(value = "/{idOrder}/add/tariff")
-    public ModelAndView allTariffs(@PathVariable int idOrder) {
-        List<Tariff> tariff =  tariffService.allTariffs();
+    public ModelAndView getTariffsPage(@PathVariable int idOrder) {
+        List<Tariff> tariff =  tariffService.getTariffs();
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("TariffPage");
         modelAndView.addObject("tariffList", tariff);
@@ -47,8 +47,8 @@ public class TariffController {
     }
 
     @GetMapping(value = "/tariff")
-    public ModelAndView allTariffsNewOrder() {
-        List<Tariff> tariff =  tariffService.allTariffs();
+    public ModelAndView getTariffsNewOrderPage() {
+        List<Tariff> tariff =  tariffService.getTariffs();
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("TariffPage");
         modelAndView.addObject("tariffList", tariff);
@@ -58,8 +58,8 @@ public class TariffController {
 
     @PreAuthorize("hasRole('EMPLOYEE')")
     @GetMapping(value = "/tariff/{idClient}")
-    public ModelAndView allTariffsNewOrder(@PathVariable int idClient) {
-        List<Tariff> tariff =  tariffService.allTariffs();
+    public ModelAndView getTariffsNewOrderPage(@PathVariable int idClient) {
+        List<Tariff> tariff =  tariffService.getTariffs();
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("TariffPage");
         modelAndView.addObject("tariffList", tariff);

@@ -35,7 +35,7 @@ public class TariffServiceImpl implements TariffService {
     }
 
     @Override
-    public List<Tariff> allTariffs() {
+    public List<Tariff> getTariffs() {
         return tariffRepository.findAll(Sort.by(Sort.Direction.ASC, "idTariff"));
     }
 
@@ -45,9 +45,9 @@ public class TariffServiceImpl implements TariffService {
         tariffRepository.saveAndFlush(tariff);
         // Updating price for clients
         if (tariff.getIdTariff() != 0) {
-            List<Order> orderList = orderService.allOrdersForUpdate();
+            List<Order> orderList = orderService.getOrdersForUpdate();
             for (Order order : orderList) {
-                List<Product> productList = productService.allProducts(order.getIdOrder());
+                List<Product> productList = productService.getProducts(order.getIdOrder());
                 for (Product product : productList) {
                     productService.updateProductPrice(product);
                 }
@@ -55,12 +55,6 @@ public class TariffServiceImpl implements TariffService {
             }
         }
     }
-
-    /*@Override
-    @Transactional
-    public void deleteTariff(Tariff tariff) {
-        tariffRepository.delete(tariff);
-    }*/
 
     @Override
     public Tariff getById(int idTariff) {

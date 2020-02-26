@@ -52,36 +52,20 @@ public class BillController {
     }
 
     @GetMapping
-    public ModelAndView allBills() {
-        return getClientBills(clientService.getAuthClient());
+    public ModelAndView getBillsPageByAuthClient() {
+        return getModelAndView(clientService.getAuthClient());
     }
 
     @PreAuthorize("hasRole('EMPLOYEE')")
     @GetMapping(value = "/{idClient}")
-    public ModelAndView allClientBills(@PathVariable int idClient) {
-        return getClientBills(clientService.getById(idClient));
+    public ModelAndView BillsPage(@PathVariable int idClient) {
+        return getModelAndView(clientService.getById(idClient));
     }
 
-    /*@PreAuthorize("hasRole('EMPLOYEE')")
-    @PostMapping
-    public ModelAndView allClientBills(@Valid @ModelAttribute Bill bill, BindingResult bindingResult) {
-        ModelAndView modelAndView = new ModelAndView();
-        if (bindingResult.hasErrors()) {
-            getErrorMap(bindingResult, modelAndView);
-            modelAndView.addObject("curBill", bill);
-            return getClientBills(clientService.getById(bill.getClient().getIdClient()));
-        }
-        else {
-            billService.editBill(bill);
-            modelAndView.setViewName("redirect:/bill/" + bill.getClient().getIdClient());
-            return modelAndView;
-        }
-    }*/
-
-    private ModelAndView getClientBills(Client client) {
-        List<Bill> billList = billService.allBills(client.getIdClient());
-        List<Product> productList = productService.allProducts(client);
-        List<Order> orderList = orderService.allOrders(client);
+    private ModelAndView getModelAndView(Client client) {
+        List<Bill> billList = billService.getBills(client);
+        List<Product> productList = productService.getProducts(client);
+        List<Order> orderList = orderService.getOrders(client);
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("BillPage");
         modelAndView.addObject("billList", billList);

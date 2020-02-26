@@ -43,9 +43,9 @@ public class ProductController {
     }
 
     @GetMapping(value = "/{idOrder}")
-    public ModelAndView allProducts(@PathVariable int idOrder) {
+    public ModelAndView productsPage(@PathVariable int idOrder) {
         verifyClient(idOrder);
-        List<Product> productList = productService.allProducts(idOrder);
+        List<Product> productList = productService.getProducts(idOrder);
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("ProductPage");
         modelAndView.addObject("productList", productList);
@@ -77,25 +77,25 @@ public class ProductController {
     public ModelAndView addProductPage(@PathVariable int idOrder, @PathVariable int idTariff) {
         verifyClient(idOrder);
         Product product = new Product(orderService.getById(idOrder), tariffService.getById(idTariff));
-        return getInfoPage(product);
+        return getModelAndView(product);
     }
 
     // For new order
     @GetMapping(value = "/add/{idTariff}")
     public ModelAndView addProductPage(@PathVariable int idTariff) {
         Product product = new Product(tariffService.getById(idTariff), clientService.getAuthClient());
-        return getInfoPage(product);
+        return getModelAndView(product);
     }
 
     // For new order of current client
     @PreAuthorize("hasRole('EMPLOYEE')")
     @GetMapping(value = "/add/{idClient}/{idTariff}")
-    public ModelAndView addClientProductPage(@PathVariable int idClient, @PathVariable int idTariff) {
+    public ModelAndView addProductForClientPage(@PathVariable int idClient, @PathVariable int idTariff) {
         Product product = new Product(tariffService.getById(idTariff), clientService.getById(idClient));
-        return getInfoPage(product);
+        return getModelAndView(product);
     }
 
-    private ModelAndView getInfoPage(Product product) {
+    private ModelAndView getModelAndView(Product product) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("product", product);
         modelAndView.addObject("role", clientService.getAuthClient().getRole());
