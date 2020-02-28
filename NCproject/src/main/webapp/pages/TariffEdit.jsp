@@ -4,10 +4,10 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <c:if test="${empty tariff.idTariff or !empty newTariff.typeTariff}">
+    <c:if test="${empty tariff.idTariff or not empty errorMessage}">
         <title>BillSYS | Add Tariff</title>
     </c:if>
-    <c:if test="${!empty tariff.idTariff}">
+    <c:if test="${not empty tariff.idTariff and tariff.idTariff ne 0}">
         <title>BillSYS | Edit Tariff</title>
     </c:if>
     <!-- Bootstrap -->
@@ -60,10 +60,10 @@
         <div class="page-header" id="banner">
             <div class="row">
                 <div class="col-lg-8 col-md-7 col-sm-6">
-                    <c:if test="${empty tariff.idTariff}">
+                    <c:if test="${empty tariff.idTariff or not empty errorMessage}">
                         <h1>Add Tariff</h1>
                     </c:if>
-                    <c:if test="${!empty tariff.idTariff}">
+                    <c:if test="${not empty tariff.idTariff and tariff.idTariff ne 0}">
                         <h1>Edit Tariff <small>#${tariff.idTariff}</small></h1>
                     </c:if>
                     <p class="lead"> </p>
@@ -75,7 +75,7 @@
         <div class="card bg-light">
             <div class="card-body">
                 <form:form action="/BillingSystem-1.0/tariff/add" method="POST">
-                    <c:if test="${!empty tariff.idTariff}">
+                    <c:if test="${not empty tariff.idTariff and tariff.idTariff ne 0}">
                         <div class="form-row">
                             <div class="form-group col-md-6">
                                 <label class="h5" for="typeTariff">Tariff type</label>
@@ -83,24 +83,22 @@
                                 <input type="hidden" name="typeTariff" value="${tariff.typeTariff}"/>
                             </div>
                         </div>
+                        <input type="hidden" name="idTariff" value="${tariff.idTariff}"/>
                     </c:if>
                     <div class="form-row">
-                        <c:if test="${!empty tariff.idTariff}">
-                            <input type="hidden" name="idTariff" value="${tariff.idTariff}"/>
-                        </c:if>
                         <div class="form-group col-md-6">
                             <label class="h5" for="nameTariff">Tariff name</label>
-                            <c:set var="varName" value="${not empty tariff.nameTariff ? tariff.nameTariff : not empty newTariff.nameTariff ? newTariff.nameTariff : ''}" />
-                            <input type="text" class="form-control ${not empty errorMessage.get('nameTariff') ? 'is-invalid' : ''}" name="nameTariff" id="nameTariff" value="${varName}" placeholder="${empty varName ? 'Enter name' : ''}" />
+                            <c:set var="varName" value="${!empty tariff.nameTariff ? tariff.nameTariff : not empty newTariff.nameTariff ? newTariff.nameTariff : ''}" />
+                            <input type="text" class="form-control ${!empty errorMessage.get('nameTariff') ? 'is-invalid' : ''}" name="nameTariff" id="nameTariff" value="${varName}" placeholder="${empty varName ? 'Enter name' : ''}" />
                             <c:if test="${not empty errorMessage.get('nameTariff')}">
                                 <div class="invalid-feedback">${errorMessage.get('nameTariff')}</div>
                             </c:if>
                         </div>
-                        <c:if test="${empty tariff.idTariff or !empty newTariff.typeTariff}">
+                        <c:if test="${empty tariff.idTariff or not empty errorMessage}">
                         <div class="form-group col-md-6">
                             <label class="h5" for="typeTariff">Tariff type</label>
                             <select class="form-control" name="typeTariff" id="typeTariff" required>
-                                <c:if test="${not empty tariff.idTariff}">
+                                <c:if test="${!empty tariff.typeTariff}">
                                     <option selected>${tariff.typeTariff}</option>
                                 </c:if>
                                 <option>Mobile connection and Internet</option>
@@ -113,14 +111,14 @@
                     <div class="form-row">
                         <div class="form-group col-md-6">
                             <label class="h5" for="priceTariff">Tariff price</label>
-                            <c:set var="varPrice" value="${not empty tariff.priceTariff ? tariff.priceTariff : not empty newTariff.priceTariff ? newTariff.priceTariff : ''}" />
-                            <input type="text" class="form-control ${not empty errorMessage.get('priceTariff') ? 'is-invalid' : ''}" name="priceTariff" id="priceTariff" value="${varPrice}" placeholder="${empty varPrice ? 'Enter price' : ''}" />
+                            <c:set var="varPrice" value="${!empty tariff.priceTariff ? tariff.priceTariff : not empty newTariff.priceTariff ? newTariff.priceTariff : ''}" />
+                            <input type="text" class="form-control ${!empty errorMessage.get('priceTariff') ? 'is-invalid' : ''}" name="priceTariff" id="priceTariff" value="${varPrice}" placeholder="${empty varPrice ? 'Enter price' : ''}" />
                             <c:if test="${not empty errorMessage.get('priceTariff')}">
                                 <div class="invalid-feedback">${errorMessage.get('priceTariff')}</div>
                             </c:if>
                         </div>
                     </div>
-                    <input value="${empty tariff.idTariff ? 'Add' : 'Edit'}" type="submit" class="btn btn-success" />
+                    <input value="${not empty tariff.idTariff and tariff.idTariff ne 0 ? 'Edit' : 'Add'}" type="submit" class="btn btn-success" />
                     <button type="button" class="btn btn-secondary" onclick="history.back()">Cancel</button>
                 </form:form>
             </div>

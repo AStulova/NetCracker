@@ -34,7 +34,7 @@ public class Client implements UserDetails {
     @Column(name = "email")
     private String email;
 
-    @Length(min = 8, message = "Password must be more than 8 characters.")
+    @Length(min = 8, max = 16, message = "Password must be between 8 and 16 characters.")
     @Column(name = "password")
     private String password;
 

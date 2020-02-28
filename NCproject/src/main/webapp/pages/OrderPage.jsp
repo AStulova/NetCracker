@@ -93,6 +93,7 @@
                         <th scope="col">ID Order</th>
                         <th scope="col">Order date</th>
                         <th scope="col">Cancel date</th>
+                        <th scope="col">Discount</th>
                         <th scope="col">Order price per month</th>
                         <th scope="col">Status</th>
                         <th class="text-right"></th>
@@ -118,6 +119,7 @@
                                     <fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${order.dateCancel}"/>
                                 </c:if>
                             </td>
+                            <td class="align-middle">${order.discount}%</td>
                             <td class="align-middle">${order.priceOrder}</td>
                             <c:if test="${order.statusOrder eq 0}">
                                 <td class="align-middle">

@@ -22,6 +22,9 @@ public class Order {
     @Column(name = "date_cancel")
     private Date dateCancel;
 
+    @Column(name = "discount")
+    private int discount;
+
     @Column(name = "price")
     private BigDecimal priceOrder;
 
@@ -63,6 +66,14 @@ public class Order {
 
     public void setDateCancel(Date dateCancel) {
         this.dateCancel = dateCancel;
+    }
+
+    public int getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(int discount) {
+        this.discount = discount;
     }
 
     public BigDecimal getPriceOrder() {

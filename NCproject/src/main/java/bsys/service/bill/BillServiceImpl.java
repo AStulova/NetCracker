@@ -20,7 +20,7 @@ public class BillServiceImpl implements BillService {
 
     @Override
     public List<Bill> getBills(Client client) {
-        return billRepository.findAllByClient(client);
+        return billRepository.findAllByClientOrderByDateBillDesc(client);
     }
 
     @Override

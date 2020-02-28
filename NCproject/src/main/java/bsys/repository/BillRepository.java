@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
 public interface BillRepository extends JpaRepository<Bill, Integer> {
-    List<Bill> findAllByClient(Client client);
+    List<Bill> findAllByClientOrderByDateBillDesc(Client client);
 
     @Query(value = "call updateBill(?1)", nativeQuery = true)
     void updateBill(int idClient);

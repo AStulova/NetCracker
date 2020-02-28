@@ -3,6 +3,7 @@ package bsys.model;
 import javax.persistence.*;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.Digits;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import java.math.BigDecimal;
 
@@ -22,6 +23,7 @@ public class Tariff {
     @Column(name = "type")
     private String typeTariff;
 
+    @NotNull(message = "Enter price!")
     @DecimalMin(value = "0.0", message = "Incorrect price!") // ?
     @Digits(integer = 4, fraction = 2, message = "Incorrect price!")
     @Column(name = "price")

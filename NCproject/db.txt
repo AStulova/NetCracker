@@ -15,6 +15,7 @@ create table Orders (
                         id_client integer references Client(id_client),
                         date_order timestamp(0) DEFAULT NULL,
                         date_cancel timestamp(0) DEFAULT NULL,
+                        discount integer default 0,
                         price numeric(8, 2) default '0.0',
                         status integer default '0',
                         CONSTRAINT PK_ORDER_ID primary key (id_order)
@@ -46,8 +47,6 @@ create table Bill (
                       id_bill serial primary key,
                       id_client integer references Client(id_client),
                       date_bill date NOT NULL,
-                      discount integer default 0,
-                      subtotal numeric(8,2) NOT NULL,
                       total numeric(8, 2) NOT NULL
 );
 
@@ -62,53 +61,49 @@ insert into tariff values
 
 create or replace function getProductPrice(_id_product integer)
     returns numeric(8,2) as
-    $BODY$
-    declare
-        price numeric(8,2);
-        begin
-            select ((p.minute + p.sms + p.gb + p.speed) * t.price) into strict price
-            from product p inner join tariff t on p.id_tariff = t.id_tariff
-            where p.id_product = _id_product;
-            return price;
-        end;
-    $BODY$
+$BODY$
+declare
+    price numeric(8,2);
+begin
+    select ((p.minute + p.sms + p.gb + p.speed) * t.price) into strict price
+    from product p inner join tariff t on p.id_tariff = t.id_tariff
+    where p.id_product = _id_product;
+    return price;
+end;
+$BODY$
     language plpgsql volatile;
 
 
 
 create or replace function getOrdersTotal(_id_client integer)
     returns numeric(8,2) as
-    $BODY$
-        declare
-            total numeric(8,2);
-            curOrder record;
-            dateB date;
-            dateDif integer;
-        begin
-            total = 0;
-            for curOrder in select date_order, date_cancel, status, price from orders where id_client = _id_client
-                loop
-                    if curOrder.status = '1' or curOrder.status = '2' then
-                        if curOrder.date_order notnull then
-                            if extract(day from current_date) <= 27 then
-                                dateB = make_date(extract(year from current_date)::integer, extract(month from current_date)::int, 27);
-                            else
-                                dateB = make_date(extract(year from current_date)::integer, extract(month from current_date)::int, 27) + interval '1 month';
-                            end if;
-                            if curOrder.date_cancel isnull or (curOrder.date_cancel < dateB and curOrder.date_cancel > dateB - interval '1 month') then
-                                dateDif = dateB - curOrder.date_order::date;
-                                if dateDif < 30 then
-                                    total = total + dateDif * (curOrder.price / 30);
-                                else
-                                    total = total + curOrder.price;
-                                end if;
-                            end if;
+$BODY$
+declare
+    total numeric(8,2);
+    curOrder record;
+    dateB date;
+    dateDif integer;
+begin
+    total = 0;
+    for curOrder in select date_order, date_cancel, status, price from orders where id_client = _id_client
+        loop
+            if curOrder.status = '1' or curOrder.status = '2' then
+                if curOrder.date_order notnull then
+                    dateB = make_date(extract(year from current_date)::integer, extract(month from current_date)::int, 27);
+                    if curOrder.date_cancel isnull or (curOrder.date_cancel < dateB and curOrder.date_cancel > dateB - interval '1 month') then
+                        dateDif = dateB - curOrder.date_order::date;
+                        if dateDif < 30 then
+                            total = total + dateDif * (curOrder.price / 30);
+                        else
+                            total = total + curOrder.price;
                         end if;
                     end if;
-                end loop;
-            return total;
-        end;
-    $BODY$
+                end if;
+            end if;
+        end loop;
+    return total;
+end;
+$BODY$
     language plpgsql volatile;
 
 
@@ -146,38 +141,37 @@ language plpgsql volatile;
 
 create or replace procedure generateBills() language plpgsql as
 $BODY$
-    declare
-        curClient record;
-        newDate date;
-        newTotal numeric(8,2);
-    begin
-        for curClient in select id_client from client
-            loop
-                newTotal = getOrdersTotal(curClient.id_client);
-                if newTotal notnull then
-                    newDate = make_date(extract(year from current_date)::int, extract(month from current_date)::int, 27) + interval '1 month';
-                    insert into bill(id_client, date_bill, subtotal, total) values (curClient.id_client, newDate::date, newTotal, newTotal);
-                end if;
-            end loop;
-    end;
+declare
+    curClient record;
+    newDate date;
+    newTotal numeric(8,2);
+begin
+    for curClient in select id_client from client
+        loop
+            newTotal = getOrdersTotal(curClient.id_client);
+            newDate = make_date(extract(year from current_date)::int, extract(month from current_date)::int, 27);
+            insert into bill(id_client, date_bill, total) values (curClient.id_client, newDate::date, newTotal);
+        end loop;
+end;
 $BODY$;
 
 
 
 create or replace procedure updateBill(_id_client integer) language plpgsql as
 $BODY$
-    declare
-        curBill record;
-        newTotal numeric(8,2);
-    begin
-        select id_bill, date_bill, discount from bill where id_client = _id_client order by id_bill desc limit 1 into curBill;
-        if curBill.date_bill notnull and current_date <= curBill.date_bill then
-            newTotal = getOrdersTotal(_id_client);
-            update bill set subtotal = newTotal - (newTotal * curBill.discount / 100), total = newTotal where id_bill = curBill.id_bill;
-        end if;
-    end;
+declare
+    curBill record;
+    newTotal numeric(8,2);
+begin
+    select id_bill, date_bill from bill where id_client = _id_client order by id_bill desc limit 1 into curBill;
+    if curBill.date_bill notnull and current_date <= curBill.date_bill then
+        newTotal = getOrdersTotal(_id_client);
+        update bill set total = newTotal where id_bill = curBill.id_bill;
+    end if;
+end;
 $BODY$;
 
 /*
-    select cron.schedule('* * 27 * *', 'CALL generateBills()');
+    select cron.schedule('0 0 27 * *', $$CALL generateBills()$$);
 */
+

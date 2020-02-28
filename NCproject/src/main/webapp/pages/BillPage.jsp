@@ -114,6 +114,7 @@
                                 <tr>
                                     <th>ID order</th>
                                     <th>Order date</th>
+                                    <th>Discount</th>
                                     <th>Tariff</th>
                                     <th class="text-right">Type</th>
                                 </tr>
@@ -126,12 +127,14 @@
                                                 <tr>
                                                     <td>${order.idOrder}</td>
                                                     <td><fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${order.dateOrder}"/></td>
+                                                    <td>${order.discount}%</td>
                                                     <td>&nbsp;</td>
                                                     <td class="text-right">&nbsp;</td>
                                                 </tr>
                                                 <c:forEach var="product" items="${productList}">
                                                     <c:if test="${order.idOrder eq product[0]}">
                                                         <tr>
+                                                            <td>&nbsp;</td>
                                                             <td>&nbsp;</td>
                                                             <td>&nbsp;</td>
                                                             <td>${product[1]}</td>
@@ -146,21 +149,11 @@
                                         <th>&nbsp;</th>
                                         <th>&nbsp;</th>
                                         <th>&nbsp;</th>
+                                        <th>&nbsp;</th>
                                         <th class="text-right">&nbsp;</th>
                                     </tr>
                                     <tr>
                                         <th>&nbsp;</th>
-                                        <th>&nbsp;</th>
-                                        <th>Subtotal</th>
-                                        <th class="text-right">${bill.subtotal} ₽</th>
-                                    </tr>
-                                    <tr>
-                                        <th>&nbsp;</th>
-                                        <th>&nbsp;</th>
-                                        <th>Discount </th>
-                                        <th class="text-right">${bill.discount}%</th>
-                                    </tr>
-                                    <tr>
                                         <th>&nbsp;</th>
                                         <th>&nbsp;</th>
                                         <th>Total </th>

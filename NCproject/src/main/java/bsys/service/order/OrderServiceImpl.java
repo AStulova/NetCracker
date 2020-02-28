@@ -55,20 +55,24 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     @Transactional
-    public void activateOrder(int idOrder) {
-        Order order = getById(idOrder);
-        order.setStatusOrder(StatusOrder.ACTIVE.ordinal());
-        order.setDateOrder(new Date());
+    public void editOrder(Order order) {
         orderRepository.save(order);
     }
 
     @Override
-    @Transactional
+    public void activateOrder(int idOrder) {
+        Order order = getById(idOrder);
+        order.setStatusOrder(StatusOrder.ACTIVE.ordinal());
+        order.setDateOrder(new Date());
+        editOrder(order);
+    }
+
+    @Override
     public void cancelOrder(int idOrder) {
         Order order = getById(idOrder);
         order.setStatusOrder(StatusOrder.CANCELED.ordinal());
         order.setDateCancel(new Date());
-        orderRepository.save(order);
+        editOrder(order);
     }
 
     @Override
@@ -89,16 +93,17 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    @Transactional
     public void updateOrderPrice(int idOrder) {
         BigDecimal priceOrder = BigDecimal.ZERO;
+        Order order = getById(idOrder);
         List<Product> productList = productService.getProducts(idOrder);
         for (Product product : productList) {
             priceOrder = priceOrder.add(product.getPrice());
         }
-        Order order = getById(idOrder);
+        BigDecimal discount = priceOrder.multiply(new BigDecimal(order.getDiscount() / 100));
+        priceOrder = priceOrder.subtract(discount);
         order.setPriceOrder(priceOrder);
-        orderRepository.save(order);
-        billService.updateBill(order.getClient().getIdClient());
+        editOrder(order);
+        //billService.updateBill(order.getClient().getIdClient());
     }
 }
