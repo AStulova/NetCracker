@@ -1,6 +1,12 @@
 package bsys.model;
 
+import org.hibernate.validator.constraints.Range;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
+import javax.validation.constraints.DecimalMax;
+import javax.validation.constraints.Digits;
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.util.Date;
 
@@ -16,12 +22,17 @@ public class Order {
     @JoinColumn(name = "id_client")
     private Client client;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @Column(name = "date_order")
     private Date dateOrder;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @Column(name = "date_cancel")
     private Date dateCancel;
 
+    @NotNull(message = "Enter discount!")
+    @Digits(integer = 3, fraction = 0, message = "Discount must be integer!")
+    @Range(min = 0, max = 100, message = "Discount must be between 0 and 100!")
     @Column(name = "discount")
     private int discount;
 

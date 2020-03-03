@@ -174,4 +174,3 @@ $BODY$;
 /*
     select cron.schedule('0 0 27 * *', $$CALL generateBills()$$);
 */
-

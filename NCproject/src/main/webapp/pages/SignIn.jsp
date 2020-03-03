@@ -36,11 +36,11 @@
                                 </c:if>
                                 <div class="form-group">
                                     <label class="h5" for="email">Email</label>
-                                    <input class="form-control form-control-lg" type="text" name="email" id="email" placeholder="Enter your email" >
+                                    <input class="form-control form-control-lg" type="text" name="email" id="email" placeholder="Enter your email" required>
                                 </div>
                                 <div class="form-group">
                                     <label class="h5" for="password">Password</label>
-                                    <input class="form-control form-control-lg" type="password" name="password" id="password" placeholder="Enter your password" >
+                                    <input class="form-control form-control-lg" type="password" name="password" id="password" placeholder="Enter your password" required>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-8 text-left">Do you want to <a href="/BillingSystem-1.0/signup">Sign Up?</a> </div>

@@ -38,7 +38,7 @@
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id="download">Personal Information<span class="caret"></span></a>
                         <div class="dropdown-menu" aria-labelledby="download">
-                            <a class="dropdown-item" href="/BillingSystem-1.0/client">Info</a>
+                            <a class="dropdown-item" href="/client">Info</a>
                             <form:form action="/BillingSystem-1.0/logout" method="post">
                                 <input class="dropdown-item" type="submit" value="Sign out">
                             </form:form>

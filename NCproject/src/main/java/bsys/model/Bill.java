@@ -18,11 +18,6 @@ public class Bill {
     @Column(name = "date_bill")
     private Date dateBill;
 
-/*
-    @Max(value = 100, message = "Discount must be between 0 and 100!")
-    @Min(value = 0, message = "Discount must be between 0 and 100!")
-*/
-
     @Column(name = "total")
     private double total;
 

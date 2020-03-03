@@ -5,7 +5,6 @@ import bsys.model.Order;
 import bsys.model.Product;
 import bsys.model.StatusOrder;
 import bsys.repository.OrderRepository;
-import bsys.service.bill.BillService;
 import bsys.service.client.ClientService;
 import bsys.service.product.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +19,6 @@ import java.util.List;
 public class OrderServiceImpl implements OrderService {
     private ClientService clientService;
     private ProductService productService;
-    private BillService billService;
     private OrderRepository orderRepository;
 
     @Autowired
@@ -31,11 +29,6 @@ public class OrderServiceImpl implements OrderService {
     @Autowired
     public void setProductService(ProductService productService) {
         this.productService = productService;
-    }
-
-    @Autowired
-    public void setBillService(BillService billService) {
-        this.billService = billService;
     }
 
     @Autowired
@@ -55,24 +48,8 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     @Transactional
-    public void editOrder(Order order) {
+    public void saveOrder(Order order) {
         orderRepository.save(order);
-    }
-
-    @Override
-    public void activateOrder(int idOrder) {
-        Order order = getById(idOrder);
-        order.setStatusOrder(StatusOrder.ACTIVE.ordinal());
-        order.setDateOrder(new Date());
-        editOrder(order);
-    }
-
-    @Override
-    public void cancelOrder(int idOrder) {
-        Order order = getById(idOrder);
-        order.setStatusOrder(StatusOrder.CANCELED.ordinal());
-        order.setDateCancel(new Date());
-        editOrder(order);
     }
 
     @Override
@@ -80,6 +57,28 @@ public class OrderServiceImpl implements OrderService {
         Order order = new Order();
         order.setClient(clientService.getById(idClient));
         return orderRepository.save(order).getIdOrder();
+    }
+
+    @Override
+    public void editDiscount(Order order) {
+        saveOrder(order);
+        updateOrderPrice(order.getIdOrder());
+    }
+
+    @Override
+    public void activateOrder(int idOrder) {
+        Order order = getById(idOrder);
+        order.setStatusOrder(StatusOrder.ACTIVE.ordinal());
+        order.setDateOrder(new Date());
+        saveOrder(order);
+    }
+
+    @Override
+    public void cancelOrder(int idOrder) {
+        Order order = getById(idOrder);
+        order.setStatusOrder(StatusOrder.CANCELED.ordinal());
+        order.setDateCancel(new Date());
+        saveOrder(order);
     }
 
     @Override
@@ -100,10 +99,9 @@ public class OrderServiceImpl implements OrderService {
         for (Product product : productList) {
             priceOrder = priceOrder.add(product.getPrice());
         }
-        BigDecimal discount = priceOrder.multiply(new BigDecimal(order.getDiscount() / 100));
+        BigDecimal discount = priceOrder.multiply(BigDecimal.valueOf((double) order.getDiscount() / 100));
         priceOrder = priceOrder.subtract(discount);
         order.setPriceOrder(priceOrder);
-        editOrder(order);
-        //billService.updateBill(order.getClient().getIdClient());
+        saveOrder(order);
     }
 }

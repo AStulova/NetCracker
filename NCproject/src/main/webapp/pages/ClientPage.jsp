@@ -1,5 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -75,7 +75,7 @@
                                 <p>${client.firstName}</p>
                             </div>
                             <div class="form-group col-md-6">
-                                <label class="h5">Last Name</label>
+                                <label class="h5">Last name</label>
                                 <p>${client.lastName}</p>
                             </div>
                         </div>

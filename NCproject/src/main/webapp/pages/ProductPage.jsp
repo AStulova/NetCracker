@@ -1,6 +1,7 @@
 <%--<%@ page buffer="8192kb" %>--%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -85,6 +86,81 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Order Info -->
+            <c:if test="${not empty order}">
+                <div class="card bg-light mb-4">
+                    <div class="card-body">
+                        <form:form action="/BillingSystem-1.0/product/edit/discount" method="POST">
+                            <input type="hidden" name="idOrder" value="${order.idOrder}"/>
+                            <input type="hidden" name="client.idClient" value="${order.client.idClient}">
+                            <input type="hidden" name="dateOrder" value="${order.dateOrder}"/>
+                            <input type="hidden" name="dateCancel" value="${order.dateCancel}"/>
+                            <input type="hidden" name="priceOrder" value="${order.priceOrder}"/>
+                            <input type="hidden" name="statusOrder" value="${order.statusOrder}"/>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label class="h5">Order date</label>
+                                    <div>
+                                        <c:if test="${order.dateOrder eq null}">
+                                            —
+                                        </c:if>
+                                        <c:if test="${order.dateOrder ne null}">
+                                            <fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${order.dateOrder}"/>
+                                        </c:if>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label class="h5">Cancel date</label>
+                                    <p>
+                                        <c:if test="${order.dateCancel eq null}">
+                                            —
+                                        </c:if>
+                                        <c:if test="${order.dateCancel ne null}">
+                                            <fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${order.dateCancel}"/>
+                                        </c:if>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label class="h5">Order price</label>
+                                    <p>${order.priceOrder} ₽</p>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label class="h5">Status</label>
+                                    <div>
+                                        <c:if test="${order.statusOrder eq 0}">
+                                            <span class="badge badge-warning">Saved</span>
+                                        </c:if>
+                                        <c:if test="${order.statusOrder eq 1}">
+                                            <span class="badge badge-success">Active</span>
+                                        </c:if>
+                                        <c:if test="${order.statusOrder eq 2}">
+                                            <span class="badge badge-secondary">Canceled</span>
+                                        </c:if>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-2">
+                                    <label class="h5" for="discount">Discount</label>
+                                    <c:if test="${role eq 'EMPLOYEE' and order.statusOrder ne 2}">
+                                        <input type="number" step="1" class="form-control ${not empty errorMessage.get('discount') ? 'is-invalid' : ''}" name="discount" id="discount" value="${not empty newDiscount ? newDiscount : order.discount}"/>
+                                        <c:if test="${not empty errorMessage.get('discount')}">
+                                            <div class="invalid-feedback">${errorMessage.get('discount')}</div>
+                                        </c:if>
+                                    </c:if>
+                                    <c:if test="${order.statusOrder eq 2}">
+                                        <p>${order.discount}%</p>
+                                    </c:if>
+                                </div>
+                            </div>
+                            <input value="Edit discount" type="submit" class="btn btn-success" />
+                        </form:form>
+                    </div>
+                </div>
+            </c:if>
 
             <!-- Table of products -->
             <c:if test="${empty productList}">

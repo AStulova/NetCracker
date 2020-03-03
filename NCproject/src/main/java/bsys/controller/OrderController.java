@@ -4,7 +4,7 @@ import bsys.model.Client;
 import bsys.model.Order;
 import bsys.service.client.ClientService;
 import bsys.service.order.OrderService;
-import org.jetbrains.annotations.NotNull;
+import bsys.service.product.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -20,6 +20,7 @@ import java.util.List;
 public class OrderController {
     private OrderService orderService;
     private ClientService clientService;
+    private ProductService productService;
 
     @Autowired
     public void setClientService(ClientService clientService) {
@@ -29,6 +30,11 @@ public class OrderController {
     @Autowired
     public void setOrderService(OrderService orderService) {
         this.orderService = orderService;
+    }
+
+    @Autowired
+    public void setProductService(ProductService productService) {
+        this.productService = productService;
     }
 
     @GetMapping
@@ -80,4 +86,6 @@ public class OrderController {
         }
         return modelAndView;
     }
+
+
 }

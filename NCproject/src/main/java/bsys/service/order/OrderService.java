@@ -8,9 +8,10 @@ import java.util.List;
 public interface OrderService {
     List<Order> getOrdersForUpdate();
     List<Order> getOrders(Client client);
-    void editOrder(Order order);
-    void activateOrder(int idOrder);
+    void saveOrder(Order order);
     int addOrder(int idClient);
+    void editDiscount(Order order);
+    void activateOrder(int idOrder);
     void cancelOrder(int idOrder);
     void deleteOrder(Order order);
     Order getById(int idOrder);

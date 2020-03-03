@@ -73,12 +73,12 @@ public class ProductServiceImpl implements ProductService {
     public void deleteProduct(Product product) {
         Order order = orderService.getById(product.getOrder().getIdOrder());
         productRepository.delete(product);
-        orderService.updateOrderPrice(order.getIdOrder());
         List<Product> productList = getProducts(order.getIdOrder());
-        if (productList.isEmpty()) {
-            if (order.getStatusOrder() == 0) {
+        if (productList.isEmpty() && order.getStatusOrder() == 0) {
                 orderService.deleteOrder(order);
-            }
+        }
+        else {
+            orderService.updateOrderPrice(order.getIdOrder());
         }
     }
 

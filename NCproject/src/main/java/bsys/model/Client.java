@@ -18,19 +18,19 @@ public class Client implements UserDetails {
     @Column(name = "id_client")
     private int idClient;
 
-    @Pattern(regexp = "^[A-Z][a-z]+$", message = "First name must begin with a capital letter.")
+    @Pattern(regexp = "^[A-Z][a-z]+$", message = "Incorrect first name!")
     @Column(name = "first_name")
     private String firstName;
 
-    @Pattern(regexp = "^[A-Z][a-z]+$", message = "Last name must begin with a capital letter.")
+    @Pattern(regexp = "^[A-Z][a-z]+$", message = "Incorrect last name!")
     @Column(name = "last_name")
     private String lastName;
 
-    @Pattern(regexp = "(^$|[0-9]{11})", message = "Phone number is not correct.")
+    @Pattern(regexp = "(^$|[0-9]{11})", message = "Incorrect phone number!")
     @Column(name = "phone")
     private String phone;
 
-    @Email(message = "Email is not correct.")
+    @Email(message = "Incorrect email!")
     @Column(name = "email")
     private String email;
 

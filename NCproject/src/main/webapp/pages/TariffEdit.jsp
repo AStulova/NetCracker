@@ -4,7 +4,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <c:if test="${empty tariff.idTariff or not empty errorMessage}">
+    <c:if test="${empty tariff.idTariff or newTariff.idTariff eq 0}">
         <title>BillSYS | Add Tariff</title>
     </c:if>
     <c:if test="${not empty tariff.idTariff and tariff.idTariff ne 0}">
@@ -60,7 +60,7 @@
         <div class="page-header" id="banner">
             <div class="row">
                 <div class="col-lg-8 col-md-7 col-sm-6">
-                    <c:if test="${empty tariff.idTariff or not empty errorMessage}">
+                    <c:if test="${empty tariff.idTariff or newTariff.idTariff eq 0}">
                         <h1>Add Tariff</h1>
                     </c:if>
                     <c:if test="${not empty tariff.idTariff and tariff.idTariff ne 0}">
@@ -89,12 +89,12 @@
                         <div class="form-group col-md-6">
                             <label class="h5" for="nameTariff">Tariff name</label>
                             <c:set var="varName" value="${!empty tariff.nameTariff ? tariff.nameTariff : not empty newTariff.nameTariff ? newTariff.nameTariff : ''}" />
-                            <input type="text" class="form-control ${!empty errorMessage.get('nameTariff') ? 'is-invalid' : ''}" name="nameTariff" id="nameTariff" value="${varName}" placeholder="${empty varName ? 'Enter name' : ''}" />
+                            <input type="text" class="form-control ${!empty errorMessage.get('nameTariff') ? 'is-invalid' : ''}" name="nameTariff" id="nameTariff" value="${varName}" placeholder="${empty varName ? 'Enter name' : ''}" >
                             <c:if test="${not empty errorMessage.get('nameTariff')}">
                                 <div class="invalid-feedback">${errorMessage.get('nameTariff')}</div>
                             </c:if>
                         </div>
-                        <c:if test="${empty tariff.idTariff or not empty errorMessage}">
+                        <c:if test="${empty tariff.idTariff or newTariff.idTariff eq 0}">
                         <div class="form-group col-md-6">
                             <label class="h5" for="typeTariff">Tariff type</label>
                             <select class="form-control" name="typeTariff" id="typeTariff" required>
@@ -112,7 +112,7 @@
                         <div class="form-group col-md-6">
                             <label class="h5" for="priceTariff">Tariff price</label>
                             <c:set var="varPrice" value="${!empty tariff.priceTariff ? tariff.priceTariff : not empty newTariff.priceTariff ? newTariff.priceTariff : ''}" />
-                            <input type="text" class="form-control ${!empty errorMessage.get('priceTariff') ? 'is-invalid' : ''}" name="priceTariff" id="priceTariff" value="${varPrice}" placeholder="${empty varPrice ? 'Enter price' : ''}" />
+                            <input type="number" step="any" class="form-control ${!empty errorMessage.get('priceTariff') ? 'is-invalid' : ''}" name="priceTariff" id="priceTariff" value="${varPrice}" placeholder="${empty varPrice ? 'Enter price' : ''}" />
                             <c:if test="${not empty errorMessage.get('priceTariff')}">
                                 <div class="invalid-feedback">${errorMessage.get('priceTariff')}</div>
                             </c:if>

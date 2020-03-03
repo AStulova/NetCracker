@@ -145,6 +145,15 @@
                                             </c:if>
                                         </c:if>
                                     </c:forEach>
+                                    <c:if test="${empty orderList}">
+                                        <tr>
+                                            <th>—</th>
+                                            <th>—</th>
+                                            <th>—</th>
+                                            <th>—</th>
+                                            <th class="text-right">—</th>
+                                        </tr>
+                                    </c:if>
                                     <tr>
                                         <th>&nbsp;</th>
                                         <th>&nbsp;</th>

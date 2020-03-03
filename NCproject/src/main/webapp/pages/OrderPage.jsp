@@ -94,7 +94,7 @@
                         <th scope="col">Order date</th>
                         <th scope="col">Cancel date</th>
                         <th scope="col">Discount</th>
-                        <th scope="col">Order price per month</th>
+                        <th scope="col">Price per month</th>
                         <th scope="col">Status</th>
                         <th class="text-right"></th>
                     </tr>

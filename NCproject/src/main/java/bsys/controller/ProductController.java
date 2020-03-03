@@ -1,6 +1,7 @@
 package bsys.controller;
 
 import bsys.model.Client;
+import bsys.model.Order;
 import bsys.model.Product;
 import bsys.service.client.ClientService;
 import bsys.service.order.OrderService;
@@ -9,10 +10,16 @@ import bsys.service.tariff.TariffService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.validation.Valid;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping(value = "/product")
@@ -45,12 +52,42 @@ public class ProductController {
     @GetMapping(value = "/{idOrder}")
     public ModelAndView productsPage(@PathVariable int idOrder) {
         verifyClient(idOrder);
+        Order order = orderService.getById(idOrder);
         List<Product> productList = productService.getProducts(idOrder);
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("ProductPage");
+        modelAndView.addObject("order", order);
         modelAndView.addObject("productList", productList);
         modelAndView.addObject("role", clientService.getAuthClient().getRole());
         return modelAndView;
+    }
+
+    @PreAuthorize("hasRole('EMPLOYEE')")
+    @PostMapping(value = "/edit/discount")
+    public ModelAndView editDiscount(@Valid @ModelAttribute("order") Order order, BindingResult bindingResult) {
+        ModelAndView modelAndView = new ModelAndView();
+        if (bindingResult.hasErrors()) {
+            getErrorMap(order, bindingResult, modelAndView);
+            List<Product> productList = productService.getProducts(order.getIdOrder());
+            modelAndView.addObject("productList", productList);
+            modelAndView.addObject("role", clientService.getAuthClient().getRole());
+            modelAndView.setViewName("ProductPage");
+        }
+        else {
+            orderService.editDiscount(order);
+            modelAndView.setViewName("redirect:/product/" + order.getIdOrder());
+        }
+        return modelAndView;
+    }
+
+    private void getErrorMap(@Valid @ModelAttribute("order") Order order, BindingResult bindingResult, ModelAndView modelAndView) {
+        Collector<FieldError, ?, Map<String, String>> collector = Collectors.toMap(
+                FieldError::getField,
+                FieldError::getDefaultMessage
+        );
+        Map<String, String> errors = bindingResult.getFieldErrors().stream().collect(collector);
+        modelAndView.addObject("errorMessage", errors);
+        modelAndView.addObject("newDiscount", order.getDiscount());
     }
 
     @GetMapping(value = "/{idOrder}/edit/{idProduct}")
