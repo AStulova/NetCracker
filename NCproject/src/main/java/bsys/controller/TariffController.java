@@ -1,7 +1,9 @@
 package bsys.controller;
 
+import bsys.model.Client;
 import bsys.model.Tariff;
 import bsys.service.client.ClientService;
+import bsys.service.order.OrderService;
 import bsys.service.tariff.TariffService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -24,6 +26,7 @@ import java.util.stream.Collectors;
 public class TariffController {
     private TariffService tariffService;
     private ClientService clientService;
+    private OrderService orderService;
 
     @Autowired
     public void setTariffService(TariffService tariffService) {
@@ -35,8 +38,14 @@ public class TariffController {
         this.clientService = clientService;
     }
 
+    @Autowired
+    public void setOrderService(OrderService orderService) {
+        this.orderService = orderService;
+    }
+
     @GetMapping(value = "/{idOrder}/add/tariff")
-    public ModelAndView getTariffsPage(@PathVariable int idOrder) {
+    public ModelAndView tariffsForOrderPage(@PathVariable int idOrder) {
+        verifyClient(idOrder);
         List<Tariff> tariff =  tariffService.getTariffs();
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("TariffPage");
@@ -47,7 +56,7 @@ public class TariffController {
     }
 
     @GetMapping(value = "/tariff")
-    public ModelAndView getTariffsNewOrderPage() {
+    public ModelAndView tariffsPage() {
         List<Tariff> tariff =  tariffService.getTariffs();
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("TariffPage");
@@ -58,7 +67,7 @@ public class TariffController {
 
     @PreAuthorize("hasRole('EMPLOYEE')")
     @GetMapping(value = "/tariff/{idClient}")
-    public ModelAndView getTariffsNewOrderPage(@PathVariable int idClient) {
+    public ModelAndView tariffsNewOrderPage(@PathVariable int idClient) {
         List<Tariff> tariff =  tariffService.getTariffs();
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("TariffPage");
@@ -111,5 +120,12 @@ public class TariffController {
         Map<String, String> errors = bindingResult.getFieldErrors().stream().collect(collector);
         modelAndView.addObject("errorMessage", errors);
         modelAndView.addObject("newTariff", tariff);
+    }
+
+    public void verifyClient(int idOrder) throws SecurityException {
+        Client curClient = clientService.getAuthClient();
+        if (curClient.getRole().equals("USER") && curClient.getIdClient() != orderService.getById(idOrder).getClient().getIdClient()) {
+            throw new SecurityException("Access denied");
+        }
     }
 }

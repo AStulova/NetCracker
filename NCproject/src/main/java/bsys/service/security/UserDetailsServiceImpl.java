@@ -1,7 +1,7 @@
 package bsys.service.security;
 
 import bsys.model.Client;
-import bsys.repository.ClientRepository;
+import bsys.service.client.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -16,14 +16,18 @@ import java.util.List;
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
+    private ClientService clientService;
+
     @Autowired
-    private ClientRepository clientRepository;
+    private void setClientService(ClientService clientService) {
+        this.clientService = clientService;
+    }
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        Client client = clientRepository.getByEmail(email);
+        Client client = clientService.getByEmail(email);
         if (client == null) {
-            throw new UsernameNotFoundException("User not found");
+            throw new UsernameNotFoundException("User not found!");
         }
         List<GrantedAuthority> role = new ArrayList<>();
         GrantedAuthority authority = new SimpleGrantedAuthority("ROLE_" + client.getRole());

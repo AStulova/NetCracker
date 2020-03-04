@@ -30,13 +30,6 @@ public class HibernateConfig {
         this.environment = environment;
     }
 
-    private Properties hibernateProperties() {
-        Properties properties = new Properties();
-        properties.put("hibernate.dialect", environment.getRequiredProperty("hibernate.dialect"));
-        properties.put("hibernate.show_sql", environment.getRequiredProperty("hibernate.show_sql"));
-        return properties;
-    }
-
     @Bean
     public DataSource dataSource() {
         BasicDataSource  dataSource = new BasicDataSource();
@@ -86,9 +79,7 @@ public class HibernateConfig {
 
         jpaProperties.put("hibernate.enable_lazy_load_no_trans", env.getRequiredProperty("hibernate.enable_lazy_load_no_trans"));
 
-
         entityManagerFactoryBean.setJpaProperties(jpaProperties);
-
         return entityManagerFactoryBean;
     }
 }

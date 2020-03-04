@@ -46,7 +46,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                    .antMatchers("/", "/signup", "/signin", "/tariff", "/.ico", "/.js", "/.css").permitAll()
+                    .antMatchers("/", "/signup", "/signin", "/.ico", "/.js", "/.css").permitAll()
                     .anyRequest().authenticated()
                 .and()
                     .formLogin()
@@ -59,8 +59,5 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     .logout()
                     .logoutSuccessUrl("/")
                     .permitAll();
-                /*.and()
-                    .exceptionHandling()
-                    .accessDeniedPage("Page403");*/
     }
 }

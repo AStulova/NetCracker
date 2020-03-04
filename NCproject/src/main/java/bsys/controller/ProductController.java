@@ -153,13 +153,23 @@ public class ProductController {
     public ModelAndView deleteProduct(@PathVariable int idOrder, @PathVariable int idProduct) {
         verifyClient(idOrder);
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("redirect:/product/" + idOrder);
         Product product = productService.getById(idProduct);
         productService.deleteProduct(product);
+        if (productService.getProducts(product.getOrder().getIdOrder()).isEmpty()) {
+            if (clientService.getAuthClient().getRole().equals("EMPLOYEE")) {
+                modelAndView.setViewName("redirect:/order/" + product.getOrder().getClient().getIdClient());
+            }
+            else {
+                modelAndView.setViewName("redirect:/order");
+            }
+        }
+        else {
+            modelAndView.setViewName("redirect:/product/" + idOrder);
+        }
         return modelAndView;
     }
 
-    public void verifyClient(int idOrder) {
+    public void verifyClient(int idOrder) throws SecurityException {
         Client curClient = clientService.getAuthClient();
         if (curClient.getRole().equals("USER") && curClient.getIdClient() != orderService.getById(idOrder).getClient().getIdClient()) {
             throw new SecurityException("Access denied");

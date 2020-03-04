@@ -146,12 +146,12 @@
                                 <div class="form-group col-md-2">
                                     <label class="h5" for="discount">Discount</label>
                                     <c:if test="${role eq 'EMPLOYEE' and order.statusOrder ne 2}">
-                                        <input type="number" step="1" class="form-control ${not empty errorMessage.get('discount') ? 'is-invalid' : ''}" name="discount" id="discount" value="${not empty newDiscount ? newDiscount : order.discount}"/>
+                                        <input type="number" step="1" required class="form-control ${not empty errorMessage.get('discount') ? 'is-invalid' : ''}" name="discount" id="discount" value="${not empty newDiscount ? newDiscount : order.discount}"/>
                                         <c:if test="${not empty errorMessage.get('discount')}">
                                             <div class="invalid-feedback">${errorMessage.get('discount')}</div>
                                         </c:if>
                                     </c:if>
-                                    <c:if test="${order.statusOrder eq 2}">
+                                    <c:if test="${role ne 'EMPLOYEE' or order.statusOrder eq 2}">
                                         <p>${order.discount}%</p>
                                     </c:if>
                                 </div>

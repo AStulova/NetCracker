@@ -43,7 +43,7 @@ public class ClientController {
     @PreAuthorize("hasRole('EMPLOYEE')")
     @GetMapping(value = "/clients")
     public ModelAndView allClientsPage() {
-        List<Client> clientList = clientService.findAllClients("USER");
+        List<Client> clientList = clientService.findAllClients();
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("AllClientsPage");
         modelAndView.addObject("clientList", clientList);

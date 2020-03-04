@@ -3,6 +3,7 @@ package bsys.service.client;
 import bsys.model.Client;
 import bsys.repository.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -30,8 +31,8 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public List<Client> findAllClients(String role) {
-        return clientRepository.findAllByRole(role);
+    public List<Client> findAllClients() {
+        return clientRepository.findAll(Sort.by(Sort.Direction.ASC, "idClient"));
     }
 
     @Override
@@ -44,6 +45,11 @@ public class ClientServiceImpl implements ClientService {
     @Transactional
     public Client getById(int idClient) {
         return clientRepository.getOne(idClient);
+    }
+
+    @Override
+    public Client getByEmail(String email) {
+        return clientRepository.getByEmail(email);
     }
 
     @Override

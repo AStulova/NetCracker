@@ -20,7 +20,6 @@ import java.util.List;
 public class OrderController {
     private OrderService orderService;
     private ClientService clientService;
-    private ProductService productService;
 
     @Autowired
     public void setClientService(ClientService clientService) {
@@ -30,11 +29,6 @@ public class OrderController {
     @Autowired
     public void setOrderService(OrderService orderService) {
         this.orderService = orderService;
-    }
-
-    @Autowired
-    public void setProductService(ProductService productService) {
-        this.productService = productService;
     }
 
     @GetMapping
@@ -64,12 +58,14 @@ public class OrderController {
 
     @GetMapping(value = "/activate/{idOrder}")
     public ModelAndView activateOrder(@PathVariable int idOrder) {
+        verifyClient(idOrder);
         orderService.activateOrder(idOrder);
         return getModelAndView(idOrder);
     }
 
     @GetMapping(value = "/cancel/{idOrder}")
     public ModelAndView cancelOrder(@PathVariable int idOrder) {
+        verifyClient(idOrder);
         orderService.cancelOrder(idOrder);
         return getModelAndView(idOrder);
     }
@@ -87,5 +83,10 @@ public class OrderController {
         return modelAndView;
     }
 
-
+    public void verifyClient(int idOrder) throws SecurityException {
+        Client curClient = clientService.getAuthClient();
+        if (curClient.getRole().equals("USER") && curClient.getIdClient() != orderService.getById(idOrder).getClient().getIdClient()) {
+            throw new SecurityException("Access denied");
+        }
+    }
 }
