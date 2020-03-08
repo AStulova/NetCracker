@@ -38,4 +38,12 @@ public class ExceptionController {
         modelAndView.setViewName("ErrorPage");
         return modelAndView;
     }
+
+    @ExceptionHandler(IllegalStateException.class)
+    private ModelAndView handleNullPointerException(IllegalStateException ex) {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("errorEx", ex.getMessage());
+        modelAndView.setViewName("SignUp");
+        return modelAndView;
+    }
 }

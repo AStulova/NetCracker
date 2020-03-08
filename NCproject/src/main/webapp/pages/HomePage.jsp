@@ -29,8 +29,8 @@
                     <h1 class="my-3 display-4 d-lg-inline-block">Welcome in BillSYS!</h1>
                     <span class="h1 my-3 d-inline-block d-lg-none"></span>
                     <p class="lead mb-3">Before start you need to...</p>
-                    <a class="btn btn-success btn-lg mr-lg-2 my-1" href="/BillingSystem-1.0/signin" role="button">Sign In</a>
-                    <a class="btn btn-success btn-lg my-1" href="/BillingSystem-1.0/signup" role="button">Sign Up</a>
+                    <a class="btn btn-success btn-lg mr-lg-2 my-2" href="/signin" role="button">Sign In</a>
+                    <%--<a class="btn btn-success btn-lg my-1" href="/signup" role="button">Sign Up</a>--%>
                 </div>
             </div>
         </div>

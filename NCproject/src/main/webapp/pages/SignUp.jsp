@@ -16,56 +16,77 @@
         <div class="row align-items-center h-100">
             <div class="col-sm-10 col-md-8 col-lg-6 mx-auto my-4">
                 <div class="text-center">
-                    <h1 class="h2">Sign Up</h1>
-                    <p class="lead">
-                        Get started with us now
-                    </p>
+                    <h1 class="h2">Registration</h1>
                 </div>
                 <div class="card bg-light">
                     <div class="card-body">
                         <div class="m-sm-4">
-                            <form:form method="POST">
+                            <c:if test="${not empty errorEx}">
+                                <div class="alert alert-dismissible alert-primary">
+                                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                    <h4 class="alert-heading">Oops!</h4>
+                                    <p class="mb-0">${errorEx}</p>
+                                </div>
+                            </c:if>
+                            <form:form action="/signup" method="POST">
                                 <div class="form-group">
                                     <label class="h5" for="firstName">First Name</label>
-                                    <input class="form-control form-control-lg ${not empty errorMessage.get('firstName') ? 'is-invalid' : ''}" type="text" value="${not empty newClient.firstName ? newClient.firstName : ''}" name="firstName" id="firstName" placeholder="Enter your first name" required/>
+                                    <input class="form-control form-control-lg ${not empty errorMessage.get('firstName') ? 'is-invalid' : ''}" type="text" value="${not empty curClient.firstName ? curClient.firstName : ''}" name="firstName" id="firstName" placeholder="Enter first name"/>
                                     <c:if test="${not empty errorMessage.get('firstName')}">
                                         <div class="invalid-feedback">${errorMessage.get('firstName')}</div>
                                     </c:if>
                                 </div>
                                 <div class="form-group">
                                     <label class="h5" for="lastName">Last Name</label>
-                                    <input class="form-control form-control-lg ${not empty errorMessage.get('lastName') ? 'is-invalid' : ''}" type="text" value="${not empty newClient.lastName ? newClient.lastName : ''}" name="lastName" id="lastName" placeholder="Enter your last name" required/>
+                                    <input class="form-control form-control-lg ${not empty errorMessage.get('lastName') ? 'is-invalid' : ''}" type="text" value="${not empty curClient.lastName ? curClient.lastName : ''}" name="lastName" id="lastName" placeholder="Enter last name"/>
                                     <c:if test="${not empty errorMessage.get('lastName')}">
                                         <div class="invalid-feedback">${errorMessage.get('lastName')}</div>
                                     </c:if>
                                 </div>
                                 <div class="form-group">
                                     <label class="h5" for="phone">Phone</label>
-                                    <input class="form-control form-control-lg ${not empty errorMessage.get('phone') ? 'is-invalid' : ''}" type="tel" value="${not empty newClient.phone ? newClient.phone : ''}" name="phone" id="phone" placeholder="Enter your phone" required/>
+                                    <input class="form-control form-control-lg ${not empty errorMessage.get('phone') ? 'is-invalid' : ''}" type="text" value="${not empty curClient.phone ? curClient.phone : ''}" name="phone" id="phone" placeholder="Enter phone"/>
                                     <c:if test="${not empty errorMessage.get('phone')}">
                                         <div class="invalid-feedback">${errorMessage.get('phone')}</div>
                                     </c:if>
                                 </div>
                                 <div class="form-group">
                                     <label class="h5" for="email">Email</label>
-                                    <input class="form-control form-control-lg ${not empty errorMessage.get('email') ? 'is-invalid' : ''}" type="email" value="${not empty newClient.email ? newClient.email : ''}" name="email" id="email" placeholder="Enter your email" required/>
+                                    <input class="form-control form-control-lg ${not empty errorMessage.get('email') ? 'is-invalid' : ''}" type="text" value="${not empty curClient.email ? curClient.email : ''}" name="email" id="email" placeholder="Enter email"/>
                                     <c:if test="${not empty errorMessage.get('email')}">
                                         <div class="invalid-feedback">${errorMessage.get('email')}</div>
                                     </c:if>
                                 </div>
+                                <c:if test="${not empty curClient.idClient and curClient.idClient ne 0}">
+                                    <input type="hidden" name="password" value="${curClient.password}">
+                                    <input type="hidden" name="idClient" value="${curClient.idClient}">
+                                </c:if>
+                                <c:if test="${empty curClient.idClient or curClient.idClient eq 0}">
+                                    <div class="form-group">
+                                        <label class="h5" for="password">Password</label>
+                                        <input class="form-control form-control-lg ${not empty errorMessage.get('password') ? 'is-invalid' : ''}" type="password" name="password" id="password" placeholder="Enter password">
+                                        <c:if test="${not empty errorMessage.get('password')}">
+                                            <div class="invalid-feedback">${errorMessage.get('password')}</div>
+                                        </c:if>
+                                    </div>
+                                </c:if>
                                 <div class="form-group">
-                                    <label class="h5" for="password">Password</label>
-                                    <input class="form-control form-control-lg ${not empty errorMessage.get('password') ? 'is-invalid' : ''}" type="password" name="password" id="password" placeholder="Enter your password" required>
-                                    <c:if test="${not empty errorMessage.get('password')}">
-                                        <div class="invalid-feedback">${errorMessage.get('password')}</div>
-                                    </c:if>
+                                    <label class="h5" for="role">Role</label>
+                                    <select class="form-control" name="role" id="role" required>
+                                        <c:if test="${not empty curClient.idClient or curClient.idClient ne 0}">
+                                            <option selected>${curClient.role}</option>
+                                        </c:if>
+                                        <option>USER</option>
+                                        <option>EMPLOYEE</option>
+                                        <option>MANAGER</option>
+                                        <option>ADMIN</option>
+                                    </select>
                                 </div>
-                                <div class="row">
-                                    <div class="col-md-8 text-left">Do you want to <a href="/BillingSystem-1.0/signin">Sign In?</a></div>
-                                    <div class="col-md-4  text-right">...or return <a href="/BillingSystem-1.0/">home</a></div>
+                                <div>
+                                    <div class="text-right">Back to <a href="/users">users</a></div>
                                 </div>
                                 <div class="text-center mt-3">
-                                   <input value="Sign Up" type="submit" class="btn btn-lg btn-primary"/>
+                                   <input value="Register" type="submit" class="btn btn-lg btn-primary"/>
                                 </div>
                             </form:form>
                         </div>

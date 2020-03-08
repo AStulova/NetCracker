@@ -15,7 +15,7 @@
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary" style> <!-- fixed-top -->
         <div class="container">
-            <a class="navbar-brand" href="/BillingSystem-1.0/client">BillSYS</a>
+            <a class="navbar-brand" href="/client">BillSYS</a>
             <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -23,23 +23,23 @@
                 <ul class="navbar-nav mr-auto">
                     <c:if test="${client.role eq 'EMPLOYEE'}">
                     <li class="nav-item">
-                        <a class="nav-link" href="/BillingSystem-1.0/clients">Clients</a>
+                        <a class="nav-link" href="/clients">Clients</a>
                     </li>
                 </c:if>
                     <li class="nav-item">
-                        <a class="nav-link" href="/BillingSystem-1.0/tariff">Tariffs</a>
+                        <a class="nav-link" href="/tariff">Tariffs</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/BillingSystem-1.0/order">Orders</a>
+                        <a class="nav-link" href="/order">Orders</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/BillingSystem-1.0/bill">Bills</a>
+                        <a class="nav-link" href="/bill">Bills</a>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id="download">Personal Information<span class="caret"></span></a>
                         <div class="dropdown-menu" aria-labelledby="download">
-                            <a class="dropdown-item" href="/BillingSystem-1.0/client">Info</a>
-                            <form:form action="/BillingSystem-1.0/logout" method="post">
+                            <a class="dropdown-item" href="/client">Info</a>
+                            <form:form action="/logout" method="post">
                                 <input class="dropdown-item" type="submit" value="Sign out">
                             </form:form>
                         </div>
@@ -101,19 +101,19 @@
             <div class="card bg-light">
                 <div class="card-body">
                     <h4 class="card-title">Edit Information</h4>
-                    <form:form action="/BillingSystem-1.0/client" method="POST">
+                    <form:form action="/client" method="POST">
                         <input type="hidden" id="idClient" name="idClient" value="${client.idClient}">
                         <div class="form-row">
                             <div class="form-group col-md-6">
                                 <label class="h5" for="firstName">First name</label>
-                                <input type="text" class="form-control ${not empty errorMessage.get('firstName') ? 'is-invalid' : ''}" name="firstName" id="firstName" value="${not empty newClient.firstName ? newClient.firstName : client.firstName}" />
+                                <input type="text" class="form-control ${not empty errorMessage.get('firstName') ? 'is-invalid' : ''}" name="firstName" id="firstName" value="${not empty curClient.firstName ? curClient.firstName : client.firstName}" />
                                 <c:if test="${not empty errorMessage.get('firstName')}">
                                     <div class="invalid-feedback">${errorMessage.get('firstName')}</div>
                                 </c:if>
                             </div>
                             <div class="form-group col-md-6">
                                 <label class="h5" for="lastName">Last name</label>
-                                <input type="text" class="form-control ${not empty errorMessage.get('lastName') ? 'is-invalid' : ''}" name="lastName" id="lastName" value="${not empty newClient.lastName ? newClient.lastName : client.lastName}" />
+                                <input type="text" class="form-control ${not empty errorMessage.get('lastName') ? 'is-invalid' : ''}" name="lastName" id="lastName" value="${not empty curClient.lastName ? curClient.lastName : client.lastName}" />
                                 <c:if test="${not empty errorMessage.get('lastName')}">
                                     <div class="invalid-feedback">${errorMessage.get('lastName')}</div>
                                 </c:if>
@@ -122,14 +122,14 @@
                         <div class="form-row">
                             <div class="form-group col-md-6">
                                 <label class="h5" for="email">Email</label>
-                                <input type="email" class="form-control ${not empty errorMessage.get('email') ? 'is-invalid' : ''}" name="email" id="email" value="${not empty newClient.email ? newClient.email : client.email}" aria-describedby="emailHelp" placeholder="Email"/>
+                                <input type="text" class="form-control ${not empty errorMessage.get('email') ? 'is-invalid' : ''}" name="email" id="email" value="${not empty curClient.email ? curClient.email : client.email}" aria-describedby="emailHelp" placeholder="Email"/>
                                 <c:if test="${not empty errorMessage.get('email')}">
                                     <div class="invalid-feedback">${errorMessage.get('email')}</div>
                                 </c:if>
                             </div>
                             <div class="form-group col-md-6">
                                 <label class="h5" for="phone">Phone</label>
-                                <input type="tel" class="form-control ${not empty errorMessage.get('phone') ? 'is-invalid' : ''}" name="phone" id="phone" value="${not empty newClient.phone ? newClient.phone : client.phone}" />
+                                <input type="text" class="form-control ${not empty errorMessage.get('phone') ? 'is-invalid' : ''}" name="phone" id="phone" value="${not empty curClient.phone ? curClient.phone : client.phone}" />
                                 <c:if test="${not empty errorMessage.get('phone')}">
                                     <div class="invalid-feedback">${errorMessage.get('phone')}</div>
                                 </c:if>

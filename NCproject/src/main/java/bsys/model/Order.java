@@ -1,10 +1,8 @@
 package bsys.model;
 
-import org.hibernate.validator.constraints.Range;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
-import javax.validation.constraints.DecimalMax;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
@@ -30,11 +28,11 @@ public class Order {
     @Column(name = "date_cancel")
     private Date dateCancel;
 
-    @NotNull(message = "Enter discount!")
+    @NotNull(message = "This field is required!")
     @Digits(integer = 3, fraction = 0, message = "Discount must be integer!")
-    @Range(min = 0, max = 100, message = "Discount must be between 0 and 100!")
+    //@Range(min = 0, max = 100, message = "Discount must be between 0 and 100!")
     @Column(name = "discount")
-    private int discount;
+    private Integer discount;
 
     @Column(name = "price")
     private BigDecimal priceOrder;
@@ -79,11 +77,11 @@ public class Order {
         this.dateCancel = dateCancel;
     }
 
-    public int getDiscount() {
+    public Integer getDiscount() {
         return discount;
     }
 
-    public void setDiscount(int discount) {
+    public void setDiscount(Integer discount) {
         this.discount = discount;
     }
 

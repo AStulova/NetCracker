@@ -1,7 +1,5 @@
 package bsys.model;
 
-import org.springframework.format.annotation.NumberFormat;
-
 import javax.persistence.*;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.Digits;
@@ -27,7 +25,7 @@ public class Tariff {
     @NotNull(message = "Enter price!")
     @DecimalMin(value = "0", message = "Price must be positive!")
     @Digits(integer = 4, fraction = 2, message = "Incorrect price!")
-    @NumberFormat(style= NumberFormat.Style.NUMBER)
+    //@NumberFormat(style = NumberFormat.Style.NUMBER)
     @Column(name = "price")
     private BigDecimal priceTariff;
 

@@ -15,7 +15,7 @@
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary" style> <!-- fixed-top -->
         <div class="container">
-            <a class="navbar-brand" href="/BillingSystem-1.0/client">BillSYS</a>
+            <a class="navbar-brand" href="/client">BillSYS</a>
             <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -23,23 +23,23 @@
                 <ul class="navbar-nav mr-auto">
                     <c:if test="${role eq 'EMPLOYEE'}">
                         <li class="nav-item">
-                            <a class="nav-link" href="/BillingSystem-1.0/clients">Clients</a>
+                            <a class="nav-link" href="/clients">Clients</a>
                         </li>
                     </c:if>
                     <li class="nav-item">
-                        <a class="nav-link" href="/BillingSystem-1.0/tariff">Tariffs</a>
+                        <a class="nav-link" href="/tariff">Tariffs</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/BillingSystem-1.0/order">Orders</a>
+                        <a class="nav-link" href="/order">Orders</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/BillingSystem-1.0/bill">Bills</a>
+                        <a class="nav-link" href="/bill">Bills</a>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id="download">Personal Information<span class="caret"></span></a>
                         <div class="dropdown-menu" aria-labelledby="download">
                             <a class="dropdown-item" href="/client">Info</a>
-                            <form:form action="/BillingSystem-1.0/logout" method="post">
+                            <form:form action="/logout" method="post">
                                 <input class="dropdown-item" type="submit" value="Sign out">
                             </form:form>
                         </div>
@@ -65,7 +65,7 @@
                             </c:if>
                             <c:if test="${role eq 'MANAGER'}">
                                 <div class="btn-group" role="group" aria-label="Basic example">
-                                    <input value="New Tariff" type="button" class="btn btn-lg btn-primary" onclick="location.href='/BillingSystem-1.0/tariff/add'"/>
+                                    <input value="New Tariff" type="button" class="btn btn-lg btn-primary" onclick="location.href='/tariff/add'"/>
                                     <input value="Back" type="button" class="btn btn-lg btn-secondary" onclick="history.back()"/>
                                 </div>
                             </c:if>
@@ -94,19 +94,19 @@
                             <td class="align-middle">${tariff.priceTariff}</td>
                             <td class="text-right">
                                 <c:if test="${!empty idOrder}">
-                                    <input value="Add Product" type="button" onclick="location.href='/BillingSystem-1.0/product/${idOrder}/add/${tariff.idTariff}'" class="btn btn-outline-primary" />
+                                    <input value="Add Product" type="button" onclick="location.href='/product/${idOrder}/add/${tariff.idTariff}'" class="btn btn-outline-primary" />
                                 </c:if>
                                 <c:if test="${empty idOrder}">
                                     <c:if test="${role eq 'USER'}">
-                                        <input value="Create order" type="button" onclick="location.href='/BillingSystem-1.0/product/add/${tariff.idTariff}'" class="btn btn-outline-primary" />
+                                        <input value="Create order" type="button" onclick="location.href='/product/add/${tariff.idTariff}'" class="btn btn-outline-primary" />
                                     </c:if>
                                     <c:if test="${role eq 'EMPLOYEE'}">
-                                        <input value="Create order" type="button" onclick="location.href='/BillingSystem-1.0/product/add/${idClient}/${tariff.idTariff}'" class="btn btn-outline-primary" />
+                                        <input value="Create order" type="button" onclick="location.href='/product/add/${idClient}/${tariff.idTariff}'" class="btn btn-outline-primary" />
                                     </c:if>
                                     <c:if test="${role eq 'MANAGER'}">
                                         <div class="btn-group" role="group" aria-label="Basic example">
-                                            <input value="Edit Tariff" type="button" class="btn btn-primary" onclick="location.href='/BillingSystem-1.0/tariff/edit/${tariff.idTariff}'"/>
-                                            <input value="Create order" type="button" class="btn btn-outline-primary" onclick="location.href='/BillingSystem-1.0/product/add/${tariff.idTariff}'"/>
+                                            <input value="Edit Tariff" type="button" class="btn btn-primary" onclick="location.href='/tariff/edit/${tariff.idTariff}'"/>
+                                            <input value="Create order" type="button" class="btn btn-outline-primary" onclick="location.href='/product/add/${tariff.idTariff}'"/>
                                         </div>
                                     </c:if>
                                 </c:if>

@@ -56,6 +56,7 @@ public class OrderServiceImpl implements OrderService {
     public int addOrder(int idClient) {
         Order order = new Order();
         order.setClient(clientService.getById(idClient));
+        order.setDiscount(0);
         return orderRepository.save(order).getIdOrder();
     }
 

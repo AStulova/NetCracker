@@ -2,13 +2,11 @@ package bsys.model;
 
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.Length;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.AuthorityUtils;
-import org.springframework.security.core.userdetails.UserDetails;
+import org.hibernate.validator.constraints.NotBlank;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
-import java.util.Collection;
 
 @Entity
 @Table(name = "Client")
@@ -18,23 +16,25 @@ public class Client {
     @Column(name = "id_client")
     private int idClient;
 
-    @Pattern(regexp = "^[A-Z][a-z]+$", message = "Incorrect first name!")
+    @Pattern(regexp = "(^[A-Z][a-z]+$){1,255}", message = "Incorrect first name!")
     @Column(name = "first_name")
     private String firstName;
 
-    @Pattern(regexp = "^[A-Z][a-z]+$", message = "Incorrect last name!")
+    @Pattern(regexp = "(^[A-Z][a-z]+$){1,255}", message = "Incorrect last name!")
     @Column(name = "last_name")
     private String lastName;
 
+    @NotBlank(message = "This field is required!")
     @Pattern(regexp = "(^$|[0-9]{11})", message = "Incorrect phone number!")
     @Column(name = "phone")
     private String phone;
 
+    @NotBlank(message = "This field is required!")
     @Email(message = "Incorrect email!")
     @Column(name = "email")
     private String email;
 
-    @Length(min = 8, max = 16, message = "Password must be between 8 and 16 characters.")
+    @Length(min = 8, message = "Password must be between 8 and 16 characters!")
     @Column(name = "password")
     private String password;
 

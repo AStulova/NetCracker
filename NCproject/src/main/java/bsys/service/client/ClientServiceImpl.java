@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -24,21 +25,33 @@ public class ClientServiceImpl implements ClientService {
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    public void addClient(Client client) {
-        client.setPassword(bCryptPasswordEncoder.encode(client.getPassword()));
-        client.setRole("USER");
-        clientRepository.saveAndFlush(client);
-    }
-
     @Override
-    public List<Client> findAllClients() {
-        return clientRepository.findAll(Sort.by(Sort.Direction.ASC, "idClient"));
+    public void addClient(Client client) {
+        Client curClient = getByEmail(client.getEmail());
+        if (client.getIdClient() == 0 && curClient != null) {
+            throw new IllegalStateException("You already have an account!");
+        }
+        else {
+            client.setPassword(bCryptPasswordEncoder.encode(client.getPassword()));
+            client.setRole("USER");
+            editClient(client);
+        }
     }
 
     @Override
     @Transactional
     public void editClient(Client client) {
         clientRepository.save(client);
+    }
+
+    @Override
+    public List<Client> findAllUsers() {
+        return clientRepository.findAll(Sort.by(Sort.Direction.ASC, "idClient"));
+    }
+
+    @Override
+    public List<Client> findAllClients() {
+        return clientRepository.findAllByRoleOrderByIdClient("USER");
     }
 
     @Override

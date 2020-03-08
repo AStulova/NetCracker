@@ -36,18 +36,17 @@
                                 </c:if>
                                 <div class="form-group">
                                     <label class="h5" for="email">Email</label>
-                                    <input class="form-control form-control-lg" type="text" name="email" id="email" placeholder="Enter your email" required>
+                                    <input class="form-control form-control-lg" type="text" name="email" id="email" placeholder="Enter your email" >
                                 </div>
                                 <div class="form-group">
                                     <label class="h5" for="password">Password</label>
-                                    <input class="form-control form-control-lg" type="password" name="password" id="password" placeholder="Enter your password" required>
+                                    <input class="form-control form-control-lg" type="password" name="password" id="password" placeholder="Enter your password" >
                                 </div>
                                 <div class="row">
-                                    <div class="col-md-8 text-left">Do you want to <a href="/BillingSystem-1.0/signup">Sign Up?</a> </div>
-                                    <div class="col-md-4  text-right">...or return <a href="/BillingSystem-1.0/">home</a></div>
+                                    <div class="col-md-4">Return <a href="/">home</a></div>
                                 </div>
                                 <div class="text-center mt-3">
-                                    <input value="Sign in" type="submit" class="btn btn-lg btn-primary"/>
+                                    <input value="Sign In" type="submit" class="btn btn-lg btn-primary"/>
                                 </div>
                             </form:form>
                         </div>

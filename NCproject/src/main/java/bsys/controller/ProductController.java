@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collector;
@@ -68,14 +69,19 @@ public class ProductController {
         ModelAndView modelAndView = new ModelAndView();
         if (bindingResult.hasErrors()) {
             getErrorMap(order, bindingResult, modelAndView);
-            List<Product> productList = productService.getProducts(order.getIdOrder());
-            modelAndView.addObject("productList", productList);
-            modelAndView.addObject("role", clientService.getAuthClient().getRole());
-            modelAndView.setViewName("ProductPage");
+            getModelAndView(order, modelAndView);
         }
         else {
-            orderService.editDiscount(order);
-            modelAndView.setViewName("redirect:/product/" + order.getIdOrder());
+            if (order.getDiscount() < 0 || order.getDiscount() > 100) {
+                Map<String, String> errorMessage = new HashMap<>();
+                errorMessage.put("discount", "Discount must be between 0 and 100!");
+                modelAndView.addObject("errorMessage", errorMessage);
+                getModelAndView(order, modelAndView);
+            }
+            else {
+                orderService.editDiscount(order);
+                modelAndView.setViewName("redirect:/product/" + order.getIdOrder());
+            }
         }
         return modelAndView;
     }
@@ -87,7 +93,16 @@ public class ProductController {
         );
         Map<String, String> errors = bindingResult.getFieldErrors().stream().collect(collector);
         modelAndView.addObject("errorMessage", errors);
+    }
+
+    private void getModelAndView(Order order, ModelAndView modelAndView) {
+        List<Product> productList = productService.getProducts(order.getIdOrder());
+        Order curOrder = orderService.getById(order.getIdOrder());
         modelAndView.addObject("newDiscount", order.getDiscount());
+        modelAndView.addObject("order", curOrder);
+        modelAndView.addObject("productList", productList);
+        modelAndView.addObject("role", clientService.getAuthClient().getRole());
+        modelAndView.setViewName("ProductPage");
     }
 
     @GetMapping(value = "/{idOrder}/edit/{idProduct}")
@@ -172,7 +187,7 @@ public class ProductController {
     public void verifyClient(int idOrder) throws SecurityException {
         Client curClient = clientService.getAuthClient();
         if (curClient.getRole().equals("USER") && curClient.getIdClient() != orderService.getById(idOrder).getClient().getIdClient()) {
-            throw new SecurityException("Access denied");
+            throw new SecurityException("Access denied!");
         }
     }
 }

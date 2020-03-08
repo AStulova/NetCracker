@@ -10,10 +10,12 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collector;
@@ -38,6 +40,59 @@ public class ClientController {
     @GetMapping(value="/signin")
     public ModelAndView signInPage() {
         return new ModelAndView("SignIn");
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping(value = "/signup")
+    public ModelAndView signUpPage() {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("SignUp");
+        return modelAndView;
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping(value = "/user/{idClient}/edit")
+    public ModelAndView editUserPage(@PathVariable int idClient) {
+        ModelAndView modelAndView = new ModelAndView();
+        Client client = clientService.getById(idClient);
+        modelAndView.addObject("curClient", client);
+        modelAndView.setViewName("SignUp");
+        return modelAndView;
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @PostMapping(value = "/signup")
+    public ModelAndView addClient(@Valid @ModelAttribute("client") Client client, BindingResult bindingResult) {
+        ModelAndView modelAndView = new ModelAndView();
+        if (bindingResult.hasErrors()) {
+            getErrorMap(client, bindingResult, modelAndView);
+            modelAndView.setViewName("SignUp");
+        }
+        else {
+            if (client.getIdClient() == 0 && client.getPassword().length() < 16) {
+                clientService.addClient(client);
+                modelAndView.setViewName("redirect:/users");
+            }
+            else {
+                Map<String, String> errors = new HashMap<>();
+                errors.put("password", "Password must be between 8 and 16 characters!");
+                modelAndView.addObject("errorMessage", errors);
+                modelAndView.addObject("curClient", client);
+                modelAndView.setViewName("SignUp");
+            }
+        }
+        return modelAndView;
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping(value = "/users")
+    public ModelAndView usersPage() {
+        ModelAndView modelAndView = new ModelAndView();
+        List<Client> clientList = clientService.findAllUsers();
+        modelAndView.addObject("clientList", clientList);
+        modelAndView.addObject("role", clientService.getAuthClient().getRole());
+        modelAndView.setViewName("AllClientsPage");
+        return modelAndView;
     }
 
     @PreAuthorize("hasRole('EMPLOYEE')")
@@ -81,27 +136,6 @@ public class ClientController {
         return modelAndView;
     }
 
-    @GetMapping(value = "/signup")
-    public ModelAndView signUpPage() {
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("SignUp");
-        return modelAndView;
-    }
-
-    @PostMapping(value = "/signup")
-    public ModelAndView addClient(@Valid @ModelAttribute("client") Client client, BindingResult bindingResult) {
-        ModelAndView modelAndView = new ModelAndView();
-        if (bindingResult.hasErrors()) {
-            getErrorMap(client, bindingResult, modelAndView);
-            modelAndView.setViewName("SignUp");
-        }
-        else {
-            clientService.addClient(client);
-            modelAndView.setViewName("redirect:/signin");
-        }
-        return modelAndView;
-    }
-
     private void getErrorMap(@Valid @ModelAttribute("client") Client client, BindingResult bindingResult, ModelAndView modelAndView) {
         Collector<FieldError, ?, Map<String, String>> collector = Collectors.toMap(
                 FieldError::getField,
@@ -109,6 +143,6 @@ public class ClientController {
         );
         Map<String, String> errors = bindingResult.getFieldErrors().stream().collect(collector);
         modelAndView.addObject("errorMessage", errors);
-        modelAndView.addObject("newClient", client);
+        modelAndView.addObject("curClient", client);
     }
 }
