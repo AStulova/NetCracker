@@ -143,10 +143,10 @@
                                 </div>
                             </div>
                             <div class="form-row">
-                                <div class="form-group col-md-2">
+                                <div class="form-group col-md-3">
                                     <label class="h5" for="discount">Discount</label>
                                     <c:if test="${role eq 'EMPLOYEE' and order.statusOrder ne 2}">
-                                        <input type="number"  min="0" max="100" class="form-control ${not empty errorMessage.get('discount') ? 'is-invalid' : ''}" placeholder="0" name="discount" id="discount" value="${not empty newDiscount ? newDiscount : order.discount}"/>
+                                        <input type="number"  class="form-control ${not empty errorMessage.get('discount') ? 'is-invalid' : ''}" placeholder="0" name="discount" id="discount" value="${not empty newDiscount ? newDiscount : order.discount}"/>
                                         <c:if test="${not empty errorMessage.get('discount')}">
                                             <div class="invalid-feedback">${errorMessage.get('discount')}</div>
                                         </c:if>

@@ -3,11 +3,11 @@ create table Client (
                         first_name varchar(255) NOT NULL,
                         last_name varchar(255) NOT NULL,
                         phone varchar(12) NOT NULL,
-                        email varchar(255),
+                        email varchar(255) NOT NULL,
                         password varchar(255) NOT NULL,
                         balance numeric(8, 2) NOT NULL default '0.0',
                         role varchar(255) NOT NULL,
-                        UNIQUE(phone, email)
+                        UNIQUE(email)
 );
 
 create table Orders (
@@ -15,7 +15,7 @@ create table Orders (
                         id_client integer references Client(id_client),
                         date_order timestamp(0) DEFAULT NULL,
                         date_cancel timestamp(0) DEFAULT NULL,
-                        discount integer default 0,
+                        discount integer default 0 check ( discount >= 0 or discount <= 100 ),
                         price numeric(8, 2) default '0.0',
                         status integer default '0',
                         CONSTRAINT PK_ORDER_ID primary key (id_order)
@@ -81,23 +81,44 @@ $BODY$
 declare
     total numeric(8,2);
     curOrder record;
-    dateB date;
+    lastBill record;
+    newDate date;
     dateDif integer;
 begin
     total = 0;
+    select date_bill from bill where id_client = _id_client order by id_bill desc limit 1 into lastBill;
     for curOrder in select date_order, date_cancel, status, price from orders where id_client = _id_client
         loop
             if curOrder.status = '1' or curOrder.status = '2' then
                 if curOrder.date_order notnull then
-                    dateB = make_date(extract(year from current_date)::integer, extract(month from current_date)::int, 27);
-                    if curOrder.date_cancel isnull or (curOrder.date_cancel < dateB and curOrder.date_cancel > dateB - interval '1 month') then
-                        dateDif = dateB - curOrder.date_order::date;
-                        if dateDif < 30 then
-                            total = total + dateDif * (curOrder.price / 30);
+                    newDate = make_date(extract(year from current_date)::int, extract(month from current_date)::int,
+                        extract(day from current_date)::int);
+                    if lastBill notnull then
+                        if curOrder.date_cancel isnull then
+                            if curOrder.date_order > lastBill.date_bill then            /*если заказ был активирован после последнего счета*/
+                                dateDif = newDate - curOrder.date_order::date;
+                            else
+                                dateDif = newDate - lastBill.date_bill;
+                            end if;
+
+                        elsif curOrder.date_cancel > lastBill.date_bill then            /*если заказ был отменен после выдачи последнего счета*/
+                            if curOrder.date_order > lastBill.date_bill then            /*если заказ был активирован после последнего счета*/
+                                dateDif = curOrder.date_cancel::date - curOrder.date_order::date;
+                            else
+                                dateDif = curOrder.date_cancel::date - lastBill.date_bill;
+                            end if;
+                        end if;
+
+                    else
+                        if curOrder.date_cancel isnull then                             /*заказ не был отменен*/
+                            dateDif = newDate - curOrder.date_order::date;
                         else
-                            total = total + curOrder.price;
+                            dateDif = curOrder.date_cancel::date - curOrder.date_order::date;
                         end if;
                     end if;
+
+                    total = total + dateDif * (curOrder.price / 30);
+
                 end if;
             end if;
         end loop;
@@ -139,6 +160,8 @@ $BODY$
 language plpgsql volatile;
 */
 
+
+
 create or replace procedure generateBills() language plpgsql as
 $BODY$
 declare
@@ -149,7 +172,7 @@ begin
     for curClient in select id_client from client
         loop
             newTotal = getOrdersTotal(curClient.id_client);
-            newDate = make_date(extract(year from current_date)::int, extract(month from current_date)::int, 27);
+            newDate = make_date(extract(year from current_date)::int, extract(month from current_date)::int, extract(day from current_date)::int);
             insert into bill(id_client, date_bill, total) values (curClient.id_client, newDate::date, newTotal);
         end loop;
 end;

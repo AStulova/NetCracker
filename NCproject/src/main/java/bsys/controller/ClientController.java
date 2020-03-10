@@ -43,7 +43,7 @@ public class ClientController {
     }
 
     @PreAuthorize("hasRole('ADMIN')")
-    @GetMapping(value = "/signup")
+    @GetMapping(value = "/user/add")
     public ModelAndView signUpPage() {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("SignUp");
@@ -69,16 +69,17 @@ public class ClientController {
             modelAndView.setViewName("SignUp");
         }
         else {
-            if (client.getIdClient() == 0 && client.getPassword().length() < 16) {
-                clientService.addClient(client);
-                modelAndView.setViewName("redirect:/users");
-            }
-            else {
+            if (client.getIdClient() == 0 && client.getPassword().length() > 16) {
                 Map<String, String> errors = new HashMap<>();
                 errors.put("password", "Password must be between 8 and 16 characters!");
                 modelAndView.addObject("errorMessage", errors);
                 modelAndView.addObject("curClient", client);
                 modelAndView.setViewName("SignUp");
+
+            }
+            else {
+                clientService.addClient(client);
+                modelAndView.setViewName("redirect:/users");
             }
         }
         return modelAndView;

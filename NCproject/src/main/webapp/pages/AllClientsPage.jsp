@@ -29,7 +29,7 @@
             <ul class="navbar-nav mr-auto">
                 <c:if test="${role eq 'ADMIN'}">
                     <li class="nav-item">
-                        <a class="nav-link text-warning" href="/users">Users</a>
+                        <a class="nav-link" href="/users">Users</a>
                     </li>
                 </c:if>
                 <c:if test="${role eq 'EMPLOYEE'}">
@@ -37,15 +37,17 @@
                         <a class="nav-link" href="/clients">Clients</a>
                     </li>
                 </c:if>
-                <li class="nav-item">
-                    <a class="nav-link" href="/tariff">Tariffs</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/order">Orders</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/bill">Bills</a>
-                </li>
+                <c:if test="${role ne 'ADMIN'}">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/tariff">Tariffs</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/order">Orders</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/bill">Bills</a>
+                    </li>
+                </c:if>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id="download">Personal Information<span class="caret"></span></a>
                     <div class="dropdown-menu" aria-labelledby="download">
@@ -77,7 +79,7 @@
                 <c:if test="${role eq 'ADMIN'}">
                     <div class="col-lg-4 col-md-4 col-sm-6">
                         <div class="text-sm-right">
-                            <input value="New User" type="button" class="btn btn-primary btn-lg" onclick="location.href='/signup'" />
+                            <input value="New User" type="button" class="btn btn-primary btn-lg" onclick="location.href='/user/add'" />
                         </div>
                     </div>
                 </c:if>

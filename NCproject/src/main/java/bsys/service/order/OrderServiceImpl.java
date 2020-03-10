@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Date;
 import java.util.List;
 
@@ -56,7 +57,7 @@ public class OrderServiceImpl implements OrderService {
     public int addOrder(int idClient) {
         Order order = new Order();
         order.setClient(clientService.getById(idClient));
-        order.setDiscount(0);
+        order.setDiscount(BigDecimal.ZERO);
         return orderRepository.save(order).getIdOrder();
     }
 
@@ -100,7 +101,8 @@ public class OrderServiceImpl implements OrderService {
         for (Product product : productList) {
             priceOrder = priceOrder.add(product.getPrice());
         }
-        BigDecimal discount = priceOrder.multiply(BigDecimal.valueOf((double) order.getDiscount() / 100));
+        BigDecimal deduction = order.getDiscount().divide(new BigDecimal(100), 2, RoundingMode.HALF_UP);
+        BigDecimal discount = priceOrder.multiply(deduction);
         priceOrder = priceOrder.subtract(discount);
         order.setPriceOrder(priceOrder);
         saveOrder(order);

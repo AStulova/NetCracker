@@ -29,7 +29,7 @@ public class ExceptionController {
         return modelAndView;
     }
 
-    @ExceptionHandler(NullPointerException.class)
+    /*@ExceptionHandler(NullPointerException.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     private ModelAndView handleNullPointerException(NullPointerException ex) {
         ModelAndView modelAndView = new ModelAndView();
@@ -37,7 +37,7 @@ public class ExceptionController {
         modelAndView.addObject("errorMessage", ex.getMessage());
         modelAndView.setViewName("ErrorPage");
         return modelAndView;
-    }
+    }*/
 
     @ExceptionHandler(IllegalStateException.class)
     private ModelAndView handleNullPointerException(IllegalStateException ex) {

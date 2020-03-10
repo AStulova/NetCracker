@@ -17,6 +17,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collector;
@@ -105,9 +108,16 @@ public class TariffController {
             getErrorMap(tariff, bindingResult, modelAndView);
             modelAndView.setViewName("TariffEdit");
         }
+        else if (tariff.getPriceTariff().compareTo(new BigDecimal(0)) < 0) {
+                Map<String, String> errorMessage = new HashMap<>();
+                errorMessage.put("priceTariff", "Price must be positive!");
+                modelAndView.addObject("errorMessage", errorMessage);
+                modelAndView.addObject("newTariff", tariff);
+                modelAndView.setViewName("TariffEdit");
+            }
         else {
-            tariffService.addTariff(tariff);
-            modelAndView.setViewName("redirect:/tariff");
+                tariffService.addTariff(tariff);
+                modelAndView.setViewName("redirect:/tariff");
         }
         return modelAndView;
     }

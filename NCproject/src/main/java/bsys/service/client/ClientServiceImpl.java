@@ -33,7 +33,6 @@ public class ClientServiceImpl implements ClientService {
         }
         else {
             client.setPassword(bCryptPasswordEncoder.encode(client.getPassword()));
-            client.setRole("USER");
             editClient(client);
         }
     }

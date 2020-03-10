@@ -112,7 +112,7 @@
                         <div class="form-group col-md-6">
                             <label class="h5" for="priceTariff">Tariff price</label>
                             <c:set var="varPrice" value="${!empty tariff.priceTariff ? tariff.priceTariff : not empty newTariff.priceTariff ? newTariff.priceTariff : ''}" />
-                            <input type="number" step="0.01" min="0" class="form-control ${!empty errorMessage.get('priceTariff') ? 'is-invalid' : ''}" name="priceTariff" id="priceTariff" value="${varPrice}" placeholder="${empty varPrice ? 'Enter price' : ''}" />
+                            <input type="number" step="0.01" class="form-control ${!empty errorMessage.get('priceTariff') ? 'is-invalid' : ''}" name="priceTariff" id="priceTariff" value="${varPrice}" placeholder="${empty varPrice ? 'Enter price' : ''}" />
                             <c:if test="${not empty errorMessage.get('priceTariff')}">
                                 <div class="invalid-feedback">${errorMessage.get('priceTariff')}</div>
                             </c:if>

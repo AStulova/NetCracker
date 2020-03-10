@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -71,17 +72,15 @@ public class ProductController {
             getErrorMap(order, bindingResult, modelAndView);
             getModelAndView(order, modelAndView);
         }
-        else {
-            if (order.getDiscount() < 0 || order.getDiscount() > 100) {
+        else if (order.getDiscount().compareTo(new BigDecimal(0)) < 0 || order.getDiscount().compareTo(new BigDecimal(100)) > 0) {
                 Map<String, String> errorMessage = new HashMap<>();
                 errorMessage.put("discount", "Discount must be between 0 and 100!");
                 modelAndView.addObject("errorMessage", errorMessage);
                 getModelAndView(order, modelAndView);
-            }
-            else {
+        }
+        else {
                 orderService.editDiscount(order);
                 modelAndView.setViewName("redirect:/product/" + order.getIdOrder());
-            }
         }
         return modelAndView;
     }

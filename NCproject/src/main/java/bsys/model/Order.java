@@ -29,10 +29,10 @@ public class Order {
     private Date dateCancel;
 
     @NotNull(message = "This field is required!")
-    @Digits(integer = 3, fraction = 0, message = "Discount must be integer!")
+    @Digits(integer = 3, fraction = 0, message = "Discount must be between 0 and 100!")
     //@Range(min = 0, max = 100, message = "Discount must be between 0 and 100!")
     @Column(name = "discount")
-    private Integer discount;
+    private BigDecimal discount;
 
     @Column(name = "price")
     private BigDecimal priceOrder;
@@ -77,11 +77,11 @@ public class Order {
         this.dateCancel = dateCancel;
     }
 
-    public Integer getDiscount() {
+    public BigDecimal getDiscount() {
         return discount;
     }
 
-    public void setDiscount(Integer discount) {
+    public void setDiscount(BigDecimal discount) {
         this.discount = discount;
     }
 

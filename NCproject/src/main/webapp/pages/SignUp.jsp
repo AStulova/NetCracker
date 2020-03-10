@@ -5,7 +5,13 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>BillSYS | Sing Up</title>
+    <c:if test="${not empty curClient.idClient and curClient.idClient ne 0}">
+        <title>BillSYS | Edit User</title>
+    </c:if>
+    <c:if test="${empty curClient.idClient or curClient.idClient eq 0}">
+        <title>BillSYS | Add User</title>
+    </c:if>
+
     <!-- Bootstrap -->
     <style>
         <%@include file='css/bootstrap.min.css' %>
@@ -16,7 +22,12 @@
         <div class="row align-items-center h-100">
             <div class="col-sm-10 col-md-8 col-lg-6 mx-auto my-4">
                 <div class="text-center">
-                    <h1 class="h2">Registration</h1>
+                    <c:if test="${not empty curClient.idClient and curClient.idClient ne 0}">
+                        <h1 class="h2">Edit User</h1>
+                    </c:if>
+                    <c:if test="${empty curClient.idClient or curClient.idClient eq 0}">
+                        <h1 class="h2">New User</h1>
+                    </c:if>
                 </div>
                 <div class="card bg-light">
                     <div class="card-body">
@@ -72,9 +83,12 @@
                                 </c:if>
                                 <div class="form-group">
                                     <label class="h5" for="role">Role</label>
-                                    <select class="form-control" name="role" id="role" required>
-                                        <c:if test="${not empty curClient.idClient or curClient.idClient ne 0}">
+                                    <select class="form-control" name="role" id="role">
+                                        <c:if test="${not empty curClient.idClient and curClient.idClient ne 0}">
                                             <option selected>${curClient.role}</option>
+                                        </c:if>
+                                        <c:if test="${empty curClient.idClient or curClient.idClient eq 0}">
+                                            <option selected>USER</option>
                                         </c:if>
                                         <option>USER</option>
                                         <option>EMPLOYEE</option>
@@ -86,7 +100,7 @@
                                     <div class="text-right">Back to <a href="/users">users</a></div>
                                 </div>
                                 <div class="text-center mt-3">
-                                   <input value="Register" type="submit" class="btn btn-lg btn-primary"/>
+                                   <input value="Confirm" type="submit" class="btn btn-lg btn-primary"/>
                                 </div>
                             </form:form>
                         </div>
