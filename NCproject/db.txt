@@ -168,11 +168,16 @@ declare
     curClient record;
     newDate date;
     newTotal numeric(8,2);
+    lastBill record;
 begin
     for curClient in select id_client from client
         loop
-            newTotal = getOrdersTotal(curClient.id_client);
+            select date_bill from bill where id_client = curClient.id_client order by id_bill desc limit 1 into lastBill;
             newDate = make_date(extract(year from current_date)::int, extract(month from current_date)::int, extract(day from current_date)::int);
+            if lastBill notnull then
+                 continue when newDate < lastBill.date_bill;                
+            end if;
+            newTotal = getOrdersTotal(curClient.id_client);
             insert into bill(id_client, date_bill, total) values (curClient.id_client, newDate::date, newTotal);
         end loop;
 end;

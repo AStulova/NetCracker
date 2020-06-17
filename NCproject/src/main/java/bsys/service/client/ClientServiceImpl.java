@@ -27,14 +27,8 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     public void addClient(Client client) {
-        Client curClient = getByEmail(client.getEmail());
-        if (client.getIdClient() == 0 && curClient != null) {
-            throw new IllegalStateException("You already have an account!");
-        }
-        else {
-            client.setPassword(bCryptPasswordEncoder.encode(client.getPassword()));
-            editClient(client);
-        }
+        client.setPassword(bCryptPasswordEncoder.encode(client.getPassword()));
+        editClient(client);
     }
 
     @Override
@@ -45,7 +39,8 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     public List<Client> findAllUsers() {
-        return clientRepository.findAll(Sort.by(Sort.Direction.ASC, "idClient"));
+        //return clientRepository.findAll(Sort.by(Sort.Direction.ASC, "idClient"));
+        return clientRepository.findClientsByIdClientIsNotOrderByIdClient(getAuthClient().getIdClient());
     }
 
     @Override

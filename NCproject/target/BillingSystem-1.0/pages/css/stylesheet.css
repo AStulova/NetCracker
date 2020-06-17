@@ -1,0 +1,28 @@
+@import '../fonts';
+
+tr {
+    display: table-row;
+    vertical-align: inherit;
+    border-color: inherit;
+}
+
+th {
+    text-align: inherit;
+}
+
+.bs-docs-section {
+    margin-top: 4em;
+}
+
+.navbar-brand {
+  font-size: 1.571875rem; !important
+}
+
+.py-6 {
+    padding-top: 10rem!important;
+	padding-bottom: 10rem!important;
+}
+
+.py-7 {
+    padding-top: 9.5rem!important;
+}

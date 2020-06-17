@@ -2,9 +2,9 @@ package bsys.controller;
 
 import bsys.model.Client;
 import bsys.model.Order;
+import bsys.service.Validator.FieldsValidator;
 import bsys.service.client.ClientService;
 import bsys.service.order.OrderService;
-import bsys.service.product.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -20,6 +20,12 @@ import java.util.List;
 public class OrderController {
     private OrderService orderService;
     private ClientService clientService;
+    private FieldsValidator fieldsValidator;
+
+    @Autowired
+    private void setFieldsValidator(FieldsValidator fieldsValidator) {
+        this.fieldsValidator = fieldsValidator;
+    }
 
     @Autowired
     public void setClientService(ClientService clientService) {
@@ -58,14 +64,14 @@ public class OrderController {
 
     @GetMapping(value = "/activate/{idOrder}")
     public ModelAndView activateOrder(@PathVariable int idOrder) {
-        verifyClient(idOrder);
+        fieldsValidator.verifyClient(idOrder);
         orderService.activateOrder(idOrder);
         return getModelAndView(idOrder);
     }
 
     @GetMapping(value = "/cancel/{idOrder}")
     public ModelAndView cancelOrder(@PathVariable int idOrder) {
-        verifyClient(idOrder);
+        fieldsValidator.verifyClient(idOrder);
         orderService.cancelOrder(idOrder);
         return getModelAndView(idOrder);
     }
@@ -81,12 +87,5 @@ public class OrderController {
             modelAndView.setViewName("redirect:/order");
         }
         return modelAndView;
-    }
-
-    public void verifyClient(int idOrder) throws SecurityException {
-        Client curClient = clientService.getAuthClient();
-        if (curClient.getRole().equals("USER") && curClient.getIdClient() != orderService.getById(idOrder).getClient().getIdClient()) {
-            throw new SecurityException("Access denied");
-        }
     }
 }

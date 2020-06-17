@@ -1,0 +1,14 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="BillingSystem:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <properties id="maven-jee-properties">
+      <options>
+        <module>BillingSystem</module>
+        <packaging>war</packaging>
+      </options>
+    </properties>
+    <root id="archive" name="BillingSystem-1.0.war">
+      <element id="artifact" artifact-name="BillingSystem:war exploded" />
+    </root>
+  </artifact>
+</component>

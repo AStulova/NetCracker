@@ -1,13 +1,13 @@
 package bsys.controller;
 
 import bsys.model.Client;
+import bsys.service.Validator.FieldsValidator;
 import bsys.service.client.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,15 +15,18 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collector;
-import java.util.stream.Collectors;
 
 @Controller
 public class ClientController {
     private ClientService clientService;
+    private FieldsValidator fieldsValidator;
+
+    @Autowired
+    private void setFieldsValidator(FieldsValidator fieldsValidator) {
+        this.fieldsValidator = fieldsValidator;
+    }
 
     @Autowired
     private void setClientService(ClientService clientService) {
@@ -65,17 +68,16 @@ public class ClientController {
     public ModelAndView addClient(@Valid @ModelAttribute("client") Client client, BindingResult bindingResult) {
         ModelAndView modelAndView = new ModelAndView();
         if (bindingResult.hasErrors()) {
-            getErrorMap(client, bindingResult, modelAndView);
+            modelAndView.addObject("errorMessage", fieldsValidator.getErrorMap(bindingResult));
+            modelAndView.addObject("curClient", client);
             modelAndView.setViewName("SignUp");
         }
         else {
-            if (client.getIdClient() == 0 && client.getPassword().length() > 16) {
-                Map<String, String> errors = new HashMap<>();
-                errors.put("password", "Password must be between 8 and 16 characters!");
-                modelAndView.addObject("errorMessage", errors);
+            Map<String, String> errorMap = fieldsValidator.clientAddValidate(client);
+            if (!errorMap.isEmpty()) {
+                modelAndView.addObject("errorMessage", errorMap);
                 modelAndView.addObject("curClient", client);
                 modelAndView.setViewName("SignUp");
-
             }
             else {
                 clientService.addClient(client);
@@ -120,30 +122,32 @@ public class ClientController {
     public ModelAndView editClient(@Valid @ModelAttribute("client") Client client, BindingResult bindingResult) {
         ModelAndView modelAndView = new ModelAndView();
         if (bindingResult.hasErrors()) {
-            getErrorMap(client, bindingResult, modelAndView);
-            modelAndView.addObject("client", clientService.getAuthClient());
-            modelAndView.setViewName("ClientPage");
+            modelAndView.addObject("errorMessage", fieldsValidator.getErrorMap(bindingResult));
+            getModelAndView(modelAndView, client);
         }
         else {
-            if (!client.getEmail().equals(clientService.getAuthClient().getEmail())) {
-                SecurityContextHolder.clearContext();
-                modelAndView.setViewName("redirect:/signin");
+            Map<String, String> errorMap = fieldsValidator.clientEditValidate(client);
+            if (!errorMap.isEmpty()) {
+                modelAndView.addObject("errorMessage", errorMap);
+                getModelAndView(modelAndView, client);
             }
             else {
-                modelAndView.setViewName("redirect:/client");
+                if (!client.getEmail().equals(clientService.getAuthClient().getEmail())) {
+                    SecurityContextHolder.clearContext();
+                    modelAndView.setViewName("redirect:/signin");
+                }
+                else {
+                    modelAndView.setViewName("redirect:/client");
+                }
+                clientService.editClient(client);
             }
-            clientService.editClient(client);
         }
         return modelAndView;
     }
 
-    private void getErrorMap(@Valid @ModelAttribute("client") Client client, BindingResult bindingResult, ModelAndView modelAndView) {
-        Collector<FieldError, ?, Map<String, String>> collector = Collectors.toMap(
-                FieldError::getField,
-                FieldError::getDefaultMessage
-        );
-        Map<String, String> errors = bindingResult.getFieldErrors().stream().collect(collector);
-        modelAndView.addObject("errorMessage", errors);
+    private void getModelAndView(ModelAndView modelAndView, Client client) {
         modelAndView.addObject("curClient", client);
+        modelAndView.addObject("client", clientService.getAuthClient());
+        modelAndView.setViewName("ClientPage");
     }
 }

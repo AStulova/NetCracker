@@ -1,15 +1,13 @@
 package bsys.controller;
 
-import bsys.model.Client;
 import bsys.model.Tariff;
+import bsys.service.Validator.FieldsValidator;
 import bsys.service.client.ClientService;
-import bsys.service.order.OrderService;
 import bsys.service.tariff.TariffService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,19 +15,19 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
-import java.math.BigDecimal;
-import java.math.BigInteger;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collector;
-import java.util.stream.Collectors;
 
 @Controller
 public class TariffController {
     private TariffService tariffService;
     private ClientService clientService;
-    private OrderService orderService;
+    private FieldsValidator fieldsValidator;
+
+    @Autowired
+    private void setFieldsValidator(FieldsValidator fieldsValidator) {
+        this.fieldsValidator = fieldsValidator;
+    }
 
     @Autowired
     public void setTariffService(TariffService tariffService) {
@@ -41,14 +39,9 @@ public class TariffController {
         this.clientService = clientService;
     }
 
-    @Autowired
-    public void setOrderService(OrderService orderService) {
-        this.orderService = orderService;
-    }
-
     @GetMapping(value = "/{idOrder}/add/tariff")
     public ModelAndView tariffsForOrderPage(@PathVariable int idOrder) {
-        verifyClient(idOrder);
+        fieldsValidator.verifyClient(idOrder);
         List<Tariff> tariff =  tariffService.getTariffs();
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("TariffPage");
@@ -105,37 +98,22 @@ public class TariffController {
     public ModelAndView addTariff(@Valid @ModelAttribute("tariff") Tariff tariff, BindingResult bindingResult) {
         ModelAndView modelAndView = new ModelAndView();
         if (bindingResult.hasErrors()) {
-            getErrorMap(tariff, bindingResult, modelAndView);
+            fieldsValidator.getErrorMap(bindingResult);
+            modelAndView.addObject("newTariff", tariff);
             modelAndView.setViewName("TariffEdit");
         }
-        else if (tariff.getPriceTariff().compareTo(new BigDecimal(0)) < 0) {
-                Map<String, String> errorMessage = new HashMap<>();
-                errorMessage.put("priceTariff", "Price must be positive!");
+        else {
+            Map<String, String> errorMessage = fieldsValidator.tariffValidate(tariff);
+            if (!errorMessage.isEmpty()) {
                 modelAndView.addObject("errorMessage", errorMessage);
                 modelAndView.addObject("newTariff", tariff);
                 modelAndView.setViewName("TariffEdit");
             }
-        else {
+            else {
                 tariffService.addTariff(tariff);
                 modelAndView.setViewName("redirect:/tariff");
+            }
         }
         return modelAndView;
-    }
-
-    private void getErrorMap(@Valid @ModelAttribute("tariff") Tariff tariff, BindingResult bindingResult, ModelAndView modelAndView) {
-        Collector<FieldError, ?, Map<String, String>> collector = Collectors.toMap(
-                FieldError::getField,
-                FieldError::getDefaultMessage
-        );
-        Map<String, String> errors = bindingResult.getFieldErrors().stream().collect(collector);
-        modelAndView.addObject("errorMessage", errors);
-        modelAndView.addObject("newTariff", tariff);
-    }
-
-    public void verifyClient(int idOrder) throws SecurityException {
-        Client curClient = clientService.getAuthClient();
-        if (curClient.getRole().equals("USER") && curClient.getIdClient() != orderService.getById(idOrder).getClient().getIdClient()) {
-            throw new SecurityException("Access denied");
-        }
     }
 }

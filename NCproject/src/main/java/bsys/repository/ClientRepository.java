@@ -8,5 +8,7 @@ import java.util.List;
 public interface ClientRepository extends JpaRepository<Client, Integer> {
     Client getByEmail(String email);
 
+    List<Client> findClientsByIdClientIsNotOrderByIdClient(int idClient);
+
     List<Client> findAllByRoleOrderByIdClient(String role);
 }

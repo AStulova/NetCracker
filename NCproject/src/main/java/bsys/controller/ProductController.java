@@ -1,8 +1,8 @@
 package bsys.controller;
 
-import bsys.model.Client;
 import bsys.model.Order;
 import bsys.model.Product;
+import bsys.service.Validator.FieldsValidator;
 import bsys.service.client.ClientService;
 import bsys.service.order.OrderService;
 import bsys.service.product.ProductService;
@@ -11,17 +11,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
-import java.math.BigDecimal;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collector;
-import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping(value = "/product")
@@ -30,6 +25,12 @@ public class ProductController {
     private OrderService orderService;
     private TariffService tariffService;
     private ClientService clientService;
+    private FieldsValidator fieldsValidator;
+
+    @Autowired
+    private void setFieldsValidator(FieldsValidator fieldsValidator) {
+        this.fieldsValidator = fieldsValidator;
+    }
 
     @Autowired
     public void setProductService(ProductService productService) {
@@ -53,7 +54,7 @@ public class ProductController {
 
     @GetMapping(value = "/{idOrder}")
     public ModelAndView productsPage(@PathVariable int idOrder) {
-        verifyClient(idOrder);
+        fieldsValidator.verifyClient(idOrder);
         Order order = orderService.getById(idOrder);
         List<Product> productList = productService.getProducts(idOrder);
         ModelAndView modelAndView = new ModelAndView();
@@ -69,29 +70,21 @@ public class ProductController {
     public ModelAndView editDiscount(@Valid @ModelAttribute("order") Order order, BindingResult bindingResult) {
         ModelAndView modelAndView = new ModelAndView();
         if (bindingResult.hasErrors()) {
-            getErrorMap(order, bindingResult, modelAndView);
+            modelAndView.addObject("errorMessage", fieldsValidator.getErrorMap(bindingResult));
             getModelAndView(order, modelAndView);
         }
-        else if (order.getDiscount().compareTo(new BigDecimal(0)) < 0 || order.getDiscount().compareTo(new BigDecimal(100)) > 0) {
-                Map<String, String> errorMessage = new HashMap<>();
-                errorMessage.put("discount", "Discount must be between 0 and 100!");
+        else {
+            Map<String, String> errorMessage = fieldsValidator.orderValidate(order);
+            if (!errorMessage.isEmpty()) {
                 modelAndView.addObject("errorMessage", errorMessage);
                 getModelAndView(order, modelAndView);
-        }
-        else {
+            }
+            else {
                 orderService.editDiscount(order);
                 modelAndView.setViewName("redirect:/product/" + order.getIdOrder());
+            }
         }
         return modelAndView;
-    }
-
-    private void getErrorMap(@Valid @ModelAttribute("order") Order order, BindingResult bindingResult, ModelAndView modelAndView) {
-        Collector<FieldError, ?, Map<String, String>> collector = Collectors.toMap(
-                FieldError::getField,
-                FieldError::getDefaultMessage
-        );
-        Map<String, String> errors = bindingResult.getFieldErrors().stream().collect(collector);
-        modelAndView.addObject("errorMessage", errors);
     }
 
     private void getModelAndView(Order order, ModelAndView modelAndView) {
@@ -106,7 +99,7 @@ public class ProductController {
 
     @GetMapping(value = "/{idOrder}/edit/{idProduct}")
     public ModelAndView editProductPage(@PathVariable int idOrder, @PathVariable int idProduct) {
-        verifyClient(idOrder);
+        fieldsValidator.verifyClient(idOrder);
         ModelAndView modelAndView = new ModelAndView();
         Product product = productService.getById(idProduct);
         modelAndView.setViewName("ProductEdit");
@@ -126,7 +119,7 @@ public class ProductController {
     // For current order
     @GetMapping(value = "/{idOrder}/add/{idTariff}")
     public ModelAndView addProductPage(@PathVariable int idOrder, @PathVariable int idTariff) {
-        verifyClient(idOrder);
+        fieldsValidator.verifyClient(idOrder);
         Product product = new Product(orderService.getById(idOrder), tariffService.getById(idTariff));
         return getModelAndView(product);
     }
@@ -165,7 +158,7 @@ public class ProductController {
 
     @GetMapping(value = "/{idOrder}/delete/{idProduct}")
     public ModelAndView deleteProduct(@PathVariable int idOrder, @PathVariable int idProduct) {
-        verifyClient(idOrder);
+        fieldsValidator.verifyClient(idOrder);
         ModelAndView modelAndView = new ModelAndView();
         Product product = productService.getById(idProduct);
         productService.deleteProduct(product);
@@ -181,12 +174,5 @@ public class ProductController {
             modelAndView.setViewName("redirect:/product/" + idOrder);
         }
         return modelAndView;
-    }
-
-    public void verifyClient(int idOrder) throws SecurityException {
-        Client curClient = clientService.getAuthClient();
-        if (curClient.getRole().equals("USER") && curClient.getIdClient() != orderService.getById(idOrder).getClient().getIdClient()) {
-            throw new SecurityException("Access denied!");
-        }
     }
 }
